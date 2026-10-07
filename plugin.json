@@ -1,0 +1,31 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "sid-reading-companion",
+  "version": "0.3.2",
+  "description": "Vietnamese SID reading companion for source-grounded deep reading, knowledge extraction and learning checkpoints.",
+  "author": {
+    "name": "SID"
+  },
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Reading Companion",
+        "shortDescription": "Đọc sâu và trích xuất tri thức",
+        "longDescription": "Vietnamese reading companion for source-grounded deep reading, knowledge extraction and learning checkpoints. Offers a staged Feynman–Socratic workflow, clear study modes, learning-state tracking, and source-linked knowledge artifacts.",
+        "developerName": "SID",
+        "category": "Productivity",
+        "brandColor": "#15324F",
+        "capabilities": [
+          "Interactive"
+        ],
+        "logo": "./assets/logo.svg",
+        "composerIcon": "./assets/logo.svg",
+        "defaultPrompt": [
+          "Đọc tài liệu này, đề xuất chế độ phù hợp rồi để tôi chọn đọc sâu, trích xuất hoặc kết hợp.",
+          "Trích xuất chương đã chọn thành các đơn vị tri thức có nguồn, điều kiện và thẻ nhớ.",
+          "Tiếp tục từ bản bàn giao này; giữ lựa chọn của tôi và kiểm tra phần còn thiếu."
+        ]
+      }
+    }
+  }
+}

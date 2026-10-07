@@ -1,0 +1,39 @@
+name: Bug Report
+description: Báo cáo lỗi hoặc sai khác hợp đồng (contract violation) trong SID Reading Companion
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cảm ơn bạn đã đóng góp báo cáo lỗi! Vui lòng cung cấp đầy đủ thông tin để kiểm chứng.
+  - type: textarea
+    id: description
+    attributes:
+      label: Mô tả lỗi
+      description: Mô tả ngắn gọn và chính xác về sự cố gặp phải.
+    validations:
+      required: true
+  - type: dropdown
+    id: module
+    attributes:
+      label: Thành phần liên quan
+      options:
+        - Controller (master-instruction.md)
+        - Knowledge Compiler (knowledge-compiler.md / knowledge_compiler.py)
+        - Reading Protocols (reading-protocols.md)
+        - Checkpoint & State (checkpoint.py / reading_session.py)
+        - IA Mapping (ia_map.py)
+        - Plugin Configuration (plugin.json)
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Các bước tái hiện lỗi (Steps to Reproduce)
+      placeholder: |
+        1. Prompt: '...'
+        2. Mode: Deep / Extract / Combined
+        3. Input source: '...'
+    validations:
+      required: true
