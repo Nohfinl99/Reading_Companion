@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 330" role="img" aria-labelledby="title desc">
+  <title id="title">Reading Companion: từ trích xuất nhanh đến ứng dụng</title>
+  <desc id="desc">Bốn bước: chọn phạm vi và nguồn, ghi rõ nội dung AI tổng hợp, nối ý với ví dụ áp dụng, và công khai giới hạn bằng chứng.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1728"/>
+      <stop offset="1" stop-color="#142b43"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#68e0c1"/>
+      <stop offset="1" stop-color="#7bb8ff"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0 0 9 4.5 0 9Z" fill="#6c91b2"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="330" rx="24" fill="url(#bg)"/>
+  <circle cx="1080" cy="-20" r="190" fill="#24456a" opacity=".22"/>
+  <circle cx="80" cy="330" r="170" fill="#1c796d" opacity=".12"/>
+  <text x="54" y="57" fill="#80e2ca" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="2">READING COMPANION  /  EXTRACT · QUICK</text>
+  <text x="54" y="94" fill="#f4f8fc" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700">Từ nội dung đọc đến bước áp dụng</text>
+  <path d="M286 190H345M573 190H632M860 190H919" stroke="#6c91b2" stroke-width="2" marker-end="url(#arrow)"/>
+  <g font-family="Segoe UI,Arial,sans-serif">
+    <g transform="translate(54 126)">
+      <rect width="232" height="126" rx="16" fill="#1a3048" stroke="#31516e"/>
+      <circle cx="28" cy="28" r="15" fill="#1d5e5a"/><text x="28" y="33" text-anchor="middle" fill="#a8f2df" font-size="13" font-weight="700">01</text>
+      <text x="22" y="67" fill="#f4f8fc" font-size="17" font-weight="700">Chọn phạm vi</text>
+      <text x="22" y="94" fill="#b8c8d8" font-size="13">Mục tiêu · nguồn · locator</text>
+    </g>
+    <g transform="translate(345 126)">
+      <rect width="228" height="126" rx="16" fill="#1a3048" stroke="#31516e"/>
+      <circle cx="28" cy="28" r="15" fill="#3b4a78"/><text x="28" y="33" text-anchor="middle" fill="#c7d2ff" font-size="13" font-weight="700">02</text>
+      <text x="22" y="67" fill="#f4f8fc" font-size="17" font-weight="700">Chọn và ghi nguồn</text>
+      <text x="22" y="94" fill="#b8c8d8" font-size="13">Ý của tác giả hay AI tổng hợp?</text>
+    </g>
+    <g transform="translate(632 126)">
+      <rect width="228" height="126" rx="16" fill="#1a3048" stroke="#31516e"/>
+      <circle cx="28" cy="28" r="15" fill="#69522b"/><text x="28" y="33" text-anchor="middle" fill="#ffe2a2" font-size="13" font-weight="700">03</text>
+      <text x="22" y="67" fill="#f4f8fc" font-size="17" font-weight="700">Nối sang ứng dụng</text>
+      <text x="22" y="94" fill="#b8c8d8" font-size="13">Ví dụ gắn với ý đã trích</text>
+    </g>
+    <g transform="translate(919 126)">
+      <rect width="227" height="126" rx="16" fill="#1a3048" stroke="#31516e"/>
+      <circle cx="28" cy="28" r="15" fill="#623d51"/><text x="28" y="33" text-anchor="middle" fill="#ffc5d5" font-size="13" font-weight="700">04</text>
+      <text x="22" y="67" fill="#f4f8fc" font-size="17" font-weight="700">Nêu giới hạn</text>
+      <text x="22" y="94" fill="#b8c8d8" font-size="13">Giả định không phải kết quả</text>
+    </g>
+  </g>
+  <rect x="54" y="281" width="1092" height="2" rx="1" fill="url(#accent)" opacity=".8"/>
+  <text x="54" y="307" fill="#9fb5c9" font-family="Segoe UI,Arial,sans-serif" font-size="13">Mỗi lựa chọn có tiêu chí, mỗi kết luận có giới hạn.</text>
+  <text x="1146" y="307" text-anchor="end" fill="#80e2ca" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="700">SOURCE → INSIGHT → APPLICATION</text>
+</svg>

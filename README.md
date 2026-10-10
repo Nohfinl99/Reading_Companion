@@ -40,6 +40,27 @@ Trích xuất các ý có thể áp dụng từ phần này. Ghi rõ tiêu chí 
 
 Các nhãn này là cách đọc, không phải cấp độ năng lực. Nếu tác giả không ấn định số lượng, Companion phải ghi rõ khi nó tự chọn số mục và nêu tiêu chí chọn.
 
+## Từ trích xuất nhanh đến hướng dẫn áp dụng
+
+Ví dụ [Extract · Quick về *AI Engineering*](https://chatgpt.com/share/6ac9b71a-81cc-83ec-a8bf-4b2d2ae85cc8) cho thấy Reading Companion có thể đi từ ý trong tài liệu đến một cách áp dụng cụ thể, đồng thời nói rõ phần nào là lựa chọn biên tập của AI.
+
+<p align="center">
+  <img src="assets/quick-extract-workflow.svg" alt="Quy trình trích xuất nhanh: chọn phạm vi, ghi rõ ý AI tổng hợp, nối sang ví dụ áp dụng và công khai giới hạn bằng chứng" width="900" />
+</p>
+
+**Prompt mẫu**
+
+```text
+Trích xuất nhanh những nguyên lý trong tài liệu có thể áp dụng vào Reading Companion.
+Với mỗi ý, nêu ý nghĩa và ví dụ. Ghi rõ tiêu chí lựa chọn, số lượng nào do tác giả
+quy định và phần nào do em tổng hợp. Giữ locator và giới hạn nguồn; đánh dấu số liệu
+minh họa, không trình bày chúng như kết quả benchmark.
+```
+
+Trong ví dụ, danh sách 10 nguyên lý được chính output mô tả là **do AI chọn và tổng hợp**, không phải danh sách đánh số chính thức của tác giả. Quy trình năm bước và các ví dụ Reading Companion cũng là phần ứng dụng do AI biên soạn. Các tỷ lệ Recall@5, Precision@5 và độ đúng trong chat được ghi là **giả định minh họa**, không phải kết quả kiểm thử plugin.
+
+> **Giới hạn ví dụ:** cuộc trò chuyện ghi nguồn đối chiếu là bản Markdown được cung cấp; không xác nhận đã kiểm tra toàn bộ cuốn sách. Vì vậy, đây là minh họa về cách trình bày lựa chọn, ứng dụng và giới hạn nguồn—không phải chứng nhận độ chính xác nội dung sách.
+
 ## Đầu ra mẫu
 
 Các đoạn dưới đây được trích từ output đã ghi nhận trong run `PS1r4` ngày 2026-10-10. Chúng cho thấy cách hệ thống trình bày giới hạn và xuất xứ của lựa chọn; **đây chưa phải kết quả benchmark đạt**. Output chưa được chấm độc lập, và run được thực hiện qua Codex CLI, không phải trên plugin host đã cài.
