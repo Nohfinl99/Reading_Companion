@@ -1,4 +1,4 @@
-# Case benchmark — 0.3.2
+# Case benchmark — 0.3.2 — PS1 draft
 
 Evaluation only: expected outputs/cases không phải bằng chứng sách, đáp án learner hoặc nguồn khoa học. Dùng khi user yêu cầu audit/test/demo; không nạp trong mọi lượt học. Controller M07 phân tầng bằng chứng.
 
@@ -10,7 +10,7 @@ Các lớp riêng: packaging, mechanical helper, source fixture/excerpt, assista
 
 Rubric nội dung 5 chiều 0–4: đúng goal/mode/scope; faithful source; architecture/relations; interaction/support; artifact/continuity dùng được. 0 fatal/sai nặng, 1 thiếu nhiều, 2 dùng được cần sửa, 3 thiếu nhỏ, 4 đủ case; N/A chuẩn hóa Σscore/(4×số chiều áp dụng)×100. Mỗi điểm cần output evidence và locator, không style/độ dài/token làm proxy hiểu. Hard fail dù điểm cao: source/research/time/capability giả, sai core meaning/condition/negation, mode trái user, độc lập sau hint/unknown hoặc lộ answer Q. Dynamic source sai context, future chưa hiệu lực như hiện tại, timestamp làm mới khi reopen cũng hard fail. Một vài case pass không tỷ lệ đúng tổng thể.
 
-Rubric SID Project do user chọn: Σ(score_i/3×weight_i), Assignment Σ(score_i/5×weight_i), tổng weight100. Mốc85 là quy ước rubric, không khoa học/chứng minh efficacy; design score/host readiness/learner kết luận riêng, không cộng để bù hardfail. Không chấm hidden reasoning hoặc affiliation/keyword như bằng chứng.
+Reading Companion đánh theo required checks/source/target, không nhập modes chấm Assignment/Project, trọng số hoặc mốc85 của SID Mentor. Rubric 5 chiều cũ chỉ là báo cáo tùy chọn khi user yêu cầu; không quyết định gate, không đánh năng lực toàn người. Không chấm hidden reasoning hoặc affiliation/keyword như bằng chứng.
 
 Learner: recall bằng lời mình, transfer tình huống mới, delayed recall sau khoảng thời gian thực; support từng lần, chỉ task đã quan sát, không mastery toàn chương từ một câu. User được bỏ qua. Audit lượt học tách prompt → response thật → source-grounded feedback, không điền segment chưa xảy ra.
 
@@ -62,7 +62,7 @@ Gate source release E1 trong phạm vi thay đổi: registry/taxonomy/owner IDs 
 
 Gate host readiness tách riêng, cần host activation/retrieval và relevant CORE/STATE/COMPACT/source cases trên plugin đã nạp; thiếu lớp đó ghi INSUFFICIENT_EVIDENCE và NOT_RUN. Source release E1 đạt local gate không chứng minh host ready, capability performance hoặc learning gain. Điều kiện này giữ B01 scoped local gate và blueprint 0.3.1: host chưa chạy phải công bố NOT_RUN. Không gọi source-save decision là E2 MERGE hoặc dùng nó cho autonomous candidate selection. E1 chỉ đề xuất patch; B07/E2 baseline-candidate selection dự kiến 0.4.0, E3 hoãn.
 
-Rollback bằng baseline source trước thay đổi: revert SKILL/M07 và routing alias, B01 bổ sung/B05/B06, hai manifest về 0.3.0. Không migration learner state; compiler/protocol/artifact-registry/helper có version riêng giữ 0.3.0 nếu contract không đổi. Baseline/log/report nằm ngoài clean package.
+Rollback lấy source snapshot đúng release trước thay đổi, gồm manifest/identity/presentation và các file đã thay. Local restore vào thư mục riêng rồi đối chiếu hash trước thay nguồn. Account rollback dùng nội dung snapshot với semantic version cao hơn release hiện tại và expected_release_id mới nhất; không gửi manifest version thấp hơn hoặc xóa file ngoài danh sách đã thêm. Không migration learner state; version contract compiler/protocol/helper giữ khi API không đổi. Baseline/log/report nằm ngoài clean package.
 
 ## B02 — Demo giả định
 
@@ -481,3 +481,35 @@ Kết quả walkthrough ghi riêng `diagnostic_verdict` PASS/FAIL/NOT_RUN, check
 ### B06.5 — E1 report artifact
 
 Report gồm baseline/source version + request scope; requirement status đã triển khai/một phần/chưa triển khai theo file/section; evidence layers/run IDs; B01.1 records; performance và coverage B05.3; observed failures/upstream/symptom/root candidates/owners; patch recommendation và regression cases đề xuất; local gate/host NOT_RUN/gaps. Không tự kết luận MERGE/REJECT hoặc capability score từ design review. Không cần artifact-registry runtime mới. E2 baseline/candidate comparison và B07 thuộc 0.4.0; E3 auto-publish hoãn.
+
+## B08 — Prompt stack alignment PS1
+
+Khi kiểm thay đổi PS1, retrieve KC02.U1–U4/KC04.MAP, R13/R14 và stack-contracts SC00–SC05; kế thừa B01 evidence protocol, B03 regression IDs, B05 capability/F01–F10. Case specifications và raw runs giữ ở development folder `prompt-stack-redesign-2026-10-09/benchmark/`, không nạp expected vào reading stack. R14 runtime gates không là results benchmark.
+
+Targets: PS01 author-count; PS02 AI-count; PS03 user-limited subset; PS04 missing source; PS05 example break; PS06 faithful example; PS07 heading laundering after edit; PS08 mixed list; PS09 pending question/resume; PS10 sidecar missing/stale; PS11 combined IDs; PS12 literary decomposition. PS01 và PS-CDH cần sách thật/edition/locator; thiếu nguồn hoặc output bắt đầu NOT_RUN. Không đổi fixture synthetic thành sách thật. Không có một số units expected chung cho mọi case.
+
+Mỗi requirement liên kết owner section → case → source/output/intermediate/state spans → pass/fail criterion trong matrix development. Lớp structural/helper, human semantic, actual output và learner outcomes báo riêng. Actual host output có thể có mà human review/learner vẫn NOT_RUN. PASS cần input+output+grading thực ở chính lớp được báo; mọi required check áp dụng đạt, hard fail false. Chỉ case thiết kế không có result; không tăng mẫu số executions từ expected rows. Score learner chỉ response thật; delayed recall cần delay thật.
+
+
+### B08.1 — Planned capability coverage, chưa là kết quả
+
+| Ca | Primary capability B05 | Secondary | Failure class nếu quan sát | Runtime owner |
+|---|---|---|---|---|
+| PS01/PS02/PS03 | C03 | C01/C02/C06/C08 | F03/F04/F02/F07 | KC02/SC01/R14 |
+| PS04 | C02 | C01/C05 | F02/F06 | KC01/R14 |
+| PS05/PS06 | C05 | C02/C03/C04/C06 | F06/F04/F05 | R13/SC03/R14 |
+| PS07/PS08 | C06 | C02/C03/C08 | F04/F02/F07 | SC01/R06/R09/R14 |
+| PS09/PS10 | C10 | C02/C07 | F09/F08/F02 | SC00/SC04/R04/R10/R11/R12 |
+| PS11 | C01 | C03/C06/C07/C10 | F01/F03/F04/F08/F09 | M04/R01/R02/R04 |
+| PS12 | C03 | C02/C04/C05/C08 | F03/F05/F06/F07 | KC02/KC03/R01/R08 |
+| PS-CDH | C03 | C01/C02/C04/C05/C06/C07/C08/C10 | Chỉ classify từ raw evidence | B06 + owner được trace xác nhận |
+
+Upstream thực kiểm: source→units→argument→example; units/relations→IA; state/hash/criterion→assessment; pre/post title→attribution. Links chỉ áp dụng trong ca cần chúng, không ép mọi capability hoặc tăng observed coverage từ mapping. Các ca PS bổ sung planned breadth; câu C03 gap trong B05 mô tả catalogue legacy vẫn đúng, chưa có measured performance cho PS.
+
+
+
+### B08.2 — Shared CDH regression PS14–PS16
+
+PS14 giữ author-three-artifacts đúng marker52/Ch4–7 scope (primary C02, secondary C03/C06/C08; F02/F03/F04/F07 nếu sai). PS15 dùng nguyên câu hỏi user tìm vấn đề, R15 repair đúng issue/mode/Q (primary C01, secondary C05/C06/C10; F01/F06/F04/F09). PS16 kiểm learner-visible bridge khác sidecar referential integrity (primary C05, secondary C04/C08; F06/F05/F07).
+
+Historical shared output có captured input/output và retrospective assistant review, plugin/model version unknown; không gọi matched baseline0.3.2 run hoặc candidate PASS. Current user diagnostic question không nằm trong shared snapshot, response-to-that-question historical NOT_RUN. Source count3 có author evidence, count12 là organization disclosed partly nhưng criterion chưa có; không chẩn đoán tất cả numbers là AI quota hoặc nêu reason chọn12 từ tưởng tượng. Preserving source-supported enumeration là positive control. Fresh PS14–16/PS-CDH replay bắt đầu NOT_RUN.

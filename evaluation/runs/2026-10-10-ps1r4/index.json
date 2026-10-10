@@ -1,0 +1,122 @@
+{
+  "run_date": "2026-10-10",
+  "suite": "PS1r4",
+  "candidate_cases_with_output": [
+    "PS01",
+    "PS02",
+    "PS03",
+    "PS04",
+    "PS05",
+    "PS06",
+    "PS07"
+  ],
+  "cases_not_run": [
+    "PS-CDH",
+    "PS08",
+    "PS09",
+    "PS10",
+    "PS11",
+    "PS12",
+    "PS14",
+    "PS15",
+    "PS16"
+  ],
+  "results": [
+    {
+      "case_id": "PS01",
+      "run_status": "OUTPUT_CAPTURED_UNGRADED",
+      "grading": "NOT_RUN",
+      "human_semantic": "NOT_RUN",
+      "learner_outcome": "NOT_RUN",
+      "input.txt_sha256": "7be15ecd4a7d96a7a13e82c0eae07b477aa245f4870f5e998b37259dbcb3de2f",
+      "output.md_sha256": "8ddffac6c58f22744fd96d0b55a3cec18a63b1cd1f053adc4d5d0e9bad4c1843",
+      "execution.json_sha256": "8ad2ce69bfacb51fae2713a7504e563ae796659829a1b5da16ae4ed07fb38a85",
+      "input-manifest.json_sha256": "782ed551349f3ca86b3868fb6e35a1f4b103302141f48da502bbeb24c9478c79",
+      "requested_model": "gpt-5.5; compatible model advertised by account endpoint; configured gpt-6.1-sol rejected by CLI account",
+      "execution_host": "Codex CLI; NOT installed ChatGPT plugin"
+    },
+    {
+      "case_id": "PS02",
+      "run_status": "OUTPUT_CAPTURED_UNGRADED",
+      "grading": "NOT_RUN",
+      "human_semantic": "NOT_RUN",
+      "learner_outcome": "NOT_RUN",
+      "input.txt_sha256": "33fa5d0a462175ecca5eade142016d85f4c55a66bc6b3de8615d24eb55f8da68",
+      "output.md_sha256": "63cd6ab045338aa9a4f42c616d404e3df0056ca25c10bba88491e4e393c53e20",
+      "execution.json_sha256": "0c9de76a5702b85d91fc4014521925308764263113113f142e0c372e5995ea46",
+      "input-manifest.json_sha256": "c6a0037a3dbc6708f0ff9a9bd61d12092120312fe0a3a7cc5b01e2adf1562ba2",
+      "requested_model": "gpt-5.5; compatible model advertised by account endpoint; configured gpt-6.1-sol rejected by CLI account",
+      "execution_host": "Codex CLI; NOT installed ChatGPT plugin"
+    },
+    {
+      "case_id": "PS03",
+      "run_status": "OUTPUT_CAPTURED_UNGRADED",
+      "grading": "NOT_RUN",
+      "human_semantic": "NOT_RUN",
+      "learner_outcome": "NOT_RUN",
+      "input.txt_sha256": "3a68e6ee4cb157fccef82381338fb255c5b84df385269d266a3d8b9e741b497c",
+      "output.md_sha256": "cac62122e7ac8a282ace82e2d58d5dce80a89c4966adcbeb3dfa454fa36434f8",
+      "execution.json_sha256": "7c0c43c2f2bc15b8701a8f475c7ecc1fb1f985a794778bc95b049aa37ba90d69",
+      "input-manifest.json_sha256": "ec57c697e75e51adee9c7e0a972dcba36a1de32c46470deb7a7c448d2dccfe72",
+      "requested_model": "gpt-5.5; compatible model advertised by account endpoint; configured gpt-6.1-sol rejected by CLI account",
+      "execution_host": "Codex CLI; NOT installed ChatGPT plugin"
+    },
+    {
+      "case_id": "PS04",
+      "run_status": "OUTPUT_CAPTURED_UNGRADED",
+      "grading": "NOT_RUN",
+      "human_semantic": "NOT_RUN",
+      "learner_outcome": "NOT_RUN",
+      "input.txt_sha256": "6e0b16148b62c9612d18a078a6b5a0ca0a7f0a797eb2756b87c81c8c98b3f7b6",
+      "output.md_sha256": "471099043c5bea29d2c644e5de5dab6a2788082d90136c279073112d625cfe02",
+      "execution.json_sha256": "83ca01bf375659a2dbaf8d853a682afaab3be94f6945cd2ae5617a4b46458a30",
+      "input-manifest.json_sha256": "1f2c53745d8df61040ff4128f31617959aa7ef0f8742d074410382d63e7427bb",
+      "requested_model": "gpt-5.5; compatible model advertised by account endpoint; configured gpt-6.1-sol rejected by CLI account",
+      "execution_host": "Codex CLI; NOT installed ChatGPT plugin"
+    },
+    {
+      "case_id": "PS05",
+      "run_status": "OUTPUT_CAPTURED_UNGRADED",
+      "grading": "NOT_RUN",
+      "human_semantic": "NOT_RUN",
+      "learner_outcome": "NOT_RUN",
+      "input.txt_sha256": "50ecc186193dd3ddbe913662f1773b8eb8296a0953b416a18f770b9511aa9305",
+      "output.md_sha256": "3ab1cb9f29a7c2315bbaffe9b6982796193069eda84c2ba37248a57fe06c81a6",
+      "execution.json_sha256": "5bea8257cc58f1e52cf72d2cdc227d4a69ea94b35163e831bc73bd460e610d69",
+      "input-manifest.json_sha256": "fcbc550711c4bf376d7726d8c1cea8b097b9ee0a00da9bfb35a53bbbecc33a54",
+      "requested_model": "gpt-5.5; compatible model advertised by account endpoint; configured gpt-6.1-sol rejected by CLI account",
+      "execution_host": "Codex CLI; NOT installed ChatGPT plugin"
+    },
+    {
+      "case_id": "PS06",
+      "run_status": "OUTPUT_CAPTURED_UNGRADED",
+      "grading": "NOT_RUN",
+      "human_semantic": "NOT_RUN",
+      "learner_outcome": "NOT_RUN",
+      "input.txt_sha256": "9b1a6269d673ab9940e1ead596bc8506443b17e040f3a8e6f22c44bd6ed90eff",
+      "output.md_sha256": "4289afa639e5f35d7788e9c4371eb67782acb7ae34aa5b83ecbe0a8e5709d01e",
+      "execution.json_sha256": "abffaa7eb1063cb973990e1f90d70163a1635a83cc77c580fec7012e3fbd8d97",
+      "input-manifest.json_sha256": "780ec822694443c3869e62693a1e43fe8e61b616ac3f941e9c103a4a62464105",
+      "requested_model": "gpt-5.5; compatible model advertised by account endpoint; configured gpt-6.1-sol rejected by CLI account",
+      "execution_host": "Codex CLI; NOT installed ChatGPT plugin"
+    },
+    {
+      "case_id": "PS07",
+      "run_status": "OUTPUT_CAPTURED_UNGRADED",
+      "grading": "NOT_RUN",
+      "human_semantic": "NOT_RUN",
+      "learner_outcome": "NOT_RUN",
+      "input.txt_sha256": "80d70e74e747cac3e65f9475474e06560fa345e6802049664e29cac09ff890da",
+      "output.md_sha256": "9f9a23faf5a98059039b60dcf2cd967b928af551d98a045c0e7d4114afa18066",
+      "execution.json_sha256": "5fb826b8f065439b9dcef607b285e5706d06bb00c6e3054860d808f8695ea460",
+      "input-manifest.json_sha256": "a964980edd2f4f1642f0056cc88e4a6f56c0f73ef39e5db27544c3d5ed150ade",
+      "requested_model": "gpt-5.5; compatible model advertised by account endpoint; configured gpt-6.1-sol rejected by CLI account",
+      "execution_host": "Codex CLI; NOT installed ChatGPT plugin"
+    }
+  ],
+  "notes": [
+    "This is a Codex CLI prompt run, not an installed ChatGPT plugin host run.",
+    "Outputs were captured; no completed benchmark grading was recorded.",
+    "Human semantic review and learner outcomes are NOT_RUN."
+  ]
+}

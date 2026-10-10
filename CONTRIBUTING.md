@@ -1,37 +1,25 @@
-# Hướng dẫn Đóng góp (Contributing Guidelines)
+# Hướng dẫn đóng góp
 
-Cảm ơn bạn đã quan tâm đóng góp cho **SID Reading Companion**! Dự án này được thiết kế theo chuẩn mã nguồn mở dành cho Agent Plugins, hướng đến trải nghiệm đọc sâu và hệ thống hóa tri thức chuẩn mực.
+Cảm ơn bạn đã quan tâm đến Reading Companion. Thay đổi cần giữ hành vi định tuyến, provenance nguồn, hợp đồng dữ liệu và trạng thái học tập có căn cứ.
 
----
+## Quy tắc đóng góp
 
-## 1. Nguyên tắc Cốt lõi (Core Principles)
+- Gắn nội dung đọc với locator thực tế khi nguồn hỗ trợ locator; nếu nguồn không truy cập được, ghi rõ giới hạn.
+- Giữ mode `deep`, `extract`, `combined` và phân biệt mode với style.
+- Giữ IDs, source revision, checkpoint, câu hỏi đang chờ và trạng thái hỗ trợ; không suy đoán state chưa lưu.
+- Sửa quy tắc tại file canonical sở hữu nó. Các file khác nên tham chiếu, không tạo hợp đồng song song.
+- Phân biệt case specification, output đã chạy, grading, review nghĩa và kết quả học. Ghi `NOT_RUN` khi thiếu dữ kiện của lớp đó.
 
-1. **Source Grounding (Căn cứ nguồn thực tế)**: Không suy đoán, không tạo ảo giác (hallucination). Mọi tri thức trích xuất đều phải neo vào nguồn và số trang/locator cụ thể.
-2. **Contract Preservation**: Các module controller (`master-instruction.md`), compiler (`knowledge-compiler.md`) và protocols (`reading-protocols.md`) tuân theo các invariant nghiêm ngặt. Bất kỳ thay đổi nào cũng cần đảm bảo tính tương thích ngược.
-3. **Phân tách Rõ ràng**:
-   - `skills/sid-reading-companion/references/`: Nơi chứa tài liệu quy tắc và prompt stacks canonical.
-   - `skills/sid-reading-companion/scripts/`: Các công cụ Python thuần (pure Python, zero-external-dependency) để validate cấu trúc, graph DAG, và trạng thái checkpoint.
+## Quy trình
 
----
+1. Fork repository và tạo nhánh thay đổi.
+2. Sửa file canonical và cập nhật liên kết/tài liệu bị ảnh hưởng.
+3. Chạy các kiểm tra repository trong README và workflow GitHub Actions.
+4. Với benchmark, lưu nguyên input/output, metadata và hash; ghi trạng thái grading riêng. Không suy ra benchmark đạt từ việc helper hoặc JSON hợp lệ.
+5. Trong pull request, nêu vấn đề, file/section đã đổi, checks đã chạy, checks chưa chạy và giới hạn còn lại.
 
-## 2. Quy trình Đóng góp (Workflow)
-
-1. **Fork & Clone** kho lưu trữ về máy:
-   ```bash
-   git clone https://github.com/<your-username>/sid-reading-companion.git
-   cd sid-reading-companion
-   ```
-2. **Tạo nhánh tính năng (Feature Branch)**:
-   ```bash
-   git checkout -b feature/ten-tinh-nang
-   ```
-3. **Kiểm tra hợp đồng cục bộ (Local Validation)**:
-   Trước khi commit, hãy đảm bảo các script helper chạy bình thường:
-   ```bash
-   python skills/sid-reading-companion/scripts/ia_map.py --help
-   python skills/sid-reading-companion/scripts/knowledge_compiler.py --help
-   python skills/sid-reading-companion/scripts/checkpoint.py --help
-   ```
-4. **Tạo Pull Request**:
-   - Điền đầy đủ thông tin vào `PULL_REQUEST_TEMPLATE`.
-   - Mô tả rõ ràng lý do thay đổi và bằng chứng kiểm thử.
+```bash
+git clone https://github.com/Nohfinl99/Reading_Companion.git
+cd Reading_Companion
+python tools/validate_repository.py
+```

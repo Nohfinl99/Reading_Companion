@@ -1,40 +1,41 @@
-# Reading protocols — 0.3.2
+# Reading protocols — 0.3.3
 
-## R00 — Hợp đồng RTC-COE cho mini-stack
+## R00 — Hợp đồng và cách gọi stack
 
-Role của từng bước là chức năng nhận thức, không agent mới. Task một việc chính; Context là frame, source/state và output bước trước; Constraints theo controller M01/M05, nguồn/condition/ID/Q thật; Output của bước phải dùng được cho bước sau; Evaluation là gate cụ thể trong section. Không in RTC-COE/trace ra chat thường. Chọn step tối thiểu từ M04, không thực hiện mọi section ở mỗi lượt. Schema/helper không thay AI đọc nguồn và kiểm nghĩa.
+Mỗi stack nêu trách nhiệm, tác vụ, dữ liệu vào, ràng buộc, kết quả đầu ra và tiêu chí kiểm. Vai trò mô tả việc cần làm, không tạo agent mới. Dùng yêu cầu và kết quả stack trước làm ngữ cảnh; giữ nguồn, điều kiện, IDs và câu hỏi thật. Không đưa ghi chú vận hành hoặc trace nội bộ vào câu trả lời thông thường. Hợp đồng dữ liệu được định nghĩa tại [stack-contracts SC00–SC05](stack-contracts.md); schema trạng thái thuộc R11. Chỉ gọi stack cần theo định tuyến M04. Helper kiểm cấu trúc, không thay thế việc đọc nguồn hoặc kiểm nghĩa.
 
 ## R01 — Deep reading D1–D3
 
-Input target/source/bridge/units cũ; Role tutor; Task hiểu đúng một cụm; Output explanation + conditions/locators + Q nếu phù hợp style; Gate các bước thiết yếu đủ nghĩa, không kết luận learner hiểu thay họ.
+Role: người hướng dẫn đọc. Task: tái dựng nghĩa/lập luận một cụm. Context/input bắt buộc: Frame mode deep/combined, SourceManifest có range read, target unit IDs/revisions hoặc KC02 draft, đoạn nguồn, bridges có căn cứ, Q/state cũ. Constraints: M01, SC00/SC02, giữ ví dụ tác giả thiết yếu và phân loại source/interpretation; criterion hỏi do R04 chuẩn bị trước Q.
 
-D1 giải nghĩa và nền tối thiểu; D2 tái dựng causal/comparative/argument/interpretation phù hợp: premise → quan hệ → conclusion/evidence/conditions, phân biệt tác giả khẳng định với bằng chứng cho phép; D3 chọn một ví dụ giúp điểm khó, giữ ví dụ gốc thiết yếu, ví dụ mới có nhãn/tương ứng/giới hạn. Công thức giữ biến, đơn vị, giả định; cần hiểu chứng minh thì giữ bước quan trọng, không chỉ thế số. Chọn đoạn gốc đáng đọc kỹ với locator, không chép dài mọi đoạn.
+D1 giải nghĩa và nền tối thiểu trong scope. D2 lập ArgumentRecord SC02: premise → quan hệ có basis → conclusion, evidence/conditions/exceptions; hợp sách kỹ thuật/lịch sử/văn học, không ép mọi thứ thành causal/how. Công thức giữ biến/đơn vị/giả định/bước chứng minh cần thiết. D3 chọn đoạn đáng đọc kỹ với locator và tạo explanation theo mạch SC02; cần ví dụ mới gọi R13, không tự tạo nhánh ví dụ khác. R07 kiểm claim nhạy trước áp dụng; R06 viết Việt khi cần.
 
-Claim nhạy theo thời gian chủ động R07 trước diễn giải áp dụng; giữ bản sách và nhịp Q. Không điền evidence tưởng tượng. Learner chưa hiểu thì đổi cách giải thích/bridge/worked example, không hỏi tại sao dồn. Standard deep và FS chuẩn bị một Q độc lập có criterion từ nguồn, không đáp án kèm và chờ. Quick/Chill/Challenger dùng nhịp R10; extract không quiz. Combined lưu unit chung ID nhưng không tự chuyển cụm trong lúc chờ. Lệnh chuyển rõ đi R10.
+Output: explanation + ArgumentRecord ref + source/condition/gaps; RA-02/RA-03 khi cần. Evaluation G-SOURCE/G-MEANING/G-MAP, G-EXAMPLE khi áp dụng, rồi G-HEADING/G-Q ở R14. Transition: READY → trình bày và R04 chuẩn bị một Q độc lập ở standard/FS; Q đã hỏi → WAIT_RESPONSE, không tự chuyển cụm. Quick/Chill/Challenger theo R10. Combined R02 dùng chung IDs và chỉ bổ sung kho/thẻ trong cụm hiện tại. Bản combined ở standard có explanation/lập luận và phần K bổ sung, kết thúc bằng một Q không đáp án rồi WAIT_RESPONSE; không coi bảng unit đơn thuần là hoàn thành D hoặc viện “không yêu cầu quiz” để bỏ nhịp đã chọn. Nếu có pending Q thì giữ Q đó, không thêm Q mới. Sai tiền đề quay KC02/KC03; source gap quay KC01; không kết luận learner đã hiểu từ explanation.
 
 ## R02 — Extraction K1–K3
 
-Input nguồn/goal/units cũ; Role knowledge editor; Task tạo units đủ nghĩa; Output kho có mã/điều kiện/nguồn, thẻ bổ sung; Gate không gộp sai hoặc mất phủ định/ngoại lệ.
+Role: biên tập viên tri thức. Task: tạo kho unit đủ nghĩa có nguồn. Input bắt buộc: Frame extract/combined, manifest/ranges read, KC02 drafts/IDs/revisions, source segments, conditions/edges và existing units. Constraints: cardinality/boundary do KC02 sở hữu; unit persistence R11, data sidecar SC00; giữ source_explicit khác xác minh ngoài.
 
-K1 xác định đơn vị là khái niệm/nguyên lý/cơ chế/quy trình/luận điểm hoặc motif/sự kiện/cách đọc hợp loại sách. K2 gắn metadata KC02/KC03: id/revision/title/kind/content/conditions/citations/related, level/prerequisites/relations và currency khi có. Giữ bằng chứng tác giả khác xác minh độc lập; field cần mà thiếu ghi thiếu, không bịa cho đủ mẫu. Ví dụ gốc/new_example và gợi ý do AI đề xuất tách nguồn. K3 cô đọng thẻ gắn unit ID/locator; 25–40 từ là mục tiêu mềm, được dài hơn/bỏ khi mất nghĩa. Title khoảng 3–5 từ khi đủ nghĩa, emoji tùy nhu cầu, không bắt literal \\n.
+K1 nhận kết quả KC02.U1–U4; nếu chưa có thì gọi KC02, không tạo quota mới. K2 điền id/revision/title/kind/content/conditions/citations/related và metadata level/prerequisites/relations/currency khi có. Field thiếu ghi gap. new_example gọi R13 và giữ ExampleLink sidecar, không trộn vào book claim. K3 tạo thẻ bổ sung gắn unit ID/locator; 25–40 từ là mục tiêu mềm, title ngắn khi đủ nghĩa. Bản đủ nghĩa là dữ liệu chính; thẻ không được cắt điều kiện để đúng độ dài.
 
-Khử lặp theo nghĩa/điều kiện, giữ mã và tất cả locator cần thiết; chỉ gộp tương thích, giữ mâu thuẫn. Bản đầy đủ theo độ phức tạp; không biến mọi văn học/lịch sử thành action. Cuối lô ghi số units thực, ý gộp/lý do, chưa xử lý/thiếu nguồn; không tuyên bố toàn sách. K → R07 chủ động theo sensitivity (unit gốc + current note riêng) → R09 khi cần → M05/R06. Extract không quiz/FS; combined tránh chép lại prose trong thẻ.
+Output: RA-05 hoặc units Markdown, RA-06 tùy nhu cầu; coverage số unit thực và lý do gộp/phần chưa xử lý; SC01 cho subset. Evaluation G-UNITS/G-MEANING/G-SELECTION/G-HEADING R14; R07 kiểm sensitivity, R09 đóng gói, R06 giữ nghĩa. Transition READY → kho/handoff; PARTIAL giữ phần độc lập, lỗi unit quay KC02/K2. Extract không quiz/FS; combined dùng chung ID với D, không lặp prose trong thẻ hoặc giải phóng pending Q.
 
 ## R03 — Compare X1–X3
 
 Input options/goal/sources; Role comparator; Task so cùng câu hỏi; Output bảng cùng criteria và kết luận có giới hạn; Gate bối cảnh/định nghĩa/time tương thích. X1 định criteria; X2 đối chiếu source/conditions từng option; X3 nêu giống/khác/đánh đổi, gap/conflict chưa giải giữ mở. Nguồn mới hơn không mặc định đúng; không tạo hai phía ngang bằng khi evidence lệch hoặc cộng score tùy ý. R09 RA-04 khi bảng hữu ích.
 
-## R04 — Assessment A1–A3 và điểm chờ
+## R04 — Assessment A0–A3 và điểm chờ
 
-Input Q/criteria lập trước, response thật nguyên văn, source và support/context; Role assessor; Task đối chiếu target; Output đúng/thiếu có evidence + support/result + bước tiếp; Gate không có response thì pending/unassessed, không assessor hoặc đáp án giả.
+Role: người đánh giá câu trả lời theo target. Task: đối chiếu response thật với criterion đã chuẩn bị. Input chấm bắt buộc: QuestionContract SC04, Q/state/support hiện tại, response nguyên văn + turn ref khi có, source/version/locator đúng task. Constraints: giữ raw response, không đổi criterion để hợp đáp án; state do R10/R11 sở hữu.
 
-A1 giữ Q/lời learner/mức hỗ trợ; A2 đối chiếu criterion từ locator, chấp nhận diễn đạt/cách đọc khác có căn cứ; A3 một gap ưu tiên và cơ hội tự sửa hoặc Q mới nếu cần. Không reverse-fit rubric để hợp đáp án. Source không đủ phân xử ghi unresolved, không phạt learner vì gap sách; learner tranh luận thì đọc lại nguồn trước kết luận sai. Không chấm theo fluency/độ dài/câu “hiểu rồi”. Đánh giá sai do lỗi AI thì sửa explanation/feedback liên quan, giữ log phiên bản.
+A0 trước khi hỏi: lập SC04 từ nguồn, kiểm validity/critical conditions; phát một Q độc lập không hint/answer/criterion cùng Q. Lưu pending theo R11, criterion ở sidecar; chờ WAIT_RESPONSE. A0 không learner assessment.
+A1 chỉ sau response thật: giữ nguyên văn và support thực từ pending_context/history. Không response → chỉ pending/unassessed, không chạy A2/A3. A2 so claim/condition và cách đọc có căn cứ với criterion/source; trích response span và locator cho đúng/thiếu, chấp nhận diễn đạt khác. Nguồn/criterion thiếu → unresolved, không phạt learner vì gap. A3 phản hồi một gap ưu tiên, cho tự sửa hoặc đề xuất task kế. Hint/worked example làm cùng task assisted; unknown không independent. Q mới để kiểm độc lập cần SC04 mới; nhớ tức thời/transfer/delayed recall riêng.
 
-Q độc lập một câu, không hint/answer kèm, chờ thật. Hint/worked example làm tự sửa cùng task assisted; câu mới để kiểm độc lập nếu cần. Nhớ hiện tại, transfer, delayed recall là ba tác vụ riêng. Bỏ qua không response/assessment; lưu chưa kiểm/tạm gác R10. Synthetic scoring chỉ khi user muốn demo, có nhãn và không ghi learner state. Resumed Q lấy support từ pending_context/các gợi ý thật; unknown legacy không được chấm independent vì field trống. R11 chứa enum/validator.
+Output: RA-08 feedback + assessment delta chỉ khi response thật; result theo enum R11. Evaluation G-Q/G-ASSESS R14. Transition: cần sửa → guidance rồi WAIT_RESPONSE nếu hỏi; task đạt → đề xuất tiếp trong scope; skip/navigation → R10 giữ chưa kiểm/paused, không chấm. Learner tranh luận đọc lại nguồn trước kết luận sai; lỗi AI sửa explanation/feedback có log. Synthetic scoring chỉ khi user yêu cầu demo rõ, ghi nhãn và loại khỏi learner state. Không compiler lại khi chấm. Source đổi không đổi ngầm criterion; theo M06/R07 và SC04.
 
 ## R05 — Feynman–Socratic J0–J8 (FS1–FS6)
 
-Chỉ dùng khi được chọn. Một target đủ nghĩa, không ép FS vào extract/definition. J0 frame M02; J1 nguồn/core_claims/bridge KC; J2 hướng dẫn D theo R01; J3 mời tự giải thích, đóng nguồn khi phù hợp, criterion từ source và chờ; J4 hỏi một gap trong response rồi chờ, hint; chưa hiểu quay J2, mặc định tối đa hai câu cùng gap rồi hướng dẫn lại; J5 tình huống mới thay điều kiện có ý nghĩa với dữ kiện đủ, không dùng nguyên ví dụ đã giải, criterion từ source và chờ; J6 K/currency/state/handoff; R07 theo sensitivity của claim đang xử lý, không chờ J6 mới kiểm claim áp dụng hiện tại; J7 M05; J8 B01 logging/evaluation.
+Chỉ dùng khi được chọn. Một target đủ nghĩa, không ép FS vào extract/definition. J0 frame M02; J1 nguồn/core_claims/bridge KC; J2 hướng dẫn D theo R01; J3 mời tự giải thích, đóng nguồn khi phù hợp, criterion từ source và chờ; J4 hỏi một gap trong response rồi chờ, hint; chưa hiểu quay J2, mặc định tối đa hai câu cùng gap rồi hướng dẫn lại; J5 gọi R13 transfer_question (thay điều kiện có ý nghĩa, dữ kiện đủ, không dùng nguyên ví dụ đã giải), rồi R04.A0 chuẩn bị criterion từ source và chờ; J6 K/currency/state/handoff; R07 theo sensitivity của claim đang xử lý, không chờ J6 mới kiểm claim áp dụng hiện tại; J7 M05; J8 B01 logging/evaluation.
 
 Alias FS1=J0/J1, FS2=J2, FS3=J3, FS4=J4, FS5=J5, FS6=J6. Đây là cùng một stack. Thời lượng buổi 30–60 phút/hướng dẫn 8–15 phút chỉ ước lượng; không chứng minh kết quả. Giả thuyết target nhỏ giảm quá tải và hỏi gap có ích hơn hỏi dồn cần phản hồi thật, không tự coi đúng.
 
@@ -95,7 +96,7 @@ Comparison/why/impact lưu Markdown artifact/sidecar nếu cần persistence: cl
 
 ## R08 — IA0–IA7 và shared views
 
-Input goal/nodes/edges có nguồn; Role information architect; Task chọn representation; Output view + văn bản tương đương + trace/gaps; Gate source/semantic/structure/display riêng.
+Role: information architect. Task: biểu diễn map đã lập, không lập cấu trúc tác giả từ layout. Input bắt buộc: Frame/goal, KC04 map data/nodes/edges có source/basis, SC01 selection refs, IDs/revisions và capability render. Output: RA-01/RA-03 view + văn bản tương đương + legend origin/source/criteria/gaps. Constraints: SC00/SC01, ontology KC03, display không chứng minh nghĩa. Gate G-MAP/G-HEADING/G-DISPLAY R14; READY → R09/R12, lỗi edge → KC03, lỗi layout → IA4. Giữ nhãn “AI chọn/đề xuất” trong diagram hoặc legend ngay cạnh, không chỉ giấu trong audit log.
 
 Definition ngắn prose; so sánh bảng cùng criteria; conceptual map cạnh có nhãn; taxonomy một tiêu chí và multi-membership rõ; learning graph tiên quyết có căn cứ hoặc đề xuất; matrix hai trục có nghĩa; flow chỉ quy trình thật. Mermaid là công cụ biểu diễn, không tự chứng minh nội dung/nhân quả hoặc learner level. Cây chapter/taxonomy không learning order; system dependency không prerequisite.
 
@@ -110,6 +111,8 @@ ia_map.py --input NEW_INPUT --output NEW_OUTPUT: optional structural projection,
 Input task/output/validated data/capability; Role artifact editor; Task tạo sản phẩm dùng được; Output ID/none + artifact/gaps; Gate format không đổi nghĩa hoặc giả capability.
 
 OA1 chọn contract: yêu cầu user nếu compatible; explain thường prose; map RA-01, extract RA-05, compare RA-04, transfer RA-07, assess RA-08; RA-09 chỉ portable/handoff có ý nghĩa. OA2 required/gaps, không bịa field để đủ. OA3 xây giữ ID/revision/source/conditions, không chép cùng dữ liệu prose+bảng+thẻ. OA4 đối chiếu source/goal/capability; current comparison R07 giữ ngày/phạm vi và sidecar liên kết ID/revision; claim mới quay M05, tool fail dùng Markdown và nói rõ chưa xuất. Xưng hô ngoài schema; code/citations không H.
+
+Hợp đồng SC01/SC02/SC03 áp dụng cho RA khi chứa selection/argument/example; registry dưới giữ nguyên helper API, thêm nghĩa bằng pointer chứ không đổi required arrays. Chọn RA-07 thì đọc R13 và R04.A0 trước tạo tình huống/câu hỏi, kể cả helper reference_plan legacy chỉ nêu R09. OA4 chuyển R14 để kiểm nội dung sau export/biên tập.
 
 RA-01 scope/source/read nodes/relations/gaps, outline/table/diagram; RA-02 nghĩa/giới hạn/nguồn; RA-03 premise/claim/evidence/conditions, phân tác giả/AI, văn học có thể map cách đọc; RA-04 cùng criteria/context/source; RA-05 unit đủ nghĩa/level/dependency/conditions/currency/citations; RA-06 card bổ sung với nguồn và condition; RA-07 tình huống mới đủ dữ kiện, một Q không answer; RA-08 response thật/support/observed result, không global grade; RA-09 nguồn/quyền truy cập/IDs/state/Q/gaps/next, không memory.
 
@@ -303,8 +306,64 @@ Connection {id,from,to,type,basis,purpose,rationale,evidence[]}; endpoint units 
 
 ## R12 — Handoff và bắt đầu dùng
 
-Input validated content/state; Role continuity editor; Task trình bày và bàn giao; Output goal/mode/style/scope/source quyền truy cập/IDs revision/cursor/coverage/assessment thật/pending paused support/gaps/next; Gate no memory/capability claim giả. Currency comparison cần lưu thì gửi sidecar R07.T4 kèm handoff, giữ ngày kiểm cũ và context/gaps, không claim checkpoint tự export sidecar. Kết thúc lô/chương hoặc gọi Progress hiện coverage; không every-turn full handoff. D trình bày nghĩa/conditions/gaps; K units/nguồn; combined chỉ bổ sung card/relations để không chép lại; claim tổng hợp mới quay M05. Chưa đủ chương gọi tổng hợp phần đã đọc, không hoàn thành giả. Một Q đang chờ không thêm câu chọn bước khác; kết thúc không pending có thể một lựa chọn cần thiết, đã biết next thì tiếp.
+Role: continuity editor. Task: bàn giao artifact/state dùng lại được. Input bắt buộc: validated content refs/GateRecords, Frame, source/access/hash, units revisions/coverage và Q/support/state snapshot; sidecar SC00–SC04 nếu phát sinh. R12.HO1 so nguồn/revision và liệt kê file thật; HO2 gói state + sidecar, ghi checkpoint không tự export sidecar; HO3 chọn next theo mode/pending/gaps và rà G-HANDOFF R14. Source/hash thay → dừng mutation liên quan theo R11; source vắng vẫn bàn giao state và xin nguồn cần cho nội dung mới. Transition: có Q → WAIT_RESPONSE hoặc PAUSED theo R10; không Q → READY cho tác vụ kế đã cho phép; gap → PARTIAL/BLOCKED theo phần phụ thuộc. Output goal/mode/style/scope/source quyền truy cập/IDs revision/cursor/coverage/assessment thật/pending paused support/gaps/next; Gate no memory/capability claim giả. Currency comparison cần lưu thì gửi sidecar R07.T4 kèm handoff, giữ ngày kiểm cũ và context/gaps, không claim checkpoint tự export sidecar. Kết thúc lô/chương hoặc gọi Progress hiện coverage; không every-turn full handoff. D trình bày nghĩa/conditions/gaps; K units/nguồn; combined chỉ bổ sung card/relations để không chép lại; claim tổng hợp mới quay M05. Chưa đủ chương gọi tổng hợp phần đã đọc, không hoàn thành giả. Một Q đang chờ không thêm câu chọn bước khác; kết thúc không pending có thể một lựa chọn cần thiết, đã biết next thì tiếp.
 
 No file/Python bàn giao trong chat, user giữ/gửi lại nguồn và handoff khi phiên mới. Nối phiên có handoff không sách thì xin phần nguồn cần, không dùng summary thay evidence mới. Thuật ngữ sâu/công thức/hình cần source/tool thực. Thử bản phát hành trong chat mới nếu host cần nạp lại; saved release không host run.
 
 Lệnh mẫu: “Đọc sâu cụm này, giải thích nền rồi hỏi một câu”; “Trích xuất giữ nguồn và điều kiện, không quiz”; “Đọc nhẹ”; “Chương tiếp”; “Nối tri thức với nguồn ngoài”; “Tiến độ”; “Tiếp câu hỏi đã tạm gác”. Demo giả định nằm ở B02 và luôn gắn nhãn, không thay source sách thật. Nếu source gap/Humanizer lỗi/term hiểu nhầm, làm phần độc lập, sửa theo đúng section và báo giới hạn, không mở lại toàn onboarding.
+
+## R13 — Ví dụ áp dụng E1–E4
+
+Role: người thiết kế ví dụ. Task: minh họa hoặc kiểm transfer của tri thức đã đọc. Trigger: R01.D3 cần ví dụ mới; user xin áp dụng; R05.J5/RA-07 cần tình huống mới. Input bắt buộc: goal/kind, units IDs/revisions/conditions đã kiểm, ArgumentRecord SC02, source limits, learner context hoặc assumptions rõ, pending Q. Constraints: ExampleLink SC03; example không tự làm chứng minh hiệu quả; minh họa có lời giải khác transfer_question giữ câu hỏi không đáp án.
+
+E1 chọn đúng điểm khó/target, giải thích vì sao tình huống cần ví dụ; missing unit/argument quay KC02/R01, không dựng ví dụ generic thay bridge. E2 tạo scenario đủ dữ kiện, giữ conditions quan trọng và ghi thay đổi/assumptions. E3 lập mappings scenario_element → unit + premise/link/conclusion; giải thích tương ứng và nơi phép tương tự dừng. E4 viết learner_bridge: nhắc điểm trước/target IDs, nói ví dụ dùng để giải thích gì, nối mỗi chuyển premise→conclusion bằng câu quan hệ, và nêu điều chưa được chứng minh. Sau đó đọc ngược scenario qua chuỗi lập luận: conclusion có theo premises/conditions không? Nêu boundary/counterexample nếu hữu ích. Transfer dùng tình huống khác có thay đổi có ý nghĩa; gọi R04.A0 để criterion chuẩn bị trước Q, không in đáp án.
+
+Output: ExampleLink sidecar + ví dụ có nhãn “Ví dụ mới do AI tạo”; hoặc RA-07 question view. Evaluation G-EXAMPLE/G-MEANING/G-Q R14. Transition: illustration READY → R01/R09; transfer → WAIT_RESPONSE; thiếu mapping → sửa E3, thiếu nguồn → KC01; pending Q chưa có lệnh chuyển thì không hỏi Q mới hoặc tự trả lời Q cũ. Nếu danh sách nhiều ví dụ được chọn, criterion/origin theo SC01.
+
+## R14 — Validation V1–V4
+
+Role: kiểm định viên artifact. Task: quyết định candidate được dùng ở phạm vi nào. Input bắt buộc: candidate trước/sau biên tập, Frame/manifest, source spans, IDs/revisions, SC01–SC04 áp dụng, state/Q/support và checks helper/render có log. Output GateRecords SC05 + readiness/gaps/repair_owner; không chấm learner nếu chưa response.
+
+V1 chọn required gates theo nội dung, không chỉ format. V2 kiểm evidence từng gate; thiếu bằng chứng là NOT_RUN/PARTIAL, không mặc định PASS. V3 lỗi quay owner đầu sinh sai; tối đa hai vòng cùng lỗi/lô rồi chặn phần phụ thuộc và công khai giới hạn. V4 so bản sau R06/R09/export với bản đã kiểm và nguồn; claim/title/count/mapping/condition thay thì chạy gate liên quan lại. Chỉ emit phần độc lập đã kiểm.
+
+V4 là kiểm bản người đọc sẽ thấy: selection dùng biểu diễn tối thiểu SC01; ví dụ dùng learner_bridge SC03; combined/điểm chờ theo R01/R04. Gate record tự ghi PASS không thay các evidence này. Giữ nguyên critical conditions và exceptions của nguồn; đề xuất nới điều kiện phải ghi là giả thuyết mới chưa được nguồn xác nhận, không dùng để certify ví dụ hoặc kết luận đã đúng theo unit.
+
+| Gate | Required check | Owner sửa |
+|---|---|---|
+| G-FRAME | Đúng goal/mode/scope/output; khi user chỉ chỗ hụt mạch hoặc hỏi provenance, sửa đúng phần/câu hỏi trước thêm nội dung; không reset Q từ continue/answer | M02/M04/R15 |
+| G-SOURCE | Range thật read, locator/version/access đúng; identified chỉ outline; missing media không được claim đã thấy | KC01 |
+| G-UNITS | Boundary đủ nghĩa, không ép count; preserve ID/revision/coverage, count là kết quả trong scope | KC02 hoặc R02.K2 |
+| G-SELECTION | Mọi danh sách chọn có SC01: criterion cụ thể, origin từng mục, universe/completeness/omitted, count_basis/author locator | Bước chọn KC04/R03/R09/R13 |
+| G-MEANING | Proposition/premise/conclusion, negation, modality, conditions, exceptions, numbers, unsupported addition và locator giữ nghĩa | R01/R02/R06 theo intermediate |
+| G-MAP | Endpoints và A[relation]B có basis/source; references khác prerequisite; cây tác giả khác AI grouping/learning graph | KC03/KC04 |
+| G-EXAMPLE | Target revision tồn tại; mọi mapping có tương ứng nghĩa; scenario → premise/link → conclusion, conditions/limits đủ; AI example có nhãn; learner-visible bridge/purpose/permitted inference, hypothetical không thành proof | R13 |
+| G-HEADING | Đọc riêng title, subtitle, caption, lời dẫn và số thứ tự: có gây hiểu AI chọn N là N nguyên tắc tác giả/toàn bộ sách không? Đối chiếu SC01 và author locator; subset/tổng sách/count unit phân biệt | R09/R06; count/basis sai quay bước chọn |
+| G-Q | Một Q độc lập; criterion chuẩn bị trước; không answer/hint kèm; pending/paused/support giữ, không tự advance | R04/R10/R11 |
+| G-ASSESS | Response thật/quote, criterion/source/validity đúng, support không giảm, independent chỉ none đủ nghĩa | R04 |
+| G-CURRENCY | R07: scope product/version/context/date đúng, giữ book/current riêng, finding khác reason; so benchmark tương thích; timestamp không tự mới khi reuse | R07 |
+| G-DISPLAY | Parser/render/nhìn nhãn-hướng-cắt có log; không có renderer ghi NOT_RUN + bản văn, semantic riêng | R08 |
+| G-HANDOFF | File/access/revision/sidecar khớp, IDs/coverage/Q/criterion/support/gaps/next có thật; không memory/mastery giả | R12/R11 |
+
+Heading đúng mẫu: “Các ý tôi chọn từ chương đã đọc theo tiêu chí …”; author-explicit đúng: “[N] nguyên tắc tác giả nêu ở [locator], ở đây đọc subset …” khi áp dụng. Heading “N nguyên tắc cốt lõi của sách” không đủ attribution nếu N là AI selection; sửa heading dù nội dung từng ý đúng. Nguồn không nêu số thì không bác bỏ mọi số: count derived_after_selection được dùng khi ghi rõ chủ thể và scope.
+
+Hard fail chặn target: nguồn/access/research/capability/time giả; sai core meaning/điều kiện/phủ định; false author attribution từ title/count; ví dụ đứt mạch nhưng trình bày như hệ quả unit; mode trái user; lộ answer Q kể cả trong learner-visible handoff, response giả hoặc independent sau hỗ trợ/unknown. Điểm văn phong không bù. Source thiếu công khai/outline PROVISIONAL hợp lệ không tự FAIL. Display chưa chạy không chứng minh layout đạt nhưng vẫn dùng bản văn đã kiểm.
+
+R07 còn sở hữu thao tác currency: ngày/phạm vi chỉ claim có evidence thực; product/version/context/effective date match. Vendor nói lý do phải attribution, suy luận có nhãn, không evidence thì chưa rõ. Tốt/xấu theo criterion/trade-off và benchmark tương thích; mới hơn không proxy tốt hơn hoặc chứng minh sách sai lúc xuất bản. Causal/improvement overclaim, benchmark lệch scope và cập nhật toàn sách từ vài claim là hard fail.
+
+
+## R15 — Sửa artifact theo câu hỏi người đọc RE1–RE4
+
+Role: biên tập viên sửa nội dung đã trả. Task: giải quyết điểm người đọc chỉ ra, theo evidence. Trigger: user nói hụt mạch/không hiểu ví dụ giải thích hay chứng minh gì, hỏi số/tiêu chí chọn/origin, hoặc section lệch trọng tâm. Input bắt buộc: câu hỏi user nguyên văn, output/section thực được nhắc, units/map/argument/selection nếu có, source locator/ranges, state/mode/Q cũ. Không coi đây là đáp án learner hoặc yêu cầu đổi mode; không tạo output cũ khi chưa retrieve.
+
+RE1 chia câu hỏi thành issues theo đúng section: purpose/link của ví dụ; count/basis; scope/focus. Dùng output thực để nêu điều đã có đúng trước khi chốt gap. RE2 kiểm source enumeration cùng loại và scope: author-stated giữ với locator; AI organization nói rõ; chưa có trace selection thì lý do chọn đúng N là unknown, không post-hoc rationalization. RE3 sửa tại chỗ: nối R13 learner_bridge/units/argument và trả câu hỏi provenance; công cụ/artifact có vai trò input→operation→output trong mạch đọc, không chỉ tên/hình; đừng thêm ví dụ mới hoặc danh sách khác để thay câu hỏi cũ. Đổi khung/phạm vi sửa chỉ khi cần, giữ nguồn/ID.
+
+RE4 gọi R14 G-FRAME/G-SELECTION/G-HEADING/G-EXAMPLE/G-MEANING áp dụng; ghi original/repaired spans và gap chưa chứng minh. Output: giải thích trực tiếp từng issue + đoạn thay cụ thể cho section + source/trace refs. READY cho phần đã sửa, PARTIAL khi nguồn/trace thiếu; pending Q/support giữ qua R10/R11. Đề xuất criterion tổ chức lại được ghi là đề xuất mới, không nhận là lý do historical AI đã dùng. Artifact/provenance uncertainty chưa biết không quy lỗi cho user.
+
+### R15.RE-output — Kiểm đủ câu trả lời sửa
+
+Với câu hỏi gồm cả count/origin và hụt mạch, bản sửa cần xuất đủ các phần sau trước khi READY:
+
+- Trả riêng từng con số: ai quy định/chọn, loại mục, scope và locator; với con số AI tổ chức, nêu tiêu chí/boundary/stopping rationale đã ghi trong trace gốc. Nếu trace gốc không có, nói trực tiếp “Chưa có bằng chứng vì sao bản cũ chọn đúng N”; tiêu chí tổ chức lại chỉ là đề xuất mới, không lý do lịch sử.
+- Sửa chính ví dụ cũ: giữ outcome/dữ kiện/ID đã có, chỉ thay chỗ sai có giải thích. Xuất cầu nối ngay cạnh ví dụ theo mẫu nội dung: điểm ở phần trước + unit ID → bước trong ví dụ → quan hệ lập luận/điều kiện → điều được minh họa và điều chưa chứng minh. Khi unit cũ chưa đủ nguồn kiểm, ghi mapping theo artifact cũ và phạm vi chưa xác minh; không nâng nó thành tri thức sách đã kiểm. Một ví dụ mới chỉ bổ sung khi người dùng yêu cầu hoặc ví dụ cũ không thể sửa, phải nói lý do.
+- Phần artifact/công cụ: xuất mạch input → thao tác → output → artifact tiếp theo, nguồn/basis mỗi vai trò, scope enumeration tác giả và phần diễn giải do AI thêm. Danh sách tác giả được giữ đúng phạm vi; tính toàn sách/ranking không suy từ enumeration cục bộ.
+- Trước trả, đối chiếu lại từng issue nguyên văn với một đoạn trả lời cụ thể; thiếu đoạn nào ghi PARTIAL và gap. Trace nội bộ đủ nhưng learner view thiếu cầu nối vẫn chưa đạt G-EXAMPLE.

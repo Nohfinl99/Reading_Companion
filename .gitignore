@@ -65,3 +65,9 @@ scratch/
 # Runtime session logs & user generated artifacts
 *.session.json
 *.handoff.json
+
+# Local evaluation records can contain long copyrighted source excerpts and
+# machine-specific absolute paths. Keep those originals out of public commits.
+evaluation/runs/**/input.txt
+evaluation/runs/**/execution.json
+evaluation/runs/**/input-manifest.json

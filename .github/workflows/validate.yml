@@ -26,7 +26,13 @@ jobs:
         python -m json.tool plugin.json > /dev/null
         python -m json.tool .codex-plugin/plugin.json > /dev/null
 
-    - name: Test Helper Scripts (Syntax & CLI Interface)
+    - name: Validate repository structure and documentation links
+      run: python tools/validate_repository.py
+
+    - name: Compile helper scripts
+      run: python -m compileall -q tools skills/sid-reading-companion/scripts
+
+    - name: Check helper CLI interfaces
       run: |
         python skills/sid-reading-companion/scripts/ia_map.py --help
         python skills/sid-reading-companion/scripts/knowledge_compiler.py --help
