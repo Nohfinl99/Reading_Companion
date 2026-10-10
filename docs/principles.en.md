@@ -1,6 +1,6 @@
 # Principle Map and Rule Ownership
 
-[Tiếng Việt](principles.vi.md) · [README](../README.en.md)
+[Tiếng Việt](principles.vi.md) · [README](../README.md)
 
 This page explains the main operating principles and links to the files that own each rule. It does not create a new runtime contract or taxonomy. If documentation differs, the canonical files under `skills/sid-reading-companion/references/` take precedence.
 

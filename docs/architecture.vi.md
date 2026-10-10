@@ -1,6 +1,6 @@
 # Kiến trúc Reading Companion
 
-[English version](architecture.en.md) · [README](../README.md)
+[English version](architecture.en.md) · [README](../README.vi.md)
 
 ## Phạm vi và người dùng
 

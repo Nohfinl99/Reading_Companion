@@ -1,6 +1,6 @@
 # Quality Checks and Evidence
 
-[Tiếng Việt](quality.vi.md) · [README](../README.en.md)
+[Tiếng Việt](quality.vi.md) · [README](../README.md)
 
 ## Evidence layers
 

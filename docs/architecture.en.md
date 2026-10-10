@@ -1,6 +1,6 @@
 # Reading Companion Architecture
 
-[Tiếng Việt](architecture.vi.md) · [README](../README.en.md)
+[Tiếng Việt](architecture.vi.md) · [README](../README.md)
 
 ## Scope and audience
 

@@ -1,6 +1,6 @@
 # Bản đồ nguyên lý và chủ sở hữu
 
-[English version](principles.en.md) · [README](../README.md)
+[English version](principles.en.md) · [README](../README.vi.md)
 
 Trang này giải thích các nguyên lý vận hành chính và chỉ đến file sở hữu quy tắc. Nó không tạo contract hoặc taxonomy runtime mới. Nếu có khác biệt, ưu tiên các file canonical trong `skills/sid-reading-companion/references/`.
 

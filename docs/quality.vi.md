@@ -1,6 +1,6 @@
 # Kiểm tra chất lượng và bằng chứng
 
-[English version](quality.en.md) · [README](../README.md)
+[English version](quality.en.md) · [README](../README.vi.md)
 
 ## Các lớp kiểm tra
 

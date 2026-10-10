@@ -1,6 +1,6 @@
 # Documentation map / Bản đồ tài liệu
 
-**Languages / Ngôn ngữ:** [Tiếng Việt](../README.md) · [English](../README.en.md)
+**Languages / Ngôn ngữ:** [Tiếng Việt](../README.vi.md) · [English](../README.md)
 
 This directory explains the product architecture for human readers. The paired Vietnamese and English pages are kept in parallel; technical identifiers and file paths remain unchanged. Runtime behavior and schemas are owned by the files under [`skills/sid-reading-companion/references/`](../skills/sid-reading-companion/references/master-instruction.md), not by translations in this directory.
 

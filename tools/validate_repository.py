@@ -35,14 +35,14 @@ require(skill_path.is_file(), "Skill entry point is missing")
 required = ["references/master-instruction.md", "references/knowledge-compiler.md", "references/reading-protocols.md", "references/stack-contracts.md", "references/case-benchmark.md", "scripts/checkpoint.py", "scripts/ia_map.py", "scripts/knowledge_compiler.py", "scripts/reading_session.py"]
 for rel in required: require((skill_path.parent / rel).is_file(), f"Required plugin file missing: {rel}")
 required_docs = [
-    "README.md", "README.en.md", "CONTRIBUTING.md", "CHANGELOG.md",
+    "README.md", "README.vi.md", "CONTRIBUTING.md", "CHANGELOG.md",
     "docs/README.md",
     "docs/architecture.vi.md", "docs/architecture.en.md",
     "docs/principles.vi.md", "docs/principles.en.md",
     "docs/quality.vi.md", "docs/quality.en.md",
 ]
 for rel in required_docs: require((ROOT / rel).is_file(), f"Required documentation page missing: {rel}")
-for rel in ("README.md", "README.en.md"):
+for rel in ("README.md", "README.vi.md"):
     readme = (ROOT / rel).read_text(encoding="utf-8")
     require(root_manifest["name"] in readme, f"Technical plugin identity missing from {rel}")
     require(f"Plugin-{root_manifest['version']}-" in readme, f"Version badge is stale in {rel}")
