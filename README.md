@@ -20,17 +20,7 @@ Reading Companion biến một phạm vi sách hoặc tài liệu thành lời g
 
 > **Nguyên tắc cốt lõi:** phân biệt điều tài liệu nói với điều AI suy luận, chọn hoặc biên soạn.
 
-## Mục lục
-
-1. [Bắt đầu nhanh](#quick-start)
-2. [Chọn chế độ đọc](#reading-modes)
-3. [Tác vụ và đầu ra](#supported-tasks)
-4. [Workflow và kiến trúc](#workflow)
-5. [Nguồn và trạng thái học](#source-and-learning-state)
-6. [Ví dụ trích xuất nhanh](#quick-extract)
-7. [Chất lượng và công cụ](#quality)
-8. [Bản đồ tài liệu](#documentation)
-9. [Đóng góp và giấy phép](#contributing)
+**Đi nhanh:** [Bắt đầu](#quick-start) · [Modes](#reading-modes) · [Tác vụ](#supported-tasks) · [Artifacts](#outputs) · [Kiến trúc](#workflow) · [Chất lượng](#quality) · [Tài liệu](#documentation)
 
 <a id="quick-start"></a>
 ## 1. Bắt đầu nhanh
@@ -74,14 +64,30 @@ Mode xác định loại tác vụ. Style như `standard`, `quick`, `chill` ho�
 
 Các tác vụ này dùng chung provenance và gate kiểm định; Companion chỉ gọi nhánh phù hợp với yêu cầu, không chạy toàn bộ workflow cho mọi lượt.
 
-## 4. Workflow và kiến trúc
+## 4. Artifact có thể tạo
+
+<a id="outputs"></a>
+Registry canonical mô tả các artifact dưới đây. Đây là lựa chọn theo mục tiêu, không phải danh sách bắt buộc trong mọi phiên; số Knowledge Units vẫn phụ thuộc nội dung và phạm vi đọc.
+
+| Mục tiêu | Artifact có thể dùng |
+|---|---|
+| Xem phạm vi và cấu trúc | Source/read map, outline hoặc sơ đồ (`RA-01`) |
+| Hiểu nội dung và mạch lập luận | Giải thích có nguồn; claim, premise, evidence và điều kiện (`RA-02`, `RA-03`) |
+| Đối chiếu lựa chọn | Bảng so sánh cùng tiêu chí và bối cảnh (`RA-04`) |
+| Tạo tài liệu ôn tập | Knowledge Units có locator/điều kiện và flashcards bổ sung (`RA-05`, `RA-06`) |
+| Áp dụng hoặc kiểm tra transfer | Ví dụ mới có cầu nối hoặc câu hỏi tình huống (`RA-07`) |
+| Phản hồi và tiếp tục | Feedback cho response thật (`RA-08`); bản handoff/checkpoint có state thực (`RA-09`) |
+
+Các mã `RA-*` là technical IDs trong [artifact registry](skills/sid-reading-companion/references/reading-protocols.md#r09--output-artifacts-oa1oa4); hình thức đầu ra có thể là Markdown/prose khi không thể xuất artifact theo contract.
+
+## 5. Workflow và kiến trúc
 
 <a id="workflow"></a>
 Mỗi yêu cầu đi theo nhánh cần thiết: xác định goal/scope → kiểm tra quyền truy cập nguồn và locator → định tuyến stack → kiểm tra gate áp dụng → trình bày kết quả và giới hạn. Điều hướng phiên hoặc đánh giá câu trả lời đang chờ có thể dùng state hiện có mà không biên dịch lại sách.
 
 Xem [kiến trúc hệ thống](docs/architecture.vi.md) để biết trách nhiệm của controller, Knowledge Compiler, reading protocols, data contracts, helper và CI. Sơ đồ không phải pipeline bắt buộc cho mọi lượt.
 
-## 5. Nguồn và trạng thái học
+## 6. Nguồn và trạng thái học
 
 <a id="source-and-learning-state"></a>
 - Locator và phạm vi đọc giới hạn điều có thể kết luận; nguồn chưa truy cập được phải được nêu rõ.
@@ -92,7 +98,7 @@ Xem [kiến trúc hệ thống](docs/architecture.vi.md) để biết trách nhi
 
 Chi tiết field và chủ sở hữu nằm trong [bản đồ nguyên lý](docs/principles.vi.md) và [Stack contracts](skills/sid-reading-companion/references/stack-contracts.md).
 
-## 6. Ví dụ trích xuất nhanh
+## 7. Ví dụ trích xuất nhanh
 
 <a id="quick-extract"></a>
 Cuộc trò chuyện mẫu về [*AI Engineering* — Extract · Quick](https://chatgpt.com/share/6ac9b71a-81cc-83ec-a8bf-4b2d2ae85cc8) cho thấy cách nối nội dung đọc với hướng dẫn áp dụng.
@@ -103,7 +109,7 @@ Cuộc trò chuyện mẫu về [*AI Engineering* — Extract · Quick](https://
 
 Trong ví dụ, nhóm 10 nguyên lý được ghi là **do AI chọn và tổng hợp**, không phải danh sách đánh số chính thức của tác giả. Quy trình ứng dụng và các tỷ lệ benchmark trong chat là phần minh họa; các tỷ lệ được nêu giả định, không phải kết quả chạy Reading Companion. Nguồn chat cũng không xác nhận đã kiểm tra toàn bộ cuốn sách.
 
-## 7. Chất lượng và công cụ
+## 8. Chất lượng và công cụ
 
 <a id="quality"></a>
 Repository có các helper Python tùy chọn: `knowledge_compiler.py` kiểm tra cấu trúc execution plan; `ia_map.py` biểu diễn map; `checkpoint.py` kiểm tra và lưu checkpoint; `reading_session.py` hỗ trợ thao tác trạng thái phiên. Chúng kiểm tra cấu trúc/state theo contract, không đọc hiểu sách, xác minh nội dung web, chấm ngữ nghĩa hoặc cung cấp bộ nhớ tài khoản. Xem [hướng dẫn kiểm tra và lệnh chạy](docs/quality.vi.md).
@@ -112,7 +118,7 @@ GitHub Actions kiểm tra manifest, cấu trúc/liên kết tài liệu, cú ph�
 
 Xem [benchmark specification](skills/sid-reading-companion/references/case-benchmark.md) để biết định nghĩa ca kiểm và evidence cần có.
 
-## 8. Bản đồ tài liệu
+## 9. Bản đồ tài liệu
 
 <a id="documentation"></a>
 | Bạn cần… | Tài liệu |
@@ -134,7 +140,7 @@ assets/                       Product logo and explanatory illustration
 .github/                      CI and contribution templates
 ```
 
-## 9. Đóng góp và giấy phép
+## 10. Đóng góp và giấy phép
 
 <a id="contributing"></a>
 Đọc [hướng dẫn đóng góp](CONTRIBUTING.md); thay đổi cần giữ định tuyến, provenance, IDs, contracts và trạng thái câu hỏi. Xem [CHANGELOG](CHANGELOG.md). Repository phát hành theo [MIT License](LICENSE).
