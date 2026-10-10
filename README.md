@@ -128,7 +128,6 @@ Trong repository có các helper tùy chọn để kiểm tra checkpoint, tạo 
 ├── .github/workflows/             # CI validation
 ├── .codex-plugin/                 # Compatibility manifest
 ├── assets/                        # Logo and README illustration
-├── evaluation/                    # Benchmark specification and captured evidence
 ├── skills/sid-reading-companion/
 │   ├── SKILL.md                   # Plugin entry point
 │   ├── agents/                    # Host metadata
@@ -142,7 +141,7 @@ Trong repository có các helper tùy chọn để kiểm tra checkpoint, tạo 
 ```
 
 <a id="evaluation"></a>
-## 8. Kiểm định và giới hạn bằng chứng
+## 8. Kiểm tra chất lượng
 
 Chạy từ root repository:
 
@@ -153,17 +152,7 @@ python tools/validate_repository.py
 python -m compileall -q tools skills/sid-reading-companion/scripts
 ```
 
-GitHub Actions chạy các kiểm tra trên Python 3.10, 3.11 và 3.12, đồng thời smoke-test giao diện CLI của helper. Các kiểm tra này xác nhận cấu trúc, JSON, liên kết tài liệu và cú pháp helper; chúng **không** chứng minh cách diễn giải sách đúng hoặc plugin hoạt động như thế nào trên host đã cài.
-
-| Lớp bằng chứng | Trạng thái trong run `PS1r4` |
-|---|---|
-| Output đã ghi nhận | PS01–PS07; chưa chấm (`OUTPUT_CAPTURED_UNGRADED`) |
-| Chấm benchmark và review ngữ nghĩa độc lập | `NOT_RUN` |
-| Hành vi trên plugin host đã cài | `NOT_RUN` — run thực hiện qua Codex CLI |
-| Kết quả học của người dùng | `NOT_RUN` |
-| PS-CDH và các case PS08–PS12, PS14–PS16 | `NOT_RUN` trong run này |
-
-Xem [định nghĩa case](skills/sid-reading-companion/references/case-benchmark.md), [chỉ mục run](evaluation/runs/2026-10-10-ps1r4/index.json) và [ghi chú evidence](evaluation/README.md). Output được lưu không đồng nghĩa benchmark đã đạt.
+GitHub Actions kiểm tra manifest, cấu trúc repository, liên kết tài liệu, cú pháp Python và giao diện CLI helper trên Python 3.10, 3.11, 3.12. Đây là kiểm tra kỹ thuật của gói; chúng không thay thế đánh giá ngữ nghĩa, kiểm thử plugin trên host đã cài hoặc nghiên cứu kết quả học tập. Repository không tuyên bố benchmark đạt nếu chưa có output và kết quả chấm tương ứng.
 
 <a id="maintainers"></a>
 ## 9. Tài liệu bảo trì, đóng góp và giấy phép
