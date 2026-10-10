@@ -1,13 +1,21 @@
-## Mô tả Thay đổi (Description)
-Tóm tắt các thay đổi kỹ thuật và lý do thực hiện.
+## Summary / Tóm tắt
 
-## Phân loại Thay đổi (Type of Change)
-- [ ] Bug fix (sửa lỗi logic hoặc contract)
-- [ ] New feature (tính năng hoặc prompt mini-stack mới)
-- [ ] Documentation update (README, References, IA specs)
-- [ ] Refactoring (tối ưu hóa cấu trúc, không thay đổi hành vi ngoài)
+Describe the problem and resulting behavior. / Mô tả vấn đề và hành vi sau thay đổi.
 
-## Danh sách Kiểm tra (Checklist)
-- [ ] Đã chạy kiểm tra các file script Python (`ia_map.py`, `knowledge_compiler.py`, v.v.)
-- [ ] Không làm phá vỡ các hợp đồng (contracts) trong `master-instruction.md`
-- [ ] Tài liệu và tham chiếu tương ứng đã được cập nhật
+## Change type / Loại thay đổi
+
+- [ ] Bug fix / Sửa lỗi
+- [ ] Feature or prompt-stack change / Tính năng hoặc thay đổi prompt stack
+- [ ] Documentation / Tài liệu
+- [ ] Refactor without behavior change / Tái cấu trúc, không đổi hành vi
+
+## Verification / Kiểm tra
+
+- [ ] Relevant local checks passed / Các kiểm tra cục bộ liên quan đã đạt
+- [ ] Canonical contracts and runtime paths preserved or intentionally updated / Hợp đồng canonical và đường dẫn runtime được giữ hoặc cập nhật có chủ đích
+- [ ] Vietnamese and English documentation updated together / Tài liệu tiếng Việt và tiếng Anh được cập nhật đồng thời
+- [ ] Benchmark results are reported only with actual input, output and grading / Chỉ báo cáo benchmark khi có input, output và chấm thực
+
+**Checks run / Kiểm tra đã chạy:**
+
+**Not run or remaining limits / Chưa chạy hoặc giới hạn còn lại:**

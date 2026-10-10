@@ -5,166 +5,121 @@
 <h1 align="center">Reading Companion</h1>
 
 <p align="center"><strong>Trợ lý AI đọc sâu, trích xuất tri thức có nguồn và theo dõi tiến trình học tập</strong></p>
-<p align="center"><em>A Vietnamese-first, source-grounded reading and knowledge-compilation plugin for ChatGPT and Codex.</em></p>
+<p align="center"><em>A Vietnamese-first, source-grounded reading and knowledge-compilation plugin.</em></p>
 
 <p align="center">
   <a href="plugin.json"><img src="https://img.shields.io/badge/Plugin-0.3.3-15324F?style=flat-square" alt="Plugin version 0.3.3" /></a>
   <a href="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml"><img src="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml/badge.svg?branch=main" alt="GitHub Actions validation status" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-2E8B57?style=flat-square" alt="MIT License" /></a>
-  <img src="https://img.shields.io/badge/Language-Vietnamese%20first-7357A5?style=flat-square" alt="Vietnamese first" />
+  <img src="https://img.shields.io/badge/Language-Vietnamese%20first-7357A5?style=flat-square" alt="Vietnamese-first" />
 </p>
 
-<p align="center">
-  <a href="#quick-start">Bắt đầu</a> ·
-  <a href="#reading-modes">Chế độ đọc</a> ·
-  <a href="#source-and-learning-state">Nguồn & tiến trình</a> ·
-  <a href="#evaluation">Kiểm định</a> ·
-  <a href="#maintainers">Bảo trì</a>
-</p>
+<p align="center"><a href="README.en.md">Read in English</a></p>
 
-Reading Companion biến một phần sách hoặc tài liệu thành lời giải thích, đơn vị tri thức và bước học tiếp theo có thể truy ngược về nguồn. Người đọc chọn mục tiêu và phạm vi; Companion giữ mạch lập luận, locator, điều kiện áp dụng, trạng thái câu hỏi và giới hạn bằng chứng.
+Reading Companion biến một phạm vi sách hoặc tài liệu thành lời giải thích, đơn vị tri thức và bước học tiếp theo có thể truy ngược về nguồn. Người đọc chọn mục tiêu, phạm vi và cách đọc; Companion giữ mạch lập luận, locator, điều kiện áp dụng và giới hạn bằng chứng.
 
-> **Nguyên tắc cốt lõi:** luôn phân biệt điều tài liệu nói với điều AI suy luận, chọn hoặc biên soạn.
+> **Nguyên tắc cốt lõi:** phân biệt điều tài liệu nói với điều AI suy luận, chọn hoặc biên soạn.
 
-<a id="table-of-contents"></a>
 ## Mục lục
 
-1. [Tổng quan](#overview)
-2. [Bắt đầu nhanh](#quick-start)
-3. [Chọn chế độ đọc](#reading-modes)
-4. [Nguồn, đơn vị tri thức và trạng thái học](#source-and-learning-state)
-5. [Ví dụ trích xuất nhanh](#quick-extract-example)
-6. [Tiếp tục phiên đọc](#continue-a-session)
-7. [Cấu trúc repository](#repository-map)
-8. [Kiểm định và giới hạn bằng chứng](#evaluation)
-9. [Tài liệu bảo trì, đóng góp và giấy phép](#maintainers)
-
-<a id="overview"></a>
-## 1. Tổng quan
-
-Reading Companion là plugin hội thoại có hướng dẫn và helper tùy chọn. Đây không phải ứng dụng web độc lập, không cung cấp server/MCP riêng, không đi kèm sách hay bộ nhớ tài khoản. Nội dung đọc phụ thuộc vào tài liệu và phạm vi mà người dùng cung cấp hoặc host cho phép truy cập.
-
-| Bạn muốn… | Companion hỗ trợ… |
-|---|---|
-| Hiểu một chương hoặc một lập luận | Giải thích khái niệm, điều kiện, quan hệ giữa các ý và phần nguồn còn thiếu |
-| Tạo kho tri thức có thể xem lại | Trích xuất Knowledge Units theo phạm vi và nội dung, kèm locator và quan hệ |
-| Học và kiểm tra mức hiểu | Đặt câu hỏi theo tiêu chí, chờ câu trả lời thật rồi mới đánh giá |
-| Áp dụng điều đã đọc | Tạo ví dụ mới có cầu nối rõ về unit và mạch lập luận liên quan |
-| Chuyển phiên đọc | Bàn giao checkpoint, ID, nguồn, tiến độ và câu hỏi đang chờ khi có dữ liệu tương ứng |
+1. [Bắt đầu nhanh](#quick-start)
+2. [Chọn chế độ đọc](#reading-modes)
+3. [Workflow và kiến trúc](#workflow)
+4. [Nguồn và trạng thái học](#source-and-learning-state)
+5. [Ví dụ trích xuất nhanh](#quick-extract)
+6. [Chất lượng và giới hạn](#quality)
+7. [Bản đồ tài liệu](#documentation)
+8. [Đóng góp và giấy phép](#contributing)
 
 <a id="quick-start"></a>
-## 2. Bắt đầu nhanh
+## 1. Bắt đầu nhanh
 
-Mở Reading Companion trong host tương thích, cung cấp hoặc đính kèm tài liệu, rồi nêu **mục tiêu**, **phạm vi** và **chế độ đọc**. Nếu thiếu thông tin làm thay đổi nội dung, Companion sẽ hỏi trước khi tiếp tục.
-
-**Đọc sâu một phạm vi**
+Mở Reading Companion trong host tương thích, cung cấp hoặc đính kèm tài liệu, rồi nêu **mục tiêu**, **phạm vi** và **mode**. Nếu chưa chọn mode, hãy yêu cầu Companion đề xuất và giải thích lý do. Repository này chứa package plugin, không phải ứng dụng web chạy độc lập; cách cài/nạp tùy host.
 
 ```text
 Đọc sâu chương 2, từ mục “Problem Framing” đến hết “Opportunity Mapping”.
-Giải thích mạch lập luận, giữ locator cho từng ý và dừng lại bằng một câu hỏi để tôi trả lời.
+Giải thích mạch lập luận, gắn locator cho từng ý và dừng lại bằng một câu hỏi để tôi trả lời.
 ```
 
-**Trích xuất có tiêu chí**
+Hoặc:
 
 ```text
-Trích xuất các ý có thể áp dụng từ phần này. Nêu tiêu chí lựa chọn và locator.
-Ghi rõ số lượng nào do tác giả quy định, phần nào do em tự chọn; nếu nguồn thiếu,
-hãy nói rõ phần nào chưa thể kết luận.
+Trích xuất các ý có thể áp dụng trong phần đã chọn. Nêu tiêu chí lựa chọn và locator.
+Phân biệt số lượng tác giả quy định với phần em tự chọn; nêu rõ phần nguồn còn thiếu.
 ```
 
-Để dùng helper kiểm tra cấu trúc checkpoint hoặc biên dịch dữ liệu, cần Python 3.10 trở lên. Các helper là tùy chọn; có thể làm việc theo cùng hợp đồng trong chat khi không có Python hoặc file cục bộ.
+## 2. Chọn chế độ đọc
 
 <a id="reading-modes"></a>
-## 3. Chọn chế độ đọc
-
-| Chế độ | Dùng khi | Đầu ra trọng tâm |
+| Mode | Dùng khi | Đầu ra trọng tâm |
 |---|---|---|
-| `deep` | Muốn hiểu nghĩa, điều kiện và mạch lập luận | Lời giải thích có nguồn, quan hệ giữa các ý và câu hỏi học tập khi phù hợp |
-| `extract` | Muốn tạo kho tri thức từ phạm vi đã chọn | Knowledge Units có locator, điều kiện, quan hệ và provenance của lựa chọn |
-| `combined` | Muốn vừa hiểu vừa tạo artifact có thể xem lại | Explanation và units dùng chung ID; câu hỏi vẫn chờ người học trả lời |
+| `deep` | Muốn hiểu khái niệm, điều kiện và lập luận | Giải thích có nguồn, quan hệ giữa các ý và câu hỏi học tập khi phù hợp |
+| `extract` | Muốn tạo kho tri thức trong một phạm vi | Knowledge Units, locator, điều kiện, quan hệ và provenance của lựa chọn |
+| `combined` | Muốn vừa hiểu vừa tạo artifact để xem lại | Explanation và units dùng chung ID; câu hỏi đang chờ được giữ nguyên |
 
-Mode mô tả loại công việc. Style như `standard`, `quick`, `chill` hoặc `challenger` điều chỉnh cách trình bày; style không thay mode, không nới điều kiện nguồn và không bỏ câu hỏi đang chờ. Người dùng giữ quyền chọn hoặc đổi mode.
+Mode xác định loại tác vụ. Style như `standard`, `quick`, `chill` hoặc `challenger` chỉ điều chỉnh cách trình bày, không thay mode hay bỏ điều kiện kiểm nguồn.
+
+## 3. Workflow và kiến trúc
+
+<a id="workflow"></a>
+Mỗi yêu cầu đi theo nhánh cần thiết: xác định goal/scope → kiểm tra quyền truy cập nguồn và locator → định tuyến stack → kiểm tra gate áp dụng → trình bày kết quả và giới hạn. Điều hướng phiên hoặc đánh giá câu trả lời đang chờ có thể dùng state hiện có mà không biên dịch lại sách.
+
+Xem [kiến trúc hệ thống](docs/architecture.vi.md) để biết trách nhiệm của controller, Knowledge Compiler, reading protocols, data contracts, helper và CI. Sơ đồ không phải pipeline bắt buộc cho mọi lượt.
+
+## 4. Nguồn và trạng thái học
 
 <a id="source-and-learning-state"></a>
-## 4. Nguồn, đơn vị tri thức và trạng thái học
+- Locator và phạm vi đọc giới hạn điều có thể kết luận; nguồn chưa truy cập được phải được nêu rõ.
+- Số Knowledge Units phát sinh từ nội dung/phạm vi, không theo quota cố định. Nếu AI chọn danh sách, cần nêu tiêu chí, nguồn gốc và phần không chọn/chưa kiểm.
+- Ví dụ mới phải nối rõ với unit và mạch lập luận liên quan; ví dụ minh họa không tự chứng minh hiệu quả.
+- Tiêu đề hoặc con số do AI tạo không được trình bày như cấu trúc tác giả quy định.
+- Câu hỏi đã đặt chờ câu trả lời thật (`WAIT_RESPONSE`) hoặc lệnh chuyển bước. Không tạo response, mastery, checkpoint hay memory giả.
 
-- **Nguồn và locator:** gắn phát biểu với vị trí trong tài liệu khi dữ liệu nguồn hỗ trợ; nêu phần chưa truy cập hoặc chưa kiểm tra.
-- **Số lượng và danh sách:** số Knowledge Units phát sinh từ phạm vi và nội dung, không theo quota cố định. Nếu AI chọn một subset, cần nêu tiêu chí và nguồn gốc lựa chọn; không trình bày cách chia của AI như danh sách tác giả quy định.
-- **Mạch lập luận và ví dụ:** ví dụ mới phải chỉ ra unit/điều kiện mà nó minh họa và cách nối về lập luận. Ví dụ minh họa không tự chứng minh hiệu quả ngoài thực tế.
-- **Tiêu đề và con số:** kiểm tra để tiêu đề, thứ tự hoặc con số do AI tạo không bị hiểu nhầm là cấu trúc của tác giả.
-- **Câu hỏi đang chờ:** khi Companion đã hỏi, trạng thái giữ `WAIT_RESPONSE` cho đến khi người học trả lời hoặc yêu cầu chuyển bước. Không tự tạo câu trả lời hay kết quả mastery.
-- **Checkpoint:** chỉ khôi phục state có trong context hoặc checkpoint được cung cấp. Không khẳng định có memory, đồng bộ hay tiến trình chưa được lưu.
+Chi tiết field và chủ sở hữu nằm trong [bản đồ nguyên lý](docs/principles.vi.md) và [Stack contracts](skills/sid-reading-companion/references/stack-contracts.md).
 
-<a id="quick-extract-example"></a>
 ## 5. Ví dụ trích xuất nhanh
 
-Đoạn chat [Extract · Quick về *AI Engineering*](https://chatgpt.com/share/6ac9b71a-81cc-83ec-a8bf-4b2d2ae85cc8) minh họa cách đi từ phạm vi đọc đến gợi ý áp dụng, đồng thời công khai đâu là lựa chọn biên tập của AI.
+<a id="quick-extract"></a>
+Cuộc trò chuyện mẫu về [*AI Engineering* — Extract · Quick](https://chatgpt.com/share/6ac9b71a-81cc-83ec-a8bf-4b2d2ae85cc8) cho thấy cách nối nội dung đọc với hướng dẫn áp dụng.
 
 <p align="center">
-  <img src="assets/quick-extract-workflow.svg" alt="Bốn bước trích xuất: chọn phạm vi, ghi rõ ý AI tổng hợp, nối với ví dụ áp dụng và nêu giới hạn bằng chứng" width="900" />
+  <img src="assets/quick-extract-workflow.svg" alt="Chọn phạm vi, ghi rõ ý do AI tổng hợp, nối với ứng dụng và nêu giới hạn bằng chứng" width="900" />
 </p>
 
-Trong output mẫu, nhóm 10 nguyên lý được ghi rõ là **do AI chọn và tổng hợp**, không phải danh sách đánh số chính thức của tác giả. Quy trình áp dụng Reading Companion cũng là ví dụ do AI biên soạn. Những con số Recall@5, Precision@5 và độ đúng trong chat là **dữ liệu giả định để minh họa**, không phải benchmark của plugin.
+Trong ví dụ, nhóm 10 nguyên lý được ghi là **do AI chọn và tổng hợp**, không phải danh sách đánh số chính thức của tác giả. Quy trình ứng dụng và các tỷ lệ benchmark trong chat là phần minh họa; các tỷ lệ được nêu giả định, không phải kết quả chạy Reading Companion. Nguồn chat cũng không xác nhận đã kiểm tra toàn bộ cuốn sách.
 
-> **Giới hạn nguồn:** cuộc trò chuyện cho biết đã đối chiếu bản Markdown được cung cấp, nhưng không xác nhận đã kiểm tra toàn bộ cuốn sách. Ví dụ này minh họa cách trình bày provenance và giới hạn; nó không chứng nhận độc lập độ chính xác của nội dung sách.
+## 6. Chất lượng và giới hạn
 
-<a id="continue-a-session"></a>
-## 6. Tiếp tục phiên đọc
+<a id="quality"></a>
+GitHub Actions kiểm tra manifest, cấu trúc/liên kết tài liệu, cú pháp helper và giao diện CLI trên Python 3.10–3.12. Những kiểm tra này không thay thế đánh giá ngữ nghĩa, thử nghiệm trên plugin host đã cài hoặc đo kết quả học tập. Không tuyên bố benchmark đạt nếu thiếu input, output và kết quả chấm thực.
 
-Khi chuyển phiên, gửi checkpoint hoặc bản bàn giao gần nhất và yêu cầu giữ nguyên identity cùng trạng thái:
+Xem [các lớp kiểm tra và bằng chứng](docs/quality.vi.md) cùng [benchmark specification](skills/sid-reading-companion/references/case-benchmark.md).
 
-```text
-Tiếp tục từ checkpoint đính kèm. Kiểm tra nguồn, phạm vi và câu hỏi đang chờ.
-Giữ nguyên ID, locator và trạng thái; chỉ tiếp tục phần chưa hoàn tất.
-```
+## 7. Bản đồ tài liệu
 
-Trong repository có các helper tùy chọn để kiểm tra checkpoint, tạo execution plan tri thức, quản lý trạng thái phiên và biểu diễn bản đồ IA. Chúng kiểm tra cấu trúc/state theo hợp đồng; không tự đọc hiểu sách, xác minh nội dung web, chấm ngữ nghĩa hay lưu bộ nhớ tài khoản.
-
-<a id="repository-map"></a>
-## 7. Cấu trúc repository
-
-```text
-.
-├── .github/workflows/             # CI validation
-├── .codex-plugin/                 # Compatibility manifest
-├── assets/                        # Logo and README illustration
-├── skills/sid-reading-companion/
-│   ├── SKILL.md                   # Plugin entry point
-│   ├── agents/                    # Host metadata
-│   ├── references/                # Controller, protocols, contracts and cases
-│   └── scripts/                   # Optional Python helpers
-├── tools/                         # Repository validator
-├── plugin.json                    # Canonical plugin manifest
-├── CONTRIBUTING.md
-├── CHANGELOG.md
-└── LICENSE
-```
-
-<a id="evaluation"></a>
-## 8. Kiểm tra chất lượng
-
-Chạy từ root repository:
-
-```bash
-python -m json.tool plugin.json
-python -m json.tool .codex-plugin/plugin.json
-python tools/validate_repository.py
-python -m compileall -q tools skills/sid-reading-companion/scripts
-```
-
-GitHub Actions kiểm tra manifest, cấu trúc repository, liên kết tài liệu, cú pháp Python và giao diện CLI helper trên Python 3.10, 3.11, 3.12. Đây là kiểm tra kỹ thuật của gói; chúng không thay thế đánh giá ngữ nghĩa, kiểm thử plugin trên host đã cài hoặc nghiên cứu kết quả học tập. Repository không tuyên bố benchmark đạt nếu chưa có output và kết quả chấm tương ứng.
-
-<a id="maintainers"></a>
-## 9. Tài liệu bảo trì, đóng góp và giấy phép
-
-| Tài liệu | Nội dung |
+<a id="documentation"></a>
+| Bạn cần… | Tài liệu |
 |---|---|
-| [Master instruction](skills/sid-reading-companion/references/master-instruction.md) | Controller, định tuyến và gate |
-| [Knowledge compiler](skills/sid-reading-companion/references/knowledge-compiler.md) | Nguồn, phạm vi, units và kế hoạch thực thi |
-| [Reading protocols](skills/sid-reading-companion/references/reading-protocols.md) | Trách nhiệm prompt stack |
-| [Stack contracts](skills/sid-reading-companion/references/stack-contracts.md) | Hợp đồng dữ liệu, provenance và state |
-| [Case benchmark](skills/sid-reading-companion/references/case-benchmark.md) | Yêu cầu và ca kiểm |
-| [Contributing](CONTRIBUTING.md) | Quy tắc sửa đổi và kiểm tra |
-| [Changelog](CHANGELOG.md) | Ghi chú phiên bản |
+| Đọc kiến trúc và workflow | [Architecture](docs/architecture.vi.md) |
+| Truy nguyên nguyên lý tới file sở hữu | [Principle map](docs/principles.vi.md) |
+| Hiểu CI, benchmark và giới hạn bằng chứng | [Quality guide](docs/quality.vi.md) |
+| Tìm các bản VI/EN | [Documentation map](docs/README.md) |
+| Định tuyến, hành vi và gate runtime | [Master instruction](skills/sid-reading-companion/references/master-instruction.md) |
+| Source, units và execution plan | [Knowledge compiler](skills/sid-reading-companion/references/knowledge-compiler.md) |
+| Stack và trạng thái phiên | [Reading protocols](skills/sid-reading-companion/references/reading-protocols.md) |
+| Schema, provenance và question state | [Stack contracts](skills/sid-reading-companion/references/stack-contracts.md) |
 
-Phát hành theo [MIT License](LICENSE). Technical plugin ID: `sid-reading-companion`; display name: **Reading Companion**; version: **0.3.3**.
+```text
+docs/                         Human-facing architecture, principles and quality guides (VI/EN)
+skills/sid-reading-companion/ Runtime entry, canonical references and optional helpers
+tools/                        Repository validation
+assets/                       Product logo and explanatory illustration
+.github/                      CI and contribution templates
+```
+
+## 8. Đóng góp và giấy phép
+
+<a id="contributing"></a>
+Đọc [hướng dẫn đóng góp](CONTRIBUTING.md); thay đổi cần giữ định tuyến, provenance, IDs, contracts và trạng thái câu hỏi. Xem [CHANGELOG](CHANGELOG.md). Repository phát hành theo [MIT License](LICENSE).
+
+Technical plugin ID: `sid-reading-companion` · Display name: **Reading Companion** · Version: **0.3.3**.
