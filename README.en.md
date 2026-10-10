@@ -23,7 +23,7 @@ Reading Companion turns a selected portion of a book or document into an explana
 **Jump to:** [Quick start](#quick-start) · [Modes](#reading-modes) · [Tasks](#supported-tasks) · [Artifacts](#outputs) · [Architecture](#workflow) · [Quality](#quality) · [Docs](#documentation)
 
 <a id="quick-start"></a>
-## 1. Quick start
+## 1. 📖 Quick start
 
 Open Reading Companion in a compatible host, provide or attach the material, then state the **goal**, **scope** and **mode**. If no mode is selected, ask the Companion to recommend one and explain why. This repository contains the plugin package, not a standalone web application; installation/loading and source access depend on the host. The plugin does not include a book library, its own MCP server or account memory.
 
@@ -64,7 +64,7 @@ Mode identifies the task. Styles such as `standard`, `quick`, `chill` or `challe
 
 These tasks share provenance and validation gates. The Companion routes only to the operations the request needs rather than running the full workflow on every turn.
 
-## 4. Available artifacts
+## 4. 🧩 Available artifacts
 
 <a id="outputs"></a>
 The canonical registry describes the artifacts below. They are selected for the user's goal, not required in every session; Knowledge Unit counts still follow the source content and reading scope.
@@ -80,10 +80,14 @@ The canonical registry describes the artifacts below. They are selected for the 
 
 The `RA-*` codes are technical IDs in the [artifact registry](skills/sid-reading-companion/references/reading-protocols.md#r09--output-artifacts-oa1oa4); when a contract-shaped artifact cannot be emitted, the content may be presented as Markdown/prose.
 
-## 5. Workflow and architecture
+## 5. 🔄 Workflow and architecture
 
 <a id="workflow"></a>
 Each request takes the route it needs: frame goal/scope → check source access and locators → route to a stack → apply relevant gates → present the result and its limits. Session navigation or assessment of a pending answer can use existing state without recompiling the book.
+
+<p align="center">
+  <img src="assets/reading-flow.en.svg" alt="Conditional workflow: frame the request, check source or state, route to the task, apply relevant gates and return a bounded result" width="1000" />
+</p>
 
 See the [system architecture](docs/architecture.en.md) for responsibilities across the controller, Knowledge Compiler, reading protocols, data contracts, helpers and CI. The diagram describes available routes, not a mandatory pipeline for every turn.
 
@@ -109,7 +113,7 @@ The [*AI Engineering* Extract · Quick conversation](https://chatgpt.com/share/6
 
 In the example, the set of 10 principles is explicitly labeled as **selected and synthesized by AI**, not an official numbered list from the author. The application workflow and benchmark percentages in the conversation are illustrative; the percentages are hypothetical, not Reading Companion results. The conversation also does not establish that the entire book was reviewed.
 
-## 8. Quality and tools
+## 8. ✅ Quality and tools
 
 <a id="quality"></a>
 The repository includes optional Python helpers: `knowledge_compiler.py` checks execution-plan structure; `ia_map.py` represents maps; `checkpoint.py` validates and saves checkpoints; and `reading_session.py` supports session-state operations. They check structure/state against contracts; they do not read or understand books, verify web content, grade semantics or provide account memory. See the [quality guide and commands](docs/quality.en.md).

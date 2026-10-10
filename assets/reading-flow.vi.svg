@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 450" role="img" aria-labelledby="title desc">
+  <title id="title">Luồng xử lý có điều kiện của Reading Companion</title>
+  <desc id="desc">Bắt đầu từ mục tiêu, phạm vi và mode; kiểm nguồn hoặc trạng thái phiên; chọn nhánh cần thiết; áp dụng gate phù hợp; trả kết quả cùng giới hạn và trạng thái thật.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1728"/>
+      <stop offset="1" stop-color="#142b43"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#68e0c1"/>
+      <stop offset="1" stop-color="#7bb8ff"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0 0 9 4.5 0 9Z" fill="#75a0c1"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="450" rx="24" fill="url(#bg)"/>
+  <circle cx="1120" cy="10" r="170" fill="#24456a" opacity=".2"/>
+  <circle cx="40" cy="425" r="150" fill="#1c796d" opacity=".13"/>
+  <text x="48" y="49" fill="#80e2ca" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="2">READING COMPANION  /  LUỒNG CÓ ĐIỀU KIỆN</text>
+  <text x="48" y="82" fill="#f4f8fc" font-family="Segoe UI,Arial,sans-serif" font-size="24" font-weight="700">Chọn đúng nhánh, giữ rõ nguồn và trạng thái</text>
+  <g fill="none" stroke="#75a0c1" stroke-width="2" marker-end="url(#arrow)">
+    <path d="M270 184H314"/>
+    <path d="M565 184H610"/>
+    <path d="M885 237V292H710V316"/>
+    <path d="M825 357H885"/>
+  </g>
+  <g font-family="Segoe UI,Arial,sans-serif">
+    <g transform="translate(42 118)">
+      <rect width="228" height="132" rx="17" fill="#1a3048" stroke="#31516e"/>
+      <circle cx="29" cy="29" r="16" fill="#1d5e5a"/>
+      <text x="29" y="34" text-anchor="middle" fill="#a8f2df" font-size="13" font-weight="700">01</text>
+      <text x="20" y="68" fill="#f4f8fc" font-size="17" font-weight="700">Định khung</text>
+      <text x="20" y="94" fill="#b8c8d8" font-size="13">Mục tiêu · phạm vi · mode</text>
+      <text x="20" y="114" fill="#b8c8d8" font-size="13">Nguồn và lựa chọn đã có</text>
+    </g>
+    <g transform="translate(315 118)">
+      <rect width="250" height="132" rx="17" fill="#1a3048" stroke="#31516e"/>
+      <circle cx="29" cy="29" r="16" fill="#3b4a78"/>
+      <text x="29" y="34" text-anchor="middle" fill="#c7d2ff" font-size="13" font-weight="700">02</text>
+      <text x="20" y="68" fill="#f4f8fc" font-size="17" font-weight="700">Kiểm đầu vào</text>
+      <text x="20" y="94" fill="#b8c8d8" font-size="13">Nguồn · revision · locator</text>
+      <text x="20" y="114" fill="#b8c8d8" font-size="13">Hoặc state phiên có sẵn</text>
+    </g>
+    <g transform="translate(610 105)">
+      <rect width="275" height="158" rx="17" fill="#1a3048" stroke="#31516e"/>
+      <circle cx="29" cy="29" r="16" fill="#69522b"/>
+      <text x="29" y="34" text-anchor="middle" fill="#ffe2a2" font-size="13" font-weight="700">03</text>
+      <text x="20" y="67" fill="#f4f8fc" font-size="17" font-weight="700">Định tuyến tác vụ</text>
+      <text x="20" y="94" fill="#b8c8d8" font-size="13">Deep · Extract · Combined</text>
+      <text x="20" y="116" fill="#b8c8d8" font-size="13">Compare · Map · Example</text>
+      <text x="20" y="138" fill="#b8c8d8" font-size="13">Answer · Session · Handoff</text>
+    </g>
+    <g transform="translate(485 316)">
+      <rect width="340" height="82" rx="17" fill="#1a3048" stroke="#31516e"/>
+      <circle cx="29" cy="29" r="16" fill="#623d51"/>
+      <text x="29" y="34" text-anchor="middle" fill="#ffc5d5" font-size="13" font-weight="700">04</text>
+      <text x="55" y="32" fill="#f4f8fc" font-size="16" font-weight="700">Gate phù hợp với tác vụ</text>
+      <text x="20" y="61" fill="#b8c8d8" font-size="13">Nguồn · nghĩa · lựa chọn · ví dụ · Q · state</text>
+    </g>
+    <g transform="translate(885 316)">
+      <rect width="273" height="82" rx="17" fill="#1a3048" stroke="#31516e"/>
+      <circle cx="29" cy="29" r="16" fill="#1d5e5a"/>
+      <text x="29" y="34" text-anchor="middle" fill="#a8f2df" font-size="13" font-weight="700">05</text>
+      <text x="55" y="32" fill="#f4f8fc" font-size="16" font-weight="700">Trả kết quả</text>
+      <text x="20" y="61" fill="#b8c8d8" font-size="13">Nguồn · giới hạn · state thật</text>
+    </g>
+  </g>
+  <rect x="42" y="408" width="1116" height="2" rx="1" fill="url(#accent)" opacity=".8"/>
+  <text x="48" y="431" fill="#9fb5c9" font-family="Segoe UI,Arial,sans-serif" font-size="12">Các bước được gọi theo yêu cầu; đây không phải pipeline bắt buộc cho mọi lượt.</text>
+</svg>

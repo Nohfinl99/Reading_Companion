@@ -23,7 +23,7 @@ Reading Companion biến một phạm vi sách hoặc tài liệu thành lời g
 **Đi nhanh:** [Bắt đầu](#quick-start) · [Modes](#reading-modes) · [Tác vụ](#supported-tasks) · [Artifacts](#outputs) · [Kiến trúc](#workflow) · [Chất lượng](#quality) · [Tài liệu](#documentation)
 
 <a id="quick-start"></a>
-## 1. Bắt đầu nhanh
+## 1. 📖 Bắt đầu nhanh
 
 Mở Reading Companion trong host tương thích, cung cấp hoặc đính kèm tài liệu, rồi nêu **mục tiêu**, **phạm vi** và **mode**. Nếu chưa chọn mode, hãy yêu cầu Companion đề xuất và giải thích lý do. Repository này chứa package plugin, không phải ứng dụng web chạy độc lập; cách cài/nạp và quyền truy cập nguồn tùy host. Plugin không kèm thư viện sách, MCP server riêng hay bộ nhớ tài khoản.
 
@@ -64,7 +64,7 @@ Mode xác định loại tác vụ. Style như `standard`, `quick`, `chill` ho�
 
 Các tác vụ này dùng chung provenance và gate kiểm định; Companion chỉ gọi nhánh phù hợp với yêu cầu, không chạy toàn bộ workflow cho mọi lượt.
 
-## 4. Artifact có thể tạo
+## 4. 🧩 Artifact có thể tạo
 
 <a id="outputs"></a>
 Registry canonical mô tả các artifact dưới đây. Đây là lựa chọn theo mục tiêu, không phải danh sách bắt buộc trong mọi phiên; số Knowledge Units vẫn phụ thuộc nội dung và phạm vi đọc.
@@ -80,10 +80,14 @@ Registry canonical mô tả các artifact dưới đây. Đây là lựa chọn 
 
 Các mã `RA-*` là technical IDs trong [artifact registry](skills/sid-reading-companion/references/reading-protocols.md#r09--output-artifacts-oa1oa4); hình thức đầu ra có thể là Markdown/prose khi không thể xuất artifact theo contract.
 
-## 5. Workflow và kiến trúc
+## 5. 🔄 Workflow và kiến trúc
 
 <a id="workflow"></a>
 Mỗi yêu cầu đi theo nhánh cần thiết: xác định goal/scope → kiểm tra quyền truy cập nguồn và locator → định tuyến stack → kiểm tra gate áp dụng → trình bày kết quả và giới hạn. Điều hướng phiên hoặc đánh giá câu trả lời đang chờ có thể dùng state hiện có mà không biên dịch lại sách.
+
+<p align="center">
+  <img src="assets/reading-flow.vi.svg" alt="Luồng có điều kiện: định khung yêu cầu, kiểm nguồn hoặc trạng thái, định tuyến tác vụ, áp dụng gate phù hợp và trả kết quả có giới hạn" width="1000" />
+</p>
 
 Xem [kiến trúc hệ thống](docs/architecture.vi.md) để biết trách nhiệm của controller, Knowledge Compiler, reading protocols, data contracts, helper và CI. Sơ đồ không phải pipeline bắt buộc cho mọi lượt.
 
@@ -109,7 +113,7 @@ Cuộc trò chuyện mẫu về [*AI Engineering* — Extract · Quick](https://
 
 Trong ví dụ, nhóm 10 nguyên lý được ghi là **do AI chọn và tổng hợp**, không phải danh sách đánh số chính thức của tác giả. Quy trình ứng dụng và các tỷ lệ benchmark trong chat là phần minh họa; các tỷ lệ được nêu giả định, không phải kết quả chạy Reading Companion. Nguồn chat cũng không xác nhận đã kiểm tra toàn bộ cuốn sách.
 
-## 8. Chất lượng và công cụ
+## 8. ✅ Chất lượng và công cụ
 
 <a id="quality"></a>
 Repository có các helper Python tùy chọn: `knowledge_compiler.py` kiểm tra cấu trúc execution plan; `ia_map.py` biểu diễn map; `checkpoint.py` kiểm tra và lưu checkpoint; `reading_session.py` hỗ trợ thao tác trạng thái phiên. Chúng kiểm tra cấu trúc/state theo contract, không đọc hiểu sách, xác minh nội dung web, chấm ngữ nghĩa hoặc cung cấp bộ nhớ tài khoản. Xem [hướng dẫn kiểm tra và lệnh chạy](docs/quality.vi.md).
