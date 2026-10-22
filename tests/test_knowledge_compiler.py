@@ -197,12 +197,12 @@ def test_kc_07_reference_plan_compare_map_continue():
     ]
 
 
-def test_kc_08_reference_plan_transfer_current_behavior():
+def test_kc_08_reference_plan_transfer_includes_r13():
     plan = kc.reference_plan("transfer", "deep")
-    assert plan == [MASTER_M05, KC_ALL, protocols_ref(["R09", "R04", "R06"])]
+    assert plan == [MASTER_M05, KC_ALL, protocols_ref(["R09", "R13", "R04", "R06"])]
     sections = plan[-1]["section_ids"]
-    # KNOWN GAP KC-08: transfer reference_plan lacks R13 — locked to current behavior; fix tracked separately, outside P0 scope.
-    assert "R13" not in sections
+    # KC-08 closed: R13 added to the transfer reference plan per NohFinl's decision, 2026-10-23.
+    assert "R13" in sections
 
 
 def test_kc_09_reference_plan_validated_content():
