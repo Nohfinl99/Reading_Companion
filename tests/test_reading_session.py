@@ -1212,3 +1212,59 @@ def test_rs_60_guard_transition_pending_support_kept_ok(rs, fx):
     new = fx.state_session(fx.session_nav1(), book,
                            assessments=[_assessment(support="hint")])
     assert rs.guard_transition(old, new) is None
+
+
+# ------------------------------------------------------- Red Team regressions
+
+def test_cp_a04_parse_json_rejects_duplicate_keys(rs):
+    assert_raises(rs.InvalidSession, "Duplicate JSON key: revision",
+                  rs.parse_json, '{"revision": 3, "revision": 2}')
+    assert_raises(rs.InvalidSession, "Duplicate JSON key: support",
+                  rs.parse_json,
+                  '{"outer": {"support": "hint", "support": "none"}}')
+
+
+def test_cp_a05_read_json_rejects_oversize_input(rs, tmp_path, monkeypatch):
+    path = tmp_path / "state.json"
+    path.write_text('{"version": 1}', encoding="utf-8")
+    monkeypatch.setattr(rs, "MAX_JSON_BYTES", 4)
+    assert_raises(rs.InvalidSession, "JSON input exceeds the 4-byte limit",
+                  rs.read_json, path)
+
+
+@pytest.mark.parametrize("excerpt", ["C", "Cơ chế"])
+def test_cp_a02_connection_excerpt_below_grounding_threshold(rs, fx, excerpt):
+    # Both excerpts occur in the cited line; length/word count is the blocker.
+    conn = fx.conn_book()
+    conn["evidence"][0]["excerpt"] = excerpt
+    session = _session_with_conn(fx, conn)
+    assert_raises(rs.InvalidSession,
+                  "Connection excerpt is too short to ground evidence",
+                  _validate_session, rs, fx, session)
+
+
+@pytest.mark.parametrize("old_support", ["none", "hint", "worked_example"])
+def test_rs_a01_guard_transition_to_unknown_from_known_support_blocked(
+        rs, fx, old_support):
+    # RS-A01: "unknown" is loss of a known support state, not the top rank.
+    book = fx.book()
+    old = fx.state_pending(support=old_support, book=book)
+    new = fx.state_pending(support="unknown", book=book)
+    assert_raises(rs.InvalidSession, "Question support cannot decrease",
+                  rs.guard_transition, old, new)
+
+
+@pytest.mark.parametrize(("old_support", "new_support"), [
+    ("unknown", "unknown"),
+    ("unknown", "none"),
+    ("unknown", "hint"),
+    ("unknown", "worked_example"),
+    ("none", "hint"),
+    ("hint", "worked_example"),
+])
+def test_rs_a01_guard_transition_support_gain_or_unknown_start_ok(
+        rs, fx, old_support, new_support):
+    book = fx.book()
+    old = fx.state_pending(support=old_support, book=book)
+    new = fx.state_pending(support=new_support, book=book)
+    assert rs.guard_transition(old, new) is None
