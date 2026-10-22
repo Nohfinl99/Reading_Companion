@@ -154,7 +154,7 @@ Các helper đã được gia cố đúng vào những đường mà probe đố
 - Excerpt dùng làm căn cứ phải đạt ngưỡng tối thiểu (≥ 10 ký tự và ≥ 2 từ) ở cả checkpoint và evidence của phiên.
 - File nguồn được đọc theo luồng với giới hạn 1 MiB mỗi dòng; state có thể khai `source_root`, và export gắn cảnh báo tường minh khi nguồn là tự khai mà chưa gắn gốc.
 - Support của phiên không còn “giảm vào unknown”: chuyển về `unknown` từ mức đã biết bị coi là mất thông tin và bị chặn. Chu trình learning_order được kiểm bất kể views yêu cầu, và từ khóa dành riêng của Mermaid bị cấm làm ID node của map.
-- Hai lỗi trước đây đã sửa: `timestamp()` trả đúng thông điệp chẩn đoán “needs timezone” (trước là [issue #1](https://github.com/Nohfinl99/Reading_Companion/issues/1)), và guard `Cannot overwrite source` trong `export()` đã chạm tới được trở lại (trước là [issue #2](https://github.com/Nohfinl99/Reading_Companion/issues/2)).
+- Hai lỗi trước đây đã sửa: `timestamp()` trả đúng thông điệp chẩn đoán “needs timezone” (trước là [issue #1](https://github.com/Nohfinl99/Reading_Companion/issues/1)), và guard `Cannot overwrite source` trong `export()` đã chạm tới được trở lại (trước là [issue #2](https://github.com/Nohfinl99/Reading_Companion/issues/2)). Hai instance anh em cùng pattern cũng đã được sửa ([issue #5](https://github.com/Nohfinl99/Reading_Companion/issues/5)): chẩn đoán timezone của `checked_at` cho unit `current_source` trong `validate()`, và thứ tự guard differ-from-source trong `initialize()`.
 
 ### Khoảng trống đã khai báo
 
