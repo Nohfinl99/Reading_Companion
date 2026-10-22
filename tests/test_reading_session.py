@@ -1256,7 +1256,10 @@ def test_rs_a01_guard_transition_to_unknown_from_known_support_blocked(
 
 @pytest.mark.parametrize(("old_support", "new_support"), [
     ("unknown", "unknown"),
-    ("unknown", "none"),
+    # SUPERSESSION 2026-10-23 (issue #8): ("unknown","none") moved from
+    # allowed to blocked — old expectation followed the RS-A01 rationale
+    # in the docstring; superseded against SC04 (stack-contracts.md:55)
+    # and R11 (reading-protocols.md:303). See CHANGELOG 'Continuity fix'.
     ("unknown", "hint"),
     ("unknown", "worked_example"),
     ("none", "hint"),
@@ -1267,4 +1270,101 @@ def test_rs_a01_guard_transition_support_gain_or_unknown_start_ok(
     book = fx.book()
     old = fx.state_pending(support=old_support, book=book)
     new = fx.state_pending(support=new_support, book=book)
+    assert rs.guard_transition(old, new) is None
+
+
+def test_rs_a01_guard_transition_unknown_to_none_blocked(rs, fx):
+    # SUPERSESSION 2026-10-23 (issue #8): ("unknown","none") moved from
+    # allowed to blocked — old expectation followed the RS-A01 rationale
+    # in the docstring; superseded against SC04 (stack-contracts.md:55)
+    # and R11 (reading-protocols.md:303). See CHANGELOG 'Continuity fix'.
+    book = fx.book()
+    old = fx.state_pending(support="unknown", book=book)
+    new = fx.state_pending(support="none", book=book)
+    assert_raises(rs.InvalidSession, "Question support cannot decrease",
+                  rs.guard_transition, old, new)
+
+
+@pytest.mark.parametrize("attached_support", ["none", "hint", "worked_example"])
+def test_rs_a01_legacy_attach_context_known_support_blocked(
+        rs, fx, attached_support):
+    # Issue #8 (N2-B): a legacy question without context cannot be given
+    # a known-support context while it stays pending.
+    book = fx.book()
+    old = fx.state_pending(with_context=False, book=book)
+    new = fx.state_pending(support=attached_support, book=book)
+    assert_raises(rs.InvalidSession,
+                  "Legacy question support must remain unknown",
+                  rs.guard_transition, old, new)
+
+
+def test_rs_a01_legacy_attach_context_unknown_ok(rs, fx):
+    book = fx.book()
+    old = fx.state_pending(with_context=False, book=book)
+    new = fx.state_pending(support="unknown", book=book)
+    assert rs.guard_transition(old, new) is None
+
+
+def test_rs_a01_legacy_direct_independent_blocked(rs, fx):
+    # Issue #8 (B0): a legacy question cannot be resolved directly by an
+    # independent assessment; its effective support is unknown.
+    book = fx.book()
+    old = fx.state_pending(with_context=False, book=book)
+    new = fx.state_session(fx.session_nav1(), book,
+                           assessments=[_assessment(support="none",
+                                                    result="independent")])
+    assert_raises(rs.InvalidSession,
+                  "Assessment cannot erase question support",
+                  rs.guard_transition, old, new)
+
+
+@pytest.mark.parametrize(("context_support", "recorded_support"), [
+    ("worked_example", "hint"),
+    ("worked_example", "none"),
+])
+def test_rs_a01_assessment_support_downgrade_blocked(
+        rs, fx, context_support, recorded_support):
+    # Issue #8 (N1b): a resolving assessment may not record less support
+    # than the question actually had.
+    book = fx.book()
+    old = fx.state_pending(support=context_support, book=book)
+    new = fx.state_session(fx.session_nav1(), book,
+                           assessments=[_assessment(
+                               support=recorded_support)])
+    assert_raises(rs.InvalidSession,
+                  "Assessment cannot erase question support",
+                  rs.guard_transition, old, new)
+
+
+@pytest.mark.parametrize(("context_support", "recorded_support"), [
+    ("worked_example", "worked_example"),
+    ("hint", "worked_example"),
+])
+def test_rs_a01_assessment_support_equal_or_higher_ok(
+        rs, fx, context_support, recorded_support):
+    book = fx.book()
+    old = fx.state_pending(support=context_support, book=book)
+    new = fx.state_session(fx.session_nav1(), book,
+                           assessments=[_assessment(
+                               support=recorded_support)])
+    assert rs.guard_transition(old, new) is None
+
+
+def test_rs_a01_paused_assessment_support_downgrade_blocked(rs, fx):
+    # Issue #8 (N1b, paused surface): same rule for paused questions.
+    book = fx.book()
+    old = fx.state_paused("worked_example", book)
+    new = fx.state_session(fx.session_nav1(), book,
+                           assessments=[_assessment(support="hint")])
+    assert_raises(rs.InvalidSession,
+                  "Assessment cannot erase paused question support",
+                  rs.guard_transition, old, new)
+
+
+def test_rs_a01_new_question_may_start_at_none(rs, fx):
+    # R11 exception: a brand-new question with a clear criterion may
+    # start with context support none.
+    book = fx.book()
+    old = fx.state_session(fx.session_nav1(), book)
+    new = fx.state_pending(support="none", book=book)
     assert rs.guard_transition(old, new) is None

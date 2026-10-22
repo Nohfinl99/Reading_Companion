@@ -1023,6 +1023,25 @@ def test_cp_74_save_failure_keeps_original(cp, fx, tmp_path):
     assert target.read_bytes() == before
 
 
+def test_rs_a02_save_two_step_unknown_none_independent_blocked(
+        cp, fx, tmp_path):
+    # Issue #8 (N2-A through the real save path): rewriting a pending
+    # question's support from unknown to none in an intermediate save
+    # must be rejected, and the state file must stay byte-identical.
+    book = fx.book()
+    old = fx.state_pending(support="unknown", book=book)
+    candidate_state = fx.state_pending(support="none", book=book)
+    candidate_state["revision"] = 2
+    target = tmp_path / "state.json"
+    candidate = tmp_path / "candidate.json"
+    _write_state_file(cp, target, old)
+    before = target.read_bytes()
+    _write_state_file(cp, candidate, candidate_state)
+    assert_raises(cp.InvalidCheckpoint, "Question support cannot decrease",
+                  cp.save, target, candidate)
+    assert target.read_bytes() == before
+
+
 def test_cp_75_save_candidate_invalid_json(cp, fx, tmp_path):
     old, _new = _old_new(fx)
     target = tmp_path / "state.json"

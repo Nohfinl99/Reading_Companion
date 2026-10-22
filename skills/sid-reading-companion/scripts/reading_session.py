@@ -71,19 +71,41 @@ _KNOWN_SUPPORT_RANK = {'none': 0, 'hint': 1, 'worked_example': 2}
 def _support_not_decreased(old, new):
     """Return True when a support transition does not lose known support.
 
-    RS-A01 semantics: ``unknown`` is not the highest support level; it means
-    the support state is not known. Moving from any known level (``none``,
-    ``hint`` or ``worked_example``) to ``unknown`` therefore loses recorded
-    information and counts as a decrease. Moving away from ``unknown`` to a
-    known level establishes information and is allowed, as are increases
-    among the known levels (for example none -> hint and
-    hint -> worked_example).
+    ``unknown`` is not the highest support level; it means the support
+    state is not known. Moving from any known level (``none``, ``hint``
+    or ``worked_example``) to ``unknown`` therefore loses recorded
+    information and counts as a decrease. Increases among the known
+    levels are allowed (for example none -> hint and
+    hint -> worked_example), as is moving from ``unknown`` to ``hint``
+    or ``worked_example``: recording real assistance lowers, not raises,
+    the claim about the learner.
+
+    ``unknown -> none`` is forbidden (SC04, stack-contracts.md:55; R11,
+    reading-protocols.md:303). ``none`` is a positive claim — no
+    assistance was given — and it is the condition that unlocks an
+    ``independent`` assessment; it cannot be inferred from a state that
+    is merely not yet known.
+
+    Supersession 2026-10-23, issue #8: the RS-A01 rationale that allowed
+    ``unknown -> none`` is replaced by the rule above.
     """
     if new == 'unknown':
         return old == 'unknown'
     if old == 'unknown':
-        return True
+        return new != 'none'
     return _KNOWN_SUPPORT_RANK[new] >= _KNOWN_SUPPORT_RANK[old]
+
+
+def _assessment_support_ok(question_support, recorded):
+    """Assessment may not record less support than the question actually had.
+
+    ``unknown`` is unranked: from it, only claiming ``none`` is forbidden
+    (that is the claim that unlocks ``independent``); recording assistance
+    is conservative and allowed.
+    """
+    if question_support == 'unknown':
+        return recorded != 'none'
+    return _KNOWN_SUPPORT_RANK[recorded] >= _KNOWN_SUPPORT_RANK[question_support]
 
 
 def locator(value, sources):
@@ -363,11 +385,17 @@ def guard_transition(old, new):
             need(b['pending_context'] == {k: row[k] for k in ('cursor', 'resume_note', 'support')}, 'Resumed question must preserve context/support')
         for result in added_assessments:
             if result['question_id'] == row['question']['id']:
-                need(row['support'] == 'none' or result['support'] != 'none', 'Assessment cannot erase paused question support')
+                need(_assessment_support_ok(row['support'], result['support']), 'Assessment cannot erase paused question support')
     if old['pending_question'] is not None and a['pending_context'] is None:
         for row in b['paused_questions']:
             if row['question'] == old['pending_question']:
                 need(row['support'] == 'unknown', 'Legacy question support must remain unknown')
+        if new['pending_question'] == old['pending_question']:
+            newer = b['pending_context']
+            need(newer is None or newer['support'] == 'unknown', 'Legacy question support must remain unknown')
+        for result in added_assessments:
+            if result['question_id'] == old['pending_question']['id']:
+                need(_assessment_support_ok('unknown', result['support']), 'Assessment cannot erase question support')
     if old['pending_question'] is not None and a['pending_context'] is not None:
         context = a['pending_context']
         if new['pending_question'] == old['pending_question']:
@@ -380,7 +408,7 @@ def guard_transition(old, new):
                 need(all(row[k] == context[k] for k in ('cursor', 'resume_note', 'support')), 'Pause must preserve context/support')
         for result in added_assessments:
             if result['question_id'] == old['pending_question']['id']:
-                need(context['support'] == 'none' or result['support'] != 'none', 'Assessment cannot erase question support')
+                need(_assessment_support_ok(context['support'], result['support']), 'Assessment cannot erase question support')
 
 
 def main():
