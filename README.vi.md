@@ -8,7 +8,7 @@
 <p align="center"><em>A Vietnamese-first, source-grounded reading and knowledge-compilation plugin.</em></p>
 
 <p align="center">
-  <a href="plugin.json"><img src="https://img.shields.io/badge/Plugin-0.3.3-15324F?style=flat-square" alt="Plugin version 0.3.3" /></a>
+  <a href="plugin.json"><img src="https://img.shields.io/badge/Plugin-0.3.5-15324F?style=flat-square" alt="Plugin version 0.3.5" /></a>
   <a href="#verification"><img src="https://img.shields.io/badge/Helper%20guard%20cases-234-2E8B57?style=flat-square" alt="234 case kiểm tra guard của helper" /></a>
   <a href="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml"><img src="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml/badge.svg?branch=main" alt="Trạng thái kiểm tra GitHub Actions" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-2E8B57?style=flat-square" alt="Giấy phép MIT" /></a>
@@ -135,12 +135,12 @@ python -m pip install pytest
 python -m pytest tests/ -q
 ```
 
-**Ảnh chụp kiểm chứng — 23/10/2026, Python 3.12.3, pytest 9.1.1, sau đợt vá continuity:**
+**Ảnh chụp kiểm chứng — 23/10/2026, Python 3.12.3, pytest 9.1.1, cho bản phát hành 0.3.5 (gồm vá continuity, sửa định tuyến KC-08 và các guard anh em):**
 
 - **234 case guard đã đặc tả** cho bốn helper, cộng thêm các test an ninh CLI và test hồi quy của các đợt vá.
 - Kết quả toàn bộ suite: **556 passed, 0 xfailed**.
 - Kiểm tra độc lập: **234/234 ID case đều có mặt**, toàn bộ danh sách stage/section khớp, mutation probe **8/8 bị bắt** trên ngân hàng mở rộng.
-- Nghiệm thu đối kháng độc lập: **39/39 probe red team bị chặn** — gồm viết xuyên symlink, trường checkpoint tự phong, duplicate JSON key, JSON lồng sâu và nguồn quá khổ (nguồn 256 MB nhiều dòng được validate bằng đọc luồng với peak bộ nhớ ~19 MB; một dòng đơn vượt 1 MiB bị từ chối sạch).
+- Nghiệm thu đối kháng độc lập của vòng red team / pen test: **39/39 probe red team bị chặn** — gồm viết xuyên symlink, trường checkpoint tự phong, duplicate JSON key, JSON lồng sâu và nguồn quá khổ (nguồn 256 MB nhiều dòng được validate bằng đọc luồng với peak bộ nhớ ~19 MB; một dòng đơn vượt 1 MiB bị từ chối sạch).
 
 Bộ test khóa **lớp cơ học/cấu trúc hiện tại**. Nó không chứng minh đúng sai về ngữ nghĩa, hành vi của host LLM, benchmark thành công hay kết quả học tập. Các case benchmark `B01–B08` vẫn là đặc tả cho tới khi từng case được chạy với input, output và bằng chứng chấm thực tế.
 
@@ -205,4 +205,4 @@ assets/                       Product logo and explanatory illustrations
 
 Đọc [hướng dẫn đóng góp](CONTRIBUTING.md); thay đổi cần giữ định tuyến, provenance, IDs, contracts và trạng thái câu hỏi. Xem [CHANGELOG](CHANGELOG.md). Repository phát hành theo [MIT License](LICENSE).
 
-Technical plugin ID: `sid-reading-companion` · Display name: **Reading Companion** · Version: **0.3.3**.
+Technical plugin ID: `sid-reading-companion` · Display name: **Reading Companion** · Version: **0.3.5**.

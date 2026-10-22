@@ -5,7 +5,7 @@ description: Đọc sâu và trích xuất tri thức có nguồn bằng tiếng
 
 # Reading Companion — SID
 
-Đọc [controller](references/master-instruction.md) lần đầu. Chọn nhánh từ M04 và chỉ đọc section cần thiết. Version 0.3.3. Các reference canonical:
+Đọc [controller](references/master-instruction.md) lần đầu. Chọn nhánh từ M04 và chỉ đọc section cần thiết. Version 0.3.5. Các reference canonical:
 
 - [Master instruction](references/master-instruction.md): điều khiển, routing, gate và phạm vi.
 - [Knowledge Compiler](references/knowledge-compiler.md): nguồn, units, level, quan hệ và execution plan.
