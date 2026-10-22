@@ -391,9 +391,9 @@ def validate(state):
             require(url.scheme in {'http', 'https'} and bool(url.netloc), 'Invalid current source URL')
             try:
                 date = datetime.fromisoformat(unit.get('checked_at', '').replace('Z', '+00:00'))
-                require(date.tzinfo is not None, 'checked_at needs timezone')
             except (ValueError, TypeError):
                 raise InvalidCheckpoint('Invalid checked_at timestamp')
+            require(date.tzinfo is not None, 'checked_at needs timezone')
         for citation in citations:
             require(isinstance(citation, dict), 'Citation must be an object')
             require_allowed_fields(citation, _CITATION_FIELDS, 'citation')
@@ -477,8 +477,8 @@ def write_atomic(path, state):
 
 def initialize(source, target, mode):
     source, target = Path(source).resolve(), Path(target).absolute()
-    require(not target.exists() and not target.is_symlink(), 'State target already exists')
     require(target.resolve() != source, 'State target must differ from source')
+    require(not target.exists() and not target.is_symlink(), 'State target already exists')
     require(source.is_file(), 'Source file unavailable')
     state = {'schema_version': 1, 'revision': 1, 'mode': mode, 'scope': '', 'goal': '',
              'sources': [{'id': 'S01', 'path': str(source), 'sha256': sha256(source)}],

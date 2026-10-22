@@ -154,7 +154,7 @@ The helpers were hardened against the adversarial probes that initially bypassed
 - Grounding excerpts must meet a minimum size (≥ 10 characters and ≥ 2 words) in checkpoints and session evidence.
 - Source files are read by streaming with a 1 MiB per-line cap; states may declare a `source_root`, and exports warn explicitly when sources are self-declared without one.
 - Session support can no longer “decrease into the unknown”: moving to `unknown` from a known support level is treated as a loss and blocked. Learning-order cycles are checked regardless of the requested views, and Mermaid reserved words are rejected as map node IDs.
-- Two earlier defects are fixed: `timestamp()` reports its intended “needs timezone” diagnostic (was [issue #1](https://github.com/Nohfinl99/Reading_Companion/issues/1)), and the `Cannot overwrite source` guard in `export()` is reachable again (was [issue #2](https://github.com/Nohfinl99/Reading_Companion/issues/2)).
+- Two earlier defects are fixed: `timestamp()` reports its intended “needs timezone” diagnostic (was [issue #1](https://github.com/Nohfinl99/Reading_Companion/issues/1)), and the `Cannot overwrite source` guard in `export()` is reachable again (was [issue #2](https://github.com/Nohfinl99/Reading_Companion/issues/2)). Two sibling instances of the same patterns are fixed as well ([issue #5](https://github.com/Nohfinl99/Reading_Companion/issues/5)): the `checked_at` timezone diagnostic of `current_source` units in `validate()`, and the differ-from-source guard order in `initialize()`.
 
 ### Declared gaps
 
