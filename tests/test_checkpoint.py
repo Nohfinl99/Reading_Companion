@@ -552,12 +552,30 @@ def test_cp_45_validate_current_source_bad_url(cp, fx):
                   cp.validate, state)
 
 
-@pytest.mark.parametrize("checked_at", ["2026-01-01T00:00:00", "abc"])
-def test_cp_45_validate_current_source_bad_checked_at(cp, fx, checked_at):
+def test_cp_45_validate_current_source_bad_checked_at(cp, fx):
     unit = fx.unit_curr()
-    unit["checked_at"] = checked_at
+    unit["checked_at"] = "abc"
     state = fx.state(units=[unit])
     assert_raises(cp.InvalidCheckpoint, "Invalid checked_at timestamp",
+                  cp.validate, state)
+
+
+def test_cp_45_validate_current_source_checked_at_without_timezone(cp, fx):
+    unit = fx.unit_curr()
+    unit["checked_at"] = "2026-01-01T00:00:00"
+    state = fx.state(units=[unit])
+    assert_raises(cp.InvalidCheckpoint, "checked_at needs timezone",
+                  cp.validate, state)
+
+
+def test_cp_45_validate_current_source_checked_at_without_timezone_safety_pin(cp, fx):
+    # Safety pin cho instance anh em của CP-05: checked_at thiếu timezone của
+    # current_source (không phải input rác) phải bị chặn bằng đúng thông điệp
+    # chẩn đoán của guard chuyên biệt, không bị except nuốt thành lỗi chung.
+    unit = fx.unit_curr()
+    unit["checked_at"] = "2026-01-01T00:00:00"
+    state = fx.state(units=[unit])
+    assert_raises(cp.InvalidCheckpoint, "checked_at needs timezone",
                   cp.validate, state)
 
 
@@ -918,6 +936,17 @@ def test_cp_67_initialize_target_must_differ_from_source(cp, fx, tmp_path):
     ghost = tmp_path / "ghost.txt"
     assert_raises(cp.InvalidCheckpoint, "State target must differ from source",
                   cp.initialize, ghost, ghost, "deep")
+
+
+def test_cp_67_initialize_existing_source_as_target(cp, fx, tmp_path):
+    # Instance anh em của CP-78: khi target trùng chính file nguồn ĐANG TỒN
+    # TẠI, guard differ-from-source phải nổ trước guard already-exists để
+    # message chuyên biệt chạm tới được; nguồn không bị ghi đè.
+    book = fx.book()
+    before = book.read_bytes()
+    assert_raises(cp.InvalidCheckpoint, "State target must differ from source",
+                  cp.initialize, book, book, "deep")
+    assert book.read_bytes() == before
 
 
 def test_cp_68_initialize_source_unavailable(cp, fx, tmp_path):
