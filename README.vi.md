@@ -9,9 +9,10 @@
 
 <p align="center">
   <a href="plugin.json"><img src="https://img.shields.io/badge/Plugin-0.3.3-15324F?style=flat-square" alt="Plugin version 0.3.3" /></a>
-  <a href="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml"><img src="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml/badge.svg?branch=main" alt="GitHub Actions validation status" /></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-2E8B57?style=flat-square" alt="MIT License" /></a>
-  <img src="https://img.shields.io/badge/Language-Vietnamese%20first-7357A5?style=flat-square" alt="Vietnamese-first" />
+  <a href="#verification"><img src="https://img.shields.io/badge/Helper%20guard%20cases-234-2E8B57?style=flat-square" alt="234 case kiểm tra guard của helper" /></a>
+  <a href="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml"><img src="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml/badge.svg?branch=main" alt="Trạng thái kiểm tra GitHub Actions" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-2E8B57?style=flat-square" alt="Giấy phép MIT" /></a>
+  <img src="https://img.shields.io/badge/Language-Vietnamese%20first-7357A5?style=flat-square" alt="Ưu tiên tiếng Việt" />
 </p>
 
 <p align="center"><a href="README.md">Read in English</a></p>
@@ -20,12 +21,25 @@ Reading Companion biến một phạm vi sách hoặc tài liệu thành lời g
 
 > **Nguyên tắc cốt lõi:** phân biệt điều tài liệu nói với điều AI suy luận, chọn hoặc biên soạn.
 
-**Đi nhanh:** [Bắt đầu](#quick-start) · [Modes](#reading-modes) · [Tác vụ](#supported-tasks) · [Artifacts](#outputs) · [Kiến trúc](#workflow) · [Chất lượng](#quality) · [Tài liệu](#documentation)
+**Đi nhanh:** [Hiện trạng triển khai](#implementation) · [Bắt đầu](#quick-start) · [Modes](#reading-modes) · [Định tuyến](#routing) · [Đầu ra](#outputs) · [Kiểm chứng](#verification) · [Tài liệu](#documentation)
+
+<a id="implementation"></a>
+## 1. Hệ thống đã triển khai thực tế
+
+Reading Companion là **một package plugin chứa một skill**, không phải ứng dụng chạy độc lập và cũng không phải hệ thống multi-agent bằng phần mềm. Host LLM tương thích đọc chỉ dẫn của skill và thực hiện workflow đọc. Các “role” và “stack” trong giao thức dùng để phân chia trách nhiệm; chúng không tạo ra các agent phần mềm độc lập.
+
+| Tầng | Hình thức triển khai | Trách nhiệm | Giới hạn |
+|---|---|---|---|
+| Host runtime | Host LLM tương thích + `SKILL.md` | Đọc nguồn, tuân theo workflow và tạo câu trả lời | Repository không cung cấp host, thư viện sách, MCP server riêng hay bộ nhớ tài khoản |
+| Controller | Master instruction `M01–M07` | Định khung goal/scope, định tuyến, áp dụng gate và nêu giới hạn | Là controller bằng văn bản do host LLM thực thi—không phải dịch vụ điều phối chạy bằng code |
+| Protocol stacks | Knowledge Compiler, reading protocols và stack contracts | Quy định cách xử lý nguồn, unit, trạng thái phiên, artifact và tiêu chí đánh giá | Contract mô tả hành vi; tự nó không chứng minh một lượt chạy đã xảy ra |
+| Helper xác định | Bốn script Python | Kiểm tra execution plan, map, checkpoint và trạng thái phiên | Chỉ kiểm tra cấu trúc/state; không đọc hiểu sách hay chấm đúng sai về ngữ nghĩa |
+| Đảm bảo chất lượng repo | Repository validator + bộ test guard bằng pytest | Kiểm tra cấu trúc package và khóa hành vi guard của helper | Không đo chất lượng đọc hiểu hay kết quả học tập |
 
 <a id="quick-start"></a>
-## 1. 📖 Bắt đầu nhanh
+## 2. 📖 Bắt đầu nhanh
 
-Mở Reading Companion trong host tương thích, cung cấp hoặc đính kèm tài liệu, rồi nêu **mục tiêu**, **phạm vi** và **mode**. Nếu chưa chọn mode, hãy yêu cầu Companion đề xuất và giải thích lý do. Repository này chứa package plugin, không phải ứng dụng web chạy độc lập; cách cài/nạp và quyền truy cập nguồn tùy host. Plugin không kèm thư viện sách, MCP server riêng hay bộ nhớ tài khoản.
+Mở Reading Companion trong host tương thích, cung cấp hoặc đính kèm tài liệu, rồi nêu **mục tiêu**, **phạm vi** và **mode**. Nếu chưa chọn mode, hãy yêu cầu Companion đề xuất và giải thích lý do. Cách cài/nạp và quyền truy cập nguồn tùy thuộc vào host.
 
 ```text
 Đọc sâu chương 2, từ mục “Problem Framing” đến hết “Opportunity Mapping”.
@@ -36,12 +50,12 @@ Hoặc:
 
 ```text
 Trích xuất các ý có thể áp dụng trong phần đã chọn. Nêu tiêu chí lựa chọn và locator.
-Phân biệt số lượng tác giả quy định với phần em tự chọn; nêu rõ phần nguồn còn thiếu.
+Phân biệt số lượng tác giả quy định với phần AI tự chọn; nêu rõ phần nguồn còn thiếu.
 ```
 
-## 2. Chọn chế độ đọc
-
 <a id="reading-modes"></a>
+## 3. Chọn chế độ đọc
+
 | Mode | Dùng khi | Đầu ra trọng tâm |
 |---|---|---|
 | `deep` | Muốn hiểu khái niệm, điều kiện và lập luận | Giải thích có nguồn, quan hệ giữa các ý và câu hỏi học tập khi phù hợp |
@@ -50,24 +64,36 @@ Phân biệt số lượng tác giả quy định với phần em tự chọn; n
 
 Mode xác định loại tác vụ. Style như `standard`, `quick`, `chill` hoặc `challenger` chỉ điều chỉnh cách trình bày, không thay mode hay bỏ điều kiện kiểm nguồn.
 
-## 3. Tác vụ và đầu ra
+<a id="routing"></a>
+## 4. 🔄 Cách một yêu cầu được định tuyến
 
-<a id="supported-tasks"></a>
+Mỗi yêu cầu chỉ đi theo nhánh cần thiết—không mặc định chạy toàn bộ workflow:
+
+1. **Định khung** mục tiêu, phạm vi, mode, nguồn hoặc state hiện có.
+2. **Kiểm tra quyền truy cập và locator.** Nguồn không truy cập được và state còn thiếu phải được nêu rõ, không tự dựng lại.
+3. **Định tuyến** bằng ma trận trigger `M04` tới Knowledge Compiler hoặc reading-protocol stack phù hợp.
+4. **Áp dụng gate liên quan.** Execution plan, map, checkpoint và trạng thái phiên có cấu trúc có thể được kiểm bằng helper Python.
+5. **Trình bày kết quả kèm giới hạn**, gồm provenance, điểm chưa giải quyết và câu hỏi đang chờ người học trả lời nếu có.
+
+<p align="center">
+  <img src="assets/reading-flow.vi.svg" alt="Luồng có điều kiện: định khung yêu cầu, kiểm nguồn hoặc trạng thái, định tuyến tác vụ, áp dụng gate phù hợp và trả kết quả có giới hạn" width="1000" />
+</p>
+
+Điều hướng phiên hoặc đánh giá câu trả lời đang chờ có thể dùng state hiện có mà không biên dịch lại sách. Xem [kiến trúc hệ thống](docs/architecture.vi.md) để biết trách nhiệm của từng tầng.
+
+<a id="outputs"></a>
+## 5. Tác vụ và artifact được hỗ trợ
+
 | Tác vụ | Companion hỗ trợ | Điều kiện và giới hạn |
 |---|---|---|
 | So sánh | Đối chiếu lựa chọn theo cùng tiêu chí, bối cảnh, nguồn và điều kiện; nêu khác biệt, đánh đổi và điểm chưa giải quyết | Không tự chấm điểm hoặc coi nguồn mới hơn luôn đúng |
-| Bản đồ tri thức | Biểu diễn node và quan hệ có căn cứ thành outline, bảng hoặc sơ đồ; phân biệt cấu trúc nguồn với góc nhìn do AI đề xuất | Sơ đồ không tự chứng minh quan hệ hoặc thứ tự học |
-| Ví dụ áp dụng | Tạo ví dụ có nhãn và chỉ rõ unit, bước lập luận, điều kiện được giữ/thay đổi và điều ví dụ chưa chứng minh | Ví dụ giả định không phải bằng chứng hiệu quả thực tế |
+| Bản đồ tri thức | Biểu diễn node và quan hệ có căn cứ thành outline, bảng hoặc sơ đồ | Sơ đồ không tự chứng minh quan hệ hoặc thứ tự học |
+| Ví dụ áp dụng | Tạo ví dụ có nhãn, nối với unit, bước lập luận và điều kiện được giữ/thay đổi | Ví dụ giả định không phải bằng chứng hiệu quả thực tế |
 | Phản hồi câu trả lời | Đối chiếu câu trả lời thật với câu hỏi đang chờ và tiêu chí đã chuẩn bị | Chưa có response thì giữ trạng thái chưa đánh giá; không tự tạo câu trả lời hoặc mastery |
-| Claim nhạy theo thời gian | Khi tác vụ có claim động, đối chiếu nguồn hiện tại trong phạm vi cần kiểm | Cần host/tool truy cập nguồn; nếu không có, nêu rõ chưa kiểm hiện hành |
-| Tiếp tục phiên | Điều hướng, tạm dừng/tiếp tục, xem tiến độ hoặc bàn giao checkpoint có sẵn | Chỉ khôi phục dữ liệu thực được cung cấp/lưu; không có memory tài khoản hay đồng bộ tự động |
+| Claim nhạy theo thời gian | Đối chiếu claim động với nguồn hiện tại trong phạm vi cần kiểm | Cần host/tool truy cập nguồn; nếu không có, nêu rõ chưa kiểm hiện hành |
+| Tiếp tục phiên | Điều hướng, tạm dừng/tiếp tục, xem tiến độ hoặc bàn giao checkpoint có sẵn | Chỉ khôi phục dữ liệu thực được cung cấp/lưu; không đồng bộ tự động |
 
-Các tác vụ này dùng chung provenance và gate kiểm định; Companion chỉ gọi nhánh phù hợp với yêu cầu, không chạy toàn bộ workflow cho mọi lượt.
-
-## 4. 🧩 Artifact có thể tạo
-
-<a id="outputs"></a>
-Registry canonical mô tả các artifact dưới đây. Đây là lựa chọn theo mục tiêu, không phải danh sách bắt buộc trong mọi phiên; số Knowledge Units vẫn phụ thuộc nội dung và phạm vi đọc.
+Artifact được chọn theo mục tiêu, không phải danh sách bắt buộc trong mọi phiên:
 
 | Mục tiêu | Artifact có thể dùng |
 |---|---|
@@ -78,22 +104,10 @@ Registry canonical mô tả các artifact dưới đây. Đây là lựa chọn 
 | Áp dụng hoặc kiểm tra transfer | Ví dụ mới có cầu nối hoặc câu hỏi tình huống (`RA-07`) |
 | Phản hồi và tiếp tục | Feedback cho response thật (`RA-08`); bản handoff/checkpoint có state thực (`RA-09`) |
 
-Các mã `RA-*` là technical IDs trong [artifact registry](skills/sid-reading-companion/references/reading-protocols.md#r09--output-artifacts-oa1oa4); hình thức đầu ra có thể là Markdown/prose khi không thể xuất artifact theo contract.
+Các mã `RA-*` là technical IDs trong [artifact registry](skills/sid-reading-companion/references/reading-protocols.md#r09--output-artifacts-oa1oa4). Khi không thể xuất artifact đúng contract, nội dung có thể được trình bày bằng Markdown/văn bản thường.
 
-## 5. 🔄 Workflow và kiến trúc
+## 6. Quy tắc về nguồn, state và bằng chứng
 
-<a id="workflow"></a>
-Mỗi yêu cầu đi theo nhánh cần thiết: xác định goal/scope → kiểm tra quyền truy cập nguồn và locator → định tuyến stack → kiểm tra gate áp dụng → trình bày kết quả và giới hạn. Điều hướng phiên hoặc đánh giá câu trả lời đang chờ có thể dùng state hiện có mà không biên dịch lại sách.
-
-<p align="center">
-  <img src="assets/reading-flow.vi.svg" alt="Luồng có điều kiện: định khung yêu cầu, kiểm nguồn hoặc trạng thái, định tuyến tác vụ, áp dụng gate phù hợp và trả kết quả có giới hạn" width="1000" />
-</p>
-
-Xem [kiến trúc hệ thống](docs/architecture.vi.md) để biết trách nhiệm của controller, Knowledge Compiler, reading protocols, data contracts, helper và CI. Sơ đồ không phải pipeline bắt buộc cho mọi lượt.
-
-## 6. Nguồn và trạng thái học
-
-<a id="source-and-learning-state"></a>
 - Locator và phạm vi đọc giới hạn điều có thể kết luận; nguồn chưa truy cập được phải được nêu rõ.
 - Số Knowledge Units phát sinh từ nội dung/phạm vi, không theo quota cố định. Nếu AI chọn danh sách, cần nêu tiêu chí, nguồn gốc và phần không chọn/chưa kiểm.
 - Ví dụ mới phải nối rõ với unit và mạch lập luận liên quan; ví dụ minh họa không tự chứng minh hiệu quả.
@@ -102,7 +116,45 @@ Xem [kiến trúc hệ thống](docs/architecture.vi.md) để biết trách nhi
 
 Chi tiết field và chủ sở hữu nằm trong [bản đồ nguyên lý](docs/principles.vi.md) và [Stack contracts](skills/sid-reading-companion/references/stack-contracts.md).
 
-## 7. Ví dụ trích xuất nhanh
+<a id="verification"></a>
+## 7. ✅ Helper xác định và kiểm chứng
+
+Các helper tùy chọn tạo thành phần có thể thực thi bằng code của luồng kiểm soát:
+
+| Helper | Trách nhiệm cấu trúc | Số case guard |
+|---|---|---:|
+| `checkpoint.py` | Kiểm tra và xuất checkpoint; kiểm identity/hash của nguồn, revision, excerpt, locator và tính hiện hành | CP: 81 |
+| `reading_session.py` | Thực hiện các thao tác trạng thái phiên dùng cho checkpoint và luồng tiếp tục phiên | RS: 60 |
+| `knowledge_compiler.py` | Kiểm tra source inventory và Knowledge Units; tạo routing plan, reference plan và event plan | KC: 58 |
+| `ia_map.py` | Kiểm tra và biểu diễn information-architecture map cùng các quan hệ của nó | IA: 35 |
+
+Chạy bộ test guard của helper từ thư mục gốc của repository:
+
+```bash
+python -m pip install pytest
+python -m pytest tests/ -q
+```
+
+**Ảnh chụp kiểm chứng — 22/10/2026, Python 3.12.3, pytest 9.1.1:**
+
+- **234 case guard đã đặc tả** cho bốn helper.
+- Kết quả chạy tại chỗ: **476 passed, 2 xfailed**.
+- Kiểm tra độc lập: **234/234 ID case đều có mặt**, toàn bộ danh sách stage/section khớp, và **6/6 mutation probe đều bị bắt**.
+- Hai xfail đều là `strict`, nên nếu sửa code nền mà quên gỡ marker, bộ test sẽ chuyển đỏ.
+
+Bộ test khóa **lớp cơ học/cấu trúc hiện tại**. Nó không chứng minh đúng sai về ngữ nghĩa, hành vi của host LLM, benchmark thành công hay kết quả học tập. Các case benchmark `B01–B08` vẫn là đặc tả cho tới khi từng case được chạy với input, output và bằng chứng chấm thực tế.
+
+### Khoảng trống đã khai báo
+
+- **CP-05 — [issue #1](https://github.com/Nohfinl99/Reading_Companion/issues/1):** `timestamp()` thay thông điệp chẩn đoán dự kiến “needs timezone” bằng lỗi timestamp chung. Input không hợp lệ vẫn bị chặn.
+- **CP-78 — [issue #2](https://github.com/Nohfinl99/Reading_Companion/issues/2):** guard chuyên biệt “cannot overwrite source” trong `export()` không thể chạm tới vì guard kiểm tra đích đã tồn tại chạy trước. File nguồn vẫn được guard đầu tiên bảo vệ.
+- **KC-08:** `reference_plan('transfer')` hiện trả `[R09, R04, R06]` và thiếu `R13`. Test khóa hành vi hiện tại này và đánh dấu là khoảng trống định tuyến đã biết, chờ quyết định riêng.
+- Chỉ dẫn định tuyến hiện chưa có ví dụ few-shot cho routing và chưa có luật ưu tiên/phân xử chung khi nhiều trigger chồng nhau. Giới hạn sửa lỗi tường minh duy nhất hiện nằm cục bộ trong validation `R14`; chưa có ngân sách vòng lặp runtime dùng chung.
+- Định dạng trace/sidecar đã được đặc tả trong contract, nhưng phiên bản này chưa có bước ghi trace hoặc xuất sidecar chuyên biệt.
+
+GitHub Actions kiểm tra manifest, cấu trúc repository và liên kết tài liệu, cú pháp helper và giao diện CLI trên Python 3.10–3.12. **Lưu ý:** bước chạy pytest chưa nằm trong workflow trên `main`—hãy chạy bộ test tại chỗ bằng các lệnh ở trên cho tới khi maintainer bổ sung bước đó. [Hướng dẫn chất lượng](docs/quality.vi.md) giải thích giới hạn bằng chứng, còn [benchmark specification](skills/sid-reading-companion/references/case-benchmark.md) quy định bằng chứng cần có trước khi một benchmark được báo là đạt.
+
+## 8. Ví dụ trích xuất nhanh
 
 <a id="quick-extract"></a>
 Cuộc trò chuyện mẫu về [*AI Engineering* — Extract · Quick](https://chatgpt.com/share/6ac9b71a-81cc-83ec-a8bf-4b2d2ae85cc8) cho thấy cách nối nội dung đọc với hướng dẫn áp dụng.
@@ -111,20 +163,11 @@ Cuộc trò chuyện mẫu về [*AI Engineering* — Extract · Quick](https://
   <img src="assets/quick-extract-workflow.svg" alt="Chọn phạm vi, ghi rõ ý do AI tổng hợp, nối với ứng dụng và nêu giới hạn bằng chứng" width="900" />
 </p>
 
-Trong ví dụ, nhóm 10 nguyên lý được ghi là **do AI chọn và tổng hợp**, không phải danh sách đánh số chính thức của tác giả. Quy trình ứng dụng và các tỷ lệ benchmark trong chat là phần minh họa; các tỷ lệ được nêu giả định, không phải kết quả chạy Reading Companion. Nguồn chat cũng không xác nhận đã kiểm tra toàn bộ cuốn sách.
-
-## 8. ✅ Chất lượng và công cụ
-
-<a id="quality"></a>
-Repository có các helper Python tùy chọn: `knowledge_compiler.py` kiểm tra cấu trúc execution plan; `ia_map.py` biểu diễn map; `checkpoint.py` kiểm tra và lưu checkpoint; `reading_session.py` hỗ trợ thao tác trạng thái phiên. Chúng kiểm tra cấu trúc/state theo contract, không đọc hiểu sách, xác minh nội dung web, chấm ngữ nghĩa hoặc cung cấp bộ nhớ tài khoản. Xem [hướng dẫn kiểm tra và lệnh chạy](docs/quality.vi.md).
-
-GitHub Actions kiểm tra manifest, cấu trúc/liên kết tài liệu, cú pháp helper và giao diện CLI trên Python 3.10–3.12. Những kiểm tra này không thay thế đánh giá ngữ nghĩa, thử nghiệm trên plugin host đã cài hoặc đo kết quả học tập. Không tuyên bố benchmark đạt nếu thiếu input, output và kết quả chấm thực.
-
-Xem [benchmark specification](skills/sid-reading-companion/references/case-benchmark.md) để biết định nghĩa ca kiểm và evidence cần có.
-
-## 9. Bản đồ tài liệu
+Trong ví dụ, nhóm 10 nguyên lý được ghi là **do AI chọn và tổng hợp**, không phải danh sách đánh số chính thức của tác giả. Quy trình ứng dụng và các tỷ lệ trong cuộc trò chuyện chỉ là minh họa giả định—không phải kết quả chạy Reading Companion. Cuộc trò chuyện cũng không xác nhận đã kiểm tra toàn bộ cuốn sách.
 
 <a id="documentation"></a>
+## 9. Bản đồ tài liệu
+
 | Bạn cần… | Tài liệu |
 |---|---|
 | Đọc kiến trúc và workflow | [Architecture](docs/architecture.vi.md) |
@@ -139,14 +182,15 @@ Xem [benchmark specification](skills/sid-reading-companion/references/case-bench
 ```text
 docs/                         Human-facing architecture, principles and quality guides (VI/EN)
 skills/sid-reading-companion/ Runtime entry, canonical references and optional helpers
+tests/                        Pytest guard suite for the four Python helpers
 tools/                        Repository validation
-assets/                       Product logo and explanatory illustration
+assets/                       Product logo and explanatory illustrations
 .github/                      CI and contribution templates
 ```
 
+<a id="contributing"></a>
 ## 10. Đóng góp và giấy phép
 
-<a id="contributing"></a>
 Đọc [hướng dẫn đóng góp](CONTRIBUTING.md); thay đổi cần giữ định tuyến, provenance, IDs, contracts và trạng thái câu hỏi. Xem [CHANGELOG](CHANGELOG.md). Repository phát hành theo [MIT License](LICENSE).
 
 Technical plugin ID: `sid-reading-companion` · Display name: **Reading Companion** · Version: **0.3.3**.

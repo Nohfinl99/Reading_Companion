@@ -9,6 +9,7 @@
 
 <p align="center">
   <a href="plugin.json"><img src="https://img.shields.io/badge/Plugin-0.3.3-15324F?style=flat-square" alt="Plugin version 0.3.3" /></a>
+  <a href="#verification"><img src="https://img.shields.io/badge/Helper%20guard%20cases-234-2E8B57?style=flat-square" alt="234 helper guard cases" /></a>
   <a href="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml"><img src="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml/badge.svg?branch=main" alt="GitHub Actions validation status" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-2E8B57?style=flat-square" alt="MIT License" /></a>
   <img src="https://img.shields.io/badge/Language-Vietnamese%20first-7357A5?style=flat-square" alt="Vietnamese-first" />
@@ -16,16 +17,29 @@
 
 <p align="center"><a href="README.vi.md">Đọc bằng tiếng Việt</a></p>
 
-Reading Companion turns a selected portion of a book or document into an explanation, traceable knowledge units and a next learning step. Readers choose the goal, scope and reading mode; the Companion preserves argument flow, locators, application conditions and evidence limits.
+Reading Companion turns a selected portion of a book or document into an explanation, traceable knowledge units and a next learning step. The reader chooses the goal, scope and reading mode; the Companion preserves argument flow, locators, application conditions and evidence limits.
 
 > **Core principle:** distinguish what the source says from what AI infers, selects or creates.
 
-**Jump to:** [Quick start](#quick-start) · [Modes](#reading-modes) · [Tasks](#supported-tasks) · [Artifacts](#outputs) · [Architecture](#workflow) · [Quality](#quality) · [Docs](#documentation)
+**Jump to:** [Implementation](#implementation) · [Quick start](#quick-start) · [Modes](#reading-modes) · [Routing](#routing) · [Outputs](#outputs) · [Verification](#verification) · [Docs](#documentation)
+
+<a id="implementation"></a>
+## 1. What is actually implemented
+
+Reading Companion is a **plugin package with one skill**, not a standalone application and not a software multi-agent system. A compatible host LLM reads the skill instructions and performs the reading workflow. Protocol “roles” and “stacks” organize responsibilities; they do not create separate software agents.
+
+| Layer | Implemented as | Responsibility | Boundary |
+|---|---|---|---|
+| Host runtime | Compatible LLM host + `SKILL.md` | Reads the source, follows the workflow and produces the answer | This repository does not provide the host, a book library, an MCP server or account memory |
+| Controller | Master instruction `M01–M07` | Frames goal/scope, routes work, applies gates and states limits | A prose controller executed by the host LLM—not an executable orchestration service |
+| Protocol stacks | Knowledge Compiler, reading protocols and stack contracts | Define source handling, units, session state, artifacts and evaluation contracts | Contracts specify behavior; they do not by themselves prove a run happened |
+| Deterministic helpers | Four Python scripts | Validate plans, maps, checkpoints and session state | Structural/state checks only; they do not understand a book or grade semantic correctness |
+| Repository assurance | Repository validator + pytest guard suite | Checks package structure and locks helper guard behavior | Does not measure reading quality or learning outcomes |
 
 <a id="quick-start"></a>
-## 1. 📖 Quick start
+## 2. 📖 Quick start
 
-Open Reading Companion in a compatible host, provide or attach the material, then state the **goal**, **scope** and **mode**. If no mode is selected, ask the Companion to recommend one and explain why. This repository contains the plugin package, not a standalone web application; installation/loading and source access depend on the host. The plugin does not include a book library, its own MCP server or account memory.
+Open Reading Companion in a compatible host, provide or attach the material, then state the **goal**, **scope** and **mode**. If no mode is selected, ask the Companion to recommend one and explain why. Installation/loading and source access depend on the host.
 
 ```text
 Read chapter 2 deeply, from “Problem Framing” through “Opportunity Mapping”.
@@ -39,9 +53,9 @@ Extract applicable ideas from the selected section. State the selection criteria
 Distinguish author-specified counts from your own selection; identify any source gaps.
 ```
 
-## 2. Choose a reading mode
-
 <a id="reading-modes"></a>
+## 3. Choose a reading mode
+
 | Mode | Use it when | Main output |
 |---|---|---|
 | `deep` | You want to understand concepts, conditions and arguments | Sourced explanation, relationships between ideas and a learning question when appropriate |
@@ -50,24 +64,36 @@ Distinguish author-specified counts from your own selection; identify any source
 
 Mode identifies the task. Styles such as `standard`, `quick`, `chill` or `challenger` adjust presentation only; they do not change the mode or relax source checks.
 
-## 3. Supported tasks and outputs
+<a id="routing"></a>
+## 4. 🔄 How a request is routed
 
-<a id="supported-tasks"></a>
+Each request takes only the route it needs—not the full workflow by default:
+
+1. **Frame** the goal, scope, mode and available source or state.
+2. **Check access and locators.** Inaccessible material and missing state are named instead of being reconstructed.
+3. **Route** with the `M04` trigger matrix to the relevant Knowledge Compiler or reading-protocol stack.
+4. **Apply the relevant gates.** Structured plans, maps, checkpoints and session state can be checked by the Python helpers.
+5. **Present the result with its limits**, including provenance, unresolved points and any pending learner response.
+
+<p align="center">
+  <img src="assets/reading-flow.en.svg" alt="Conditional workflow: frame the request, check source or state, route to the task, apply relevant gates and return a bounded result" width="1000" />
+</p>
+
+Session navigation or assessment of a pending answer can use existing state without recompiling the book. See the [system architecture](docs/architecture.en.md) for the responsibilities of each layer.
+
+<a id="outputs"></a>
+## 5. Supported tasks and artifacts
+
 | Task | What the Companion does | Conditions and limits |
 |---|---|---|
 | Compare | Compares options against shared criteria, context, sources and conditions; reports differences, trade-offs and unresolved points | Does not invent scores or assume newer sources are always correct |
-| Knowledge map | Represents grounded nodes and relations as an outline, table or diagram; distinguishes source structure from an AI-proposed view | A diagram does not establish a relation or learning order by itself |
-| Apply with examples | Creates a labeled example and connects it to units, argument steps, preserved/changed conditions and what it does not establish | A hypothetical example is not evidence of real-world effectiveness |
+| Knowledge map | Represents grounded nodes and relations as an outline, table or diagram | A diagram does not establish a relation or learning order by itself |
+| Apply with examples | Creates a labeled example connected to units, argument steps and preserved/changed conditions | A hypothetical example is not evidence of real-world effectiveness |
 | Respond to an answer | Compares an actual learner response with its pending question and previously prepared criterion | Without a response, assessment remains pending; no answer or mastery is fabricated |
-| Time-sensitive claims | Checks dynamic claims against current sources within the task's scope | Requires host/tool access to sources; otherwise the claim is marked unchecked |
-| Continue a session | Navigates, pauses/resumes, checks progress or hands off an available checkpoint | Only supplied or saved state can be restored; there is no account memory or automatic synchronization |
+| Time-sensitive claims | Checks dynamic claims against current sources within the task's scope | Requires host/tool access; otherwise the claim is marked unchecked |
+| Continue a session | Navigates, pauses/resumes, checks progress or hands off an available checkpoint | Only supplied or saved state can be restored; there is no automatic synchronization |
 
-These tasks share provenance and validation gates. The Companion routes only to the operations the request needs rather than running the full workflow on every turn.
-
-## 4. 🧩 Available artifacts
-
-<a id="outputs"></a>
-The canonical registry describes the artifacts below. They are selected for the user's goal, not required in every session; Knowledge Unit counts still follow the source content and reading scope.
+Artifacts are selected for the goal, not required in every session:
 
 | Goal | Possible artifact |
 |---|---|
@@ -78,31 +104,57 @@ The canonical registry describes the artifacts below. They are selected for the 
 | Apply or test transfer | A connected new example or scenario question (`RA-07`) |
 | Get feedback and continue | Feedback on an actual response (`RA-08`); a handoff/checkpoint with real state (`RA-09`) |
 
-The `RA-*` codes are technical IDs in the [artifact registry](skills/sid-reading-companion/references/reading-protocols.md#r09--output-artifacts-oa1oa4); when a contract-shaped artifact cannot be emitted, the content may be presented as Markdown/prose.
+The `RA-*` codes are technical IDs in the [artifact registry](skills/sid-reading-companion/references/reading-protocols.md#r09--output-artifacts-oa1oa4). When a contract-shaped artifact cannot be emitted, the content may be presented as Markdown/prose.
 
-## 5. 🔄 Workflow and architecture
+## 6. Source, state and evidence rules
 
-<a id="workflow"></a>
-Each request takes the route it needs: frame goal/scope → check source access and locators → route to a stack → apply relevant gates → present the result and its limits. Session navigation or assessment of a pending answer can use existing state without recompiling the book.
-
-<p align="center">
-  <img src="assets/reading-flow.en.svg" alt="Conditional workflow: frame the request, check source or state, route to the task, apply relevant gates and return a bounded result" width="1000" />
-</p>
-
-See the [system architecture](docs/architecture.en.md) for responsibilities across the controller, Knowledge Compiler, reading protocols, data contracts, helpers and CI. The diagram describes available routes, not a mandatory pipeline for every turn.
-
-## 6. Sources and learning state
-
-<a id="source-and-learning-state"></a>
-- Locators and reading scope bound claims; inaccessible source material must be identified.
+- Locators and reading scope bound the claims; inaccessible source material must be identified.
 - Knowledge Unit counts follow the content and selected scope, not a fixed quota. If AI selects a list, it states the criteria, origin and what was excluded or unchecked.
-- New examples explicitly connect to the relevant unit and argument; an illustrative example does not prove effectiveness.
+- New examples must connect explicitly to the relevant unit and argument; an illustrative example does not prove effectiveness.
 - AI-created headings or counts must not be presented as author-defined structure.
 - A question remains `WAIT_RESPONSE` until the learner answers or asks to move on. Do not fabricate responses, mastery, checkpoints or memory.
 
 Field details and owners are in the [principle map](docs/principles.en.md) and [Stack contracts](skills/sid-reading-companion/references/stack-contracts.md).
 
-## 7. Quick extraction example
+<a id="verification"></a>
+## 7. ✅ Deterministic helpers and verification
+
+The optional helpers provide the executable part of the control flow:
+
+| Helper | Structural responsibility | Guard cases |
+|---|---|---:|
+| `checkpoint.py` | Validates and exports checkpoints; checks source identity/hash, revisions, excerpts, locators and currency | CP: 81 |
+| `reading_session.py` | Performs session-state operations used by checkpoints and continuation flows | RS: 60 |
+| `knowledge_compiler.py` | Validates source inventories and Knowledge Units; builds routing, reference and event plans | KC: 58 |
+| `ia_map.py` | Validates and represents information-architecture maps and their relations | IA: 35 |
+
+Run the helper guard suite from the repository root:
+
+```bash
+python -m pip install pytest
+python -m pytest tests/ -q
+```
+
+**Verification snapshot — 2026-10-22, Python 3.12.3, pytest 9.1.1:**
+
+- **234 specified guard cases** across the four helpers.
+- Local suite result: **476 passed, 2 xfailed**.
+- Independent re-check: **234/234 case IDs present**, all stage/section lists matched, and **6/6 mutation probes were caught**.
+- The two xfails are strict, so fixing the underlying code without removing the markers will turn the suite red.
+
+The suite locks the current **mechanical/structural layer**. It does not establish semantic correctness, host-LLM behavior, benchmark success or learning outcomes. The `B01–B08` benchmark cases remain specifications until a case is run with actual inputs, outputs and grading evidence.
+
+### Declared gaps
+
+- **CP-05 — [issue #1](https://github.com/Nohfinl99/Reading_Companion/issues/1):** `timestamp()` replaces its intended “needs timezone” diagnostic with a generic timestamp error. The invalid input is still rejected.
+- **CP-78 — [issue #2](https://github.com/Nohfinl99/Reading_Companion/issues/2):** the specialized “cannot overwrite source” guard in `export()` is unreachable because the existing-target guard runs first. The source file is still protected by that first guard.
+- **KC-08:** `reference_plan('transfer')` currently returns `[R09, R04, R06]` and omits `R13`. The test locks this current behavior and marks it as a known routing gap pending a separate decision.
+- Routing instructions currently have no few-shot routing examples and no global precedence/tie-break rule for overlapping triggers. The only explicit repair cap is local to `R14` validation; there is no general runtime loop budget.
+- Trace/sidecar formats are specified in the contracts, but this version has no dedicated trace writer or sidecar export step.
+
+GitHub Actions validates manifests, repository structure and documentation links, helper syntax and CLI interfaces on Python 3.10–3.12. **Note:** the pytest step is not yet part of the workflow on `main`—run the suite locally with the commands above until a maintainer adds that step. The [quality guide](docs/quality.en.md) explains the evidence limits, and the [benchmark specification](skills/sid-reading-companion/references/case-benchmark.md) defines the evidence required before a benchmark may be reported as passed.
+
+## 8. Quick extraction example
 
 <a id="quick-extract"></a>
 The [*AI Engineering* Extract · Quick conversation](https://chatgpt.com/share/6ac9b71a-81cc-83ec-a8bf-4b2d2ae85cc8) illustrates how reading content can be connected to an application guide.
@@ -111,20 +163,11 @@ The [*AI Engineering* Extract · Quick conversation](https://chatgpt.com/share/6
   <img src="assets/quick-extract-workflow.svg" alt="Select scope, label AI-curated ideas, connect them to an application, and state evidence limits" width="900" />
 </p>
 
-In the example, the set of 10 principles is explicitly labeled as **selected and synthesized by AI**, not an official numbered list from the author. The application workflow and benchmark percentages in the conversation are illustrative; the percentages are hypothetical, not Reading Companion results. The conversation also does not establish that the entire book was reviewed.
-
-## 8. ✅ Quality and tools
-
-<a id="quality"></a>
-The repository includes optional Python helpers: `knowledge_compiler.py` checks execution-plan structure; `ia_map.py` represents maps; `checkpoint.py` validates and saves checkpoints; and `reading_session.py` supports session-state operations. They check structure/state against contracts; they do not read or understand books, verify web content, grade semantics or provide account memory. See the [quality guide and commands](docs/quality.en.md).
-
-GitHub Actions checks manifests, repository structure and documentation links, helper syntax and CLI interfaces on Python 3.10–3.12. These checks do not replace semantic review, tests on an installed plugin host or measurement of learning outcomes. A benchmark is not reported as passed without actual input, output and grading results.
-
-See the [benchmark specification](skills/sid-reading-companion/references/case-benchmark.md) for case definitions and required evidence.
-
-## 9. Documentation map
+In the example, the set of 10 principles is explicitly labeled as **selected and synthesized by AI**, not an official numbered list from the author. The application workflow and percentages in the conversation are illustrative and hypothetical—not Reading Companion results. The conversation also does not establish that the entire book was reviewed.
 
 <a id="documentation"></a>
+## 9. Documentation map
+
 | If you need… | Read… |
 |---|---|
 | Architecture and workflow | [Architecture](docs/architecture.en.md) |
@@ -139,14 +182,15 @@ See the [benchmark specification](skills/sid-reading-companion/references/case-b
 ```text
 docs/                         Human-facing architecture, principles and quality guides (VI/EN)
 skills/sid-reading-companion/ Runtime entry, canonical references and optional helpers
+tests/                        Pytest guard suite for the four Python helpers
 tools/                        Repository validation
-assets/                       Product logo and explanatory illustration
+assets/                       Product logo and explanatory illustrations
 .github/                      CI and contribution templates
 ```
 
+<a id="contributing"></a>
 ## 10. Contributing and license
 
-<a id="contributing"></a>
 Read the [contribution guide](CONTRIBUTING.md); changes should preserve routing, provenance, IDs, contracts and pending-question state. See the [changelog](CHANGELOG.md). The repository is distributed under the [MIT License](LICENSE).
 
 Technical plugin ID: `sid-reading-companion` · Display name: **Reading Companion** · Version: **0.3.3**.
