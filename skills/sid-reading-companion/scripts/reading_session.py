@@ -25,6 +25,67 @@ def text(value):
     return isinstance(value, str) and bool(value.strip())
 
 
+# Session-state and operation-input JSON are caller-supplied. Bound the bytes
+# read and reject duplicate keys rather than letting the parser silently keep
+# the last value (CP-A04/CP-A05).
+MAX_JSON_BYTES = 8 * 1024 * 1024
+
+
+def _object_without_duplicate_keys(pairs):
+    value = {}
+    for key, item in pairs:
+        if key in value:
+            raise InvalidSession(f'Duplicate JSON key: {key}')
+        value[key] = item
+    return value
+
+
+def parse_json(text):
+    """Parse JSON with duplicate object keys rejected at every nesting level."""
+    return json.loads(text, object_pairs_hook=_object_without_duplicate_keys)
+
+
+def read_json(path):
+    """Read one bounded JSON file; oversize input fails before it is parsed."""
+    path = Path(path)
+    need(path.stat().st_size <= MAX_JSON_BYTES,
+         f'JSON input exceeds the {MAX_JSON_BYTES}-byte limit')
+    return parse_json(path.read_text(encoding='utf-8-sig'))
+
+
+def _grounded_excerpt(value):
+    """A connection excerpt must carry enough text to evidence the link.
+
+    CP-A02: a non-empty substring alone is not grounding. After stripping,
+    the excerpt needs at least 10 characters and at least two words.
+    """
+    if not isinstance(value, str):
+        return False
+    stripped = value.strip()
+    return len(stripped) >= 10 and len(stripped.split()) >= 2
+
+
+_KNOWN_SUPPORT_RANK = {'none': 0, 'hint': 1, 'worked_example': 2}
+
+
+def _support_not_decreased(old, new):
+    """Return True when a support transition does not lose known support.
+
+    RS-A01 semantics: ``unknown`` is not the highest support level; it means
+    the support state is not known. Moving from any known level (``none``,
+    ``hint`` or ``worked_example``) to ``unknown`` therefore loses recorded
+    information and counts as a decrease. Moving away from ``unknown`` to a
+    known level establishes information and is allowed, as are increases
+    among the known levels (for example none -> hint and
+    hint -> worked_example).
+    """
+    if new == 'unknown':
+        return old == 'unknown'
+    if old == 'unknown':
+        return True
+    return _KNOWN_SUPPORT_RANK[new] >= _KNOWN_SUPPORT_RANK[old]
+
+
 def locator(value, sources):
     need(isinstance(value, dict), 'Locator must be an object')
     need(set(value) == {'source_id', 'chapter_id', 'line_start', 'line_end'}, 'Invalid locator fields')
@@ -146,7 +207,9 @@ def validate(session, sources, units, pending):
                 need(set(evidence) == {'kind', 'locator', 'excerpt', 'finding'}, 'Invalid book evidence fields')
                 in_chapter(evidence['locator'])
                 loc = evidence['locator']
-                need(text(evidence['excerpt']) and evidence['excerpt'] in '\n'.join(sources[loc['source_id']][loc['line_start'] - 1:loc['line_end']]), 'Connection excerpt not found')
+                need(_grounded_excerpt(evidence['excerpt']),
+                     'Connection excerpt is too short to ground evidence')
+                need(evidence['excerpt'] in '\n'.join(sources[loc['source_id']][loc['line_start'] - 1:loc['line_end']]), 'Connection excerpt not found')
             else:
                 need(set(evidence) == {'kind', 'url', 'title', 'checked_at', 'finding'}, 'Invalid external evidence fields')
                 url = urlparse(evidence['url'])
@@ -310,8 +373,8 @@ def guard_transition(old, new):
         if new['pending_question'] == old['pending_question']:
             newer = b['pending_context']
             need(newer is not None and newer['cursor'] == context['cursor'] and newer['resume_note'] == context['resume_note'], 'Pending context cannot disappear/change')
-            support = {'none': 0, 'hint': 1, 'worked_example': 2, 'unknown': 3}
-            need(support[newer['support']] >= support[context['support']], 'Question support cannot decrease')
+            need(_support_not_decreased(context['support'], newer['support']),
+                 'Question support cannot decrease')
         for row in b['paused_questions']:
             if row['question'] == old['pending_question']:
                 need(all(row[k] == context[k] for k in ('cursor', 'resume_note', 'support')), 'Pause must preserve context/support')
@@ -330,11 +393,11 @@ def main():
     parser.add_argument('--note', default='Tiếp tục tại vị trí đã lưu.')
     args = parser.parse_args()
     try:
-        state = cp.validate(cp.read_json(args.state))
+        state = cp.validate(read_json(args.state))
         if args.action == 'progress':
             print(json.dumps(progress(state), ensure_ascii=False))
             return 0
-        value = cp.read_json(args.input) if args.input else args.value
+        value = read_json(args.input) if args.input else args.value
         candidate = enable(state, value) if args.action == 'enable' else operate(state, args.action, value=value, note=args.note)
         cp.validate(candidate)
         if candidate == state:

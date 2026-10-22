@@ -9,6 +9,10 @@ import re
 
 RELATIONS = {'is_a', 'part_of', 'supports', 'contrasts', 'limits', 'references', 'conflicts', 'depends_on'}
 BASES = {'source_explicit', 'source_interpretation', 'pedagogical_proposal', 'unresolved'}
+# Node IDs that would collide with Mermaid flowchart syntax if emitted raw.
+RESERVED_MERMAID_IDS = {'end', 'subgraph', 'flowchart', 'graph', 'class', 'classdef', 'style', 'click'}
+# Hard cap on CLI JSON input size; oversized input is rejected before parsing.
+MAX_INPUT_BYTES = 1_048_576
 
 
 class InvalidMap(ValueError):
@@ -18,6 +22,22 @@ class InvalidMap(ValueError):
 def require(condition, message):
     if not condition:
         raise InvalidMap(message)
+
+
+def _object_without_duplicate_keys(pairs):
+    result = {}
+    for key, value in pairs:
+        require(key not in result, f'Duplicate JSON key: {key}')
+        result[key] = value
+    return result
+
+
+def load_json_input(path):
+    """Read a JSON input file with duplicate-key rejection and a size cap."""
+    require(path.stat().st_size <= MAX_INPUT_BYTES,
+            f'Input file exceeds size limit of {MAX_INPUT_BYTES} bytes')
+    return json.loads(path.read_text(encoding='utf-8-sig'),
+                      object_pairs_hook=_object_without_duplicate_keys)
 
 
 def text(value):
@@ -60,7 +80,7 @@ def compile_map(data):
         require(isinstance(node, dict), 'Invalid node')
         nid = node.get('id')
         require(isinstance(nid, str) and re.fullmatch(r'[A-Za-z][A-Za-z0-9_]*', nid) and nid not in nodes, 'Invalid/duplicate node ID')
-        require(nid.lower() != 'end', 'Reserved Mermaid node ID')
+        require(nid.lower() not in RESERVED_MERMAID_IDS, 'Reserved Mermaid node ID')
         require(text(node.get('label_vi')) and text(node.get('definition')), 'Missing label/definition')
         require(node.get('source_status') == 'read' and isinstance(node.get('source_locators'), list) and bool(node['source_locators']) and all(text(x) for x in node['source_locators']), 'Diagram claim requires read source with locators')
         require(node.get('knowledge_level') in {'L1', 'L2', 'L3', 'L4'}, 'Invalid knowledge task level')
@@ -95,8 +115,9 @@ def compile_map(data):
                 unresolved.append({'view': view, **edge})
             else:
                 projected[view].append(edge)
-    if 'learning' in views:
-        require(acyclic(nodes, projected['learning']), 'Learning-order cycle; review affected branch before rendering')
+    # Learning edges are always returned, so their acyclicity is checked
+    # whenever any exist — even if the learning view was not requested.
+    require(acyclic(nodes, projected['learning']), 'Learning-order cycle; review affected branch before rendering')
     diagrams = {}
     for view in views:
         lines = ['flowchart LR']
@@ -118,15 +139,17 @@ def main():
     parser.add_argument('--output', required=True)
     args = parser.parse_args()
     try:
-        source, output = Path(args.input).resolve(), Path(args.output).resolve()
-        require(source != output and not output.exists(), 'Output must be a new file')
-        result = compile_map(json.loads(source.read_text(encoding='utf-8-sig')))
+        source, output = Path(args.input).resolve(), Path(args.output).absolute()
+        # Check the unresolved output path first: a dangling symlink must be
+        # refused, not followed (resolve() would hide it and write through).
+        require(source != output.resolve() and not output.exists() and not output.is_symlink(), 'Output must be a new file')
+        result = compile_map(load_json_input(source))
         output.parent.mkdir(parents=True, exist_ok=True)
         with output.open('x', encoding='utf-8') as stream:
             json.dump(result, stream, ensure_ascii=False, indent=2)
         print(json.dumps({'ok': True, 'semantic_verified': False}))
         return 0
-    except (ValueError, TypeError, KeyError, OSError) as error:
+    except (ValueError, TypeError, KeyError, OSError, RecursionError) as error:
         print(json.dumps({'ok': False, 'error': str(error)}, ensure_ascii=True))
         return 1
 

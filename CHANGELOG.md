@@ -6,6 +6,10 @@ These notes summarize user-facing and compatibility changes. / Ghi chú này tó
 
 - Added paired Vietnamese/English architecture, principle and quality guides; clarified document navigation and canonical owners. / Bổ sung cặp tài liệu kiến trúc, nguyên lý và chất lượng VI/EN; làm rõ điều hướng và file canonical.
 
+## Security hardening / Gia cố an ninh — unreleased
+
+- Helpers hardened after an independent red-team / pen-test wave: checkpoint field-set locking, duplicate-JSON-key rejection, clean `{ok: false}` on deeply nested JSON in all CLIs, input size caps, streaming source reads with a 1 MiB per-line cap, consistent output symlink checks, minimum grounding-excerpt size, `source_root` scoping for sources, and fixed `timestamp()` timezone diagnostics plus a reachable `Cannot overwrite source` export guard. Full suite: 542 passed; 39/39 red-team probes blocked in independent acceptance. / Các helper được gia cố sau vòng red team / pen test độc lập: khóa tập trường của checkpoint, chặn duplicate JSON key, trả `{ok: false}` sạch khi JSON lồng sâu ở mọi CLI, giới hạn kích thước input, đọc nguồn theo luồng với cap 1 MiB/dòng, kiểm symlink ở output nhất quán, ngưỡng tối thiểu cho excerpt căn cứ, gắn `source_root` cho nguồn, và sửa chẩn đoán timezone của `timestamp()` cùng guard `Cannot overwrite source` trong export. Toàn bộ suite: 542 passed; nghiệm thu độc lập chặn 39/39 probe red team.
+
 ## 0.3.3
 
 ### Tiếng Việt

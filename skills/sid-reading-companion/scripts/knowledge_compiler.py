@@ -21,12 +21,40 @@ def require(condition, message):
         raise InvalidPlan(message)
 
 
+# JSON inputs are caller-supplied data, not trusted configuration. Keep parsing
+# bounded and reject ambiguous documents instead of silently accepting the
+# last value for a duplicated key (CP-A04/CP-A05).
+MAX_JSON_BYTES = 8 * 1024 * 1024
+
+
+def _object_without_duplicate_keys(pairs):
+    value = {}
+    for key, item in pairs:
+        if key in value:
+            raise InvalidPlan(f'Duplicate JSON key: {key}')
+        value[key] = item
+    return value
+
+
+def parse_json(text):
+    """Parse JSON with duplicate object keys rejected at every nesting level."""
+    return json.loads(text, object_pairs_hook=_object_without_duplicate_keys)
+
+
+def read_json_file(path):
+    """Read one bounded JSON file; oversize input fails before it is parsed."""
+    path = Path(path)
+    require(path.stat().st_size <= MAX_JSON_BYTES,
+            f'JSON input exceeds the {MAX_JSON_BYTES}-byte limit')
+    return parse_json(path.read_text(encoding='utf-8-sig'))
+
+
 def registry():
     path = Path(__file__).resolve().parents[1] / 'references/reading-protocols.md'
     content = path.read_text(encoding='utf-8')
     blocks = re.findall(r'<!-- ARTIFACT_REGISTRY_START -->\s*```json\s*(.*?)\s*```\s*<!-- ARTIFACT_REGISTRY_END -->', content, re.S)
     require(len(blocks) == 1, 'Canonical artifact registry missing/duplicate; no legacy fallback')
-    rows = json.loads(blocks[0])['artifacts']
+    rows = parse_json(blocks[0])['artifacts']
     require(len({x['id'] for x in rows}) == len(rows), 'Duplicate artifact ID')
     return {row['id']: row for row in rows}
 
@@ -253,15 +281,16 @@ def main():
     try:
         source, output = Path(args.input).resolve(), Path(args.output).absolute()
         require(source != output.resolve() and not output.exists() and not output.is_symlink(), 'Output must be a new file')
-        plan = compile_plan(json.loads(source.read_text(encoding='utf-8-sig')))
+        plan = compile_plan(read_json_file(source))
         output.parent.mkdir(parents=True, exist_ok=True)
         with output.open('x', encoding='utf-8') as stream:
             json.dump(plan, stream, ensure_ascii=False, indent=2)
             stream.write('\n')
         print(json.dumps({'ok': True, 'status': plan['status'], 'semantic_verified': False}))
         return 0
-    except (InvalidPlan, ValueError, TypeError, KeyError, OSError) as error:
-        print(json.dumps({'ok': False, 'error': str(error)}))
+    except (InvalidPlan, ValueError, TypeError, KeyError, OSError, RecursionError) as error:
+        message = 'JSON input is nested too deeply' if isinstance(error, RecursionError) else str(error)
+        print(json.dumps({'ok': False, 'error': message}))
         return 1
 
 

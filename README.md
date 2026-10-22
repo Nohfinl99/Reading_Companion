@@ -135,19 +135,29 @@ python -m pip install pytest
 python -m pytest tests/ -q
 ```
 
-**Verification snapshot — 2026-10-22, Python 3.12.3, pytest 9.1.1:**
+**Verification snapshot — 2026-10-22, Python 3.12.3, pytest 9.1.1, after the security-fix wave:**
 
-- **234 specified guard cases** across the four helpers.
-- Local suite result: **476 passed, 2 xfailed**.
-- Independent re-check: **234/234 case IDs present**, all stage/section lists matched, and **6/6 mutation probes were caught**.
-- The two xfails are strict, so fixing the underlying code without removing the markers will turn the suite red.
+- **234 specified guard cases** across the four helpers, plus CLI-security and regression tests added by the fix wave.
+- Full suite result: **542 passed, 0 xfailed**.
+- Independent re-checks: **234/234 case IDs present**, all stage/section lists matched, mutation probes **8/8 caught** on the extended bank.
+- Independent adversarial acceptance: **39/39 red-team probes blocked** — including symlink write-through, forged checkpoint fields, duplicate JSON keys, deeply nested JSON, and oversized sources (a 256 MB multi-line source validates by streaming at ~19 MB peak memory; a single line over 1 MiB is rejected cleanly).
 
 The suite locks the current **mechanical/structural layer**. It does not establish semantic correctness, host-LLM behavior, benchmark success or learning outcomes. The `B01–B08` benchmark cases remain specifications until a case is run with actual inputs, outputs and grading evidence.
 
+### Security hardening (from the red-team / pen-test wave)
+
+The helpers were hardened against the adversarial probes that initially bypassed them:
+
+- `checkpoint.validate()` now locks the field set at every level — self-declared fields such as `semantic_verified` or `mastery_claim` are rejected instead of being saved as if checked.
+- All JSON entry points reject duplicate keys and oversized inputs; deeply nested JSON fails cleanly as `{ok: false}` in all three CLIs instead of crashing with a traceback.
+- Output symlink checks are consistent across all three CLIs, including dangling symlinks.
+- Grounding excerpts must meet a minimum size (≥ 10 characters and ≥ 2 words) in checkpoints and session evidence.
+- Source files are read by streaming with a 1 MiB per-line cap; states may declare a `source_root`, and exports warn explicitly when sources are self-declared without one.
+- Session support can no longer “decrease into the unknown”: moving to `unknown` from a known support level is treated as a loss and blocked. Learning-order cycles are checked regardless of the requested views, and Mermaid reserved words are rejected as map node IDs.
+- Two earlier defects are fixed: `timestamp()` reports its intended “needs timezone” diagnostic (was [issue #1](https://github.com/Nohfinl99/Reading_Companion/issues/1)), and the `Cannot overwrite source` guard in `export()` is reachable again (was [issue #2](https://github.com/Nohfinl99/Reading_Companion/issues/2)).
+
 ### Declared gaps
 
-- **CP-05 — [issue #1](https://github.com/Nohfinl99/Reading_Companion/issues/1):** `timestamp()` replaces its intended “needs timezone” diagnostic with a generic timestamp error. The invalid input is still rejected.
-- **CP-78 — [issue #2](https://github.com/Nohfinl99/Reading_Companion/issues/2):** the specialized “cannot overwrite source” guard in `export()` is unreachable because the existing-target guard runs first. The source file is still protected by that first guard.
 - **KC-08:** `reference_plan('transfer')` currently returns `[R09, R04, R06]` and omits `R13`. The test locks this current behavior and marks it as a known routing gap pending a separate decision.
 - Routing instructions currently have no few-shot routing examples and no global precedence/tie-break rule for overlapping triggers. The only explicit repair cap is local to `R14` validation; there is no general runtime loop budget.
 - Trace/sidecar formats are specified in the contracts, but this version has no dedicated trace writer or sidecar export step.

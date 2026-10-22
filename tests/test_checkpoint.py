@@ -73,12 +73,6 @@ def test_cp_05_currency_assessed_at_garbage(cp, fx):
                   cp.validate_currency, record)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="CP-05: spec kỳ vọng 'assessed_at needs timezone', nhưng trong "
-           "timestamp() lệnh require() nằm trong try mà InvalidCheckpoint là "
-           "con của ValueError nên bị except nuốt thành "
-           "'Invalid assessed_at timestamp' — lệch spec↔code, chỉ báo không sửa.")
 def test_cp_05_currency_assessed_at_without_timezone(cp, fx):
     record = fx.curr()
     record["assessed_at"] = "2026-01-02T00:00:00"
@@ -87,13 +81,11 @@ def test_cp_05_currency_assessed_at_without_timezone(cp, fx):
 
 
 def test_cp_05_currency_assessed_at_without_timezone_safety_pin(cp, fx):
-    # Pin hành vi an toàn HIỆN TẠI độc lập với xfail trên: input thiếu
-    # timezone (không phải input rác) vẫn bị chặn — chỉ khác thông điệp
-    # so với spec. Bất biến "thiếu tz → bị từ chối" phải đứng vững kể cả
-    # khi lệch message được sửa ở một trong hai phía.
+    # Safety pin độc lập cho CP-05: input thiếu timezone (không phải input
+    # rác) phải bị chặn bằng đúng thông điệp chẩn đoán của guard chuyên biệt.
     record = fx.curr()
     record["assessed_at"] = "2026-01-02T00:00:00"
-    assert_raises(cp.InvalidCheckpoint, "Invalid assessed_at timestamp",
+    assert_raises(cp.InvalidCheckpoint, "assessed_at needs timezone",
                   cp.validate_currency, record)
 
 
@@ -1058,13 +1050,6 @@ def test_cp_77_export_target_symlink(cp, fx, tmp_path):
                   cp.export, target, output)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="CP-78: spec kỳ vọng 'Cannot overwrite source', nhưng export() kiểm "
-           "tra output.exists()/is_symlink() TRƯỚC guard ghi đè nguồn; output "
-           "trùng file nguồn luôn tồn tại nên thông điệp thực tế là "
-           "'Export target already exists' — guard CP-78 không tới được qua "
-           "đường này. Lệch spec↔code, chỉ báo không sửa.")
 def test_cp_78_export_must_not_overwrite_source(cp, fx, tmp_path):
     book = fx.book()
     state = fx.state(book, units=[fx.unit_k01()])
@@ -1075,9 +1060,8 @@ def test_cp_78_export_must_not_overwrite_source(cp, fx, tmp_path):
 
 
 def test_cp_78_export_must_not_overwrite_source_safety_pin(cp, fx, tmp_path):
-    # Pin hành vi an toàn HIỆN TẠI độc lập với xfail trên: export với
-    # output trùng file nguồn bị từ chối (bất kể thông điệp là của guard
-    # nào) VÀ file nguồn không đổi một byte sau lần gọi.
+    # Safety pin độc lập cho CP-78: export với output trùng file nguồn bị
+    # từ chối VÀ file nguồn không đổi một byte sau lần gọi.
     book = fx.book()
     state = fx.state(book, units=[fx.unit_k01()])
     target = tmp_path / "state.json"
@@ -1154,3 +1138,301 @@ def test_cp_81_export_validates_state_first(cp, fx, tmp_path):
     assert_raises(cp.InvalidCheckpoint, "Source changed: S01; reimport required",
                   cp.export, target, output)
     assert not output.exists()
+
+
+# ===========================================================================
+# RT regression — checkpoint hardening (Red Team CP-A01…CP-A05, CP-A03)
+# ===========================================================================
+
+def test_cp_a01_state_rejects_forged_semantic_field(cp, fx):
+    """RT/CP-A01: trường tự phong ở cấp state phải bị khóa tập trường chặn."""
+    state = fx.state(semantic_verified=True)
+    assert_raises(cp.InvalidCheckpoint,
+                  "Unexpected state field: semantic_verified",
+                  cp.validate, state)
+
+
+def test_cp_a01_source_rejects_forged_field(cp, fx):
+    """RT/CP-A01: trường lạ trong source không được qua validate()."""
+    state = fx.state()
+    state["sources"][0]["mastery_claim"] = "achieved"
+    assert_raises(cp.InvalidCheckpoint,
+                  "Unexpected source field: mastery_claim",
+                  cp.validate, state)
+
+
+def test_cp_a01_unit_rejects_forged_mastery_field(cp, fx):
+    """RT/CP-A01: unit không được mang trường fabricated_mastery qua validate()."""
+    unit = fx.unit_k01()
+    unit["fabricated_mastery"] = "L4"
+    state = fx.state(units=[unit])
+    assert_raises(cp.InvalidCheckpoint,
+                  "Unexpected unit field: fabricated_mastery",
+                  cp.validate, state)
+
+
+def test_cp_a01_coverage_rejects_forged_field(cp, fx):
+    """RT/CP-A01: coverage là một dict lồng chính và cũng bị khóa tập trường."""
+    row = _coverage_row(semantic_verified=True)
+    state = fx.state(units=[fx.unit_k01()], coverage=[row])
+    assert_raises(cp.InvalidCheckpoint,
+                  "Unexpected coverage field: semantic_verified",
+                  cp.validate, state)
+
+
+def test_cp_a01_assessment_rejects_forged_field(cp, fx):
+    """RT/CP-A01: assessment không được tự phong mastery_claim."""
+    row = _assessment(mastery_claim="achieved")
+    state = fx.state(assessments=[row])
+    assert_raises(cp.InvalidCheckpoint,
+                  "Unexpected assessment field: mastery_claim",
+                  cp.validate, state)
+
+
+def test_cp_a01_currency_and_evidence_reject_forged_fields(cp, fx):
+    """RT/CP-A01: currency và evidence của nó đều bị khóa tập trường."""
+    record = fx.curr()
+    record["mastery_claim"] = "achieved"
+    assert_raises(cp.InvalidCheckpoint,
+                  "Unexpected currency field: mastery_claim",
+                  cp.validate_currency, record)
+
+    record = fx.curr()
+    record["evidence"][0]["semantic_verified"] = True
+    assert_raises(cp.InvalidCheckpoint,
+                  "Unexpected currency evidence field: semantic_verified",
+                  cp.validate_currency, record)
+
+
+def test_cp_a01_citation_and_relation_reject_forged_fields(cp, fx):
+    """RT/CP-A01: citation/relation không được chứa trường ngoài schema."""
+    unit = fx.unit_k01()
+    unit["citations"][0]["verified_by"] = "helper"
+    state = fx.state(units=[unit])
+    assert_raises(cp.InvalidCheckpoint,
+                  "Unexpected citation field: verified_by",
+                  cp.validate, state)
+
+    unit = fx.unit_k01()
+    unit["relations"] = [{"type": "supports", "target": "K02",
+                          "semantic_verified": True}]
+    state = fx.state(units=[unit, fx.unit_k02()])
+    assert_raises(cp.InvalidCheckpoint,
+                  "Unexpected relation field: semantic_verified",
+                  cp.validate, state)
+
+
+def test_cp_a01_save_rejects_forged_unit_field(cp, fx, tmp_path):
+    """RT/CP-A01: save() không được lưu giữ trường bịa đã chui vào candidate."""
+    old, new = _old_new(fx)
+    new["units"][0]["semantic_verified"] = True
+    target = tmp_path / "state.json"
+    candidate = tmp_path / "candidate.json"
+    _write_state_file(cp, target, old)
+    before = target.read_bytes()
+    _write_state_file(cp, candidate, new)
+    assert_raises(cp.InvalidCheckpoint,
+                  "Unexpected unit field: semantic_verified",
+                  cp.save, target, candidate)
+    assert target.read_bytes() == before
+
+
+def test_cp_a04_read_json_rejects_duplicate_top_level_key(cp, tmp_path):
+    """RT/CP-A04: duplicate key ở cấp ngoài cùng phải là lỗi sạch."""
+    path = tmp_path / "duplicate.json"
+    path.write_text('{"revision": 3, "revision": 2}', encoding="utf-8")
+    assert_raises(cp.InvalidCheckpoint, "Duplicate JSON key: revision",
+                  cp.read_json, path)
+
+
+def test_cp_a04_read_json_rejects_duplicate_nested_key(cp, tmp_path):
+    """RT/CP-A04: object_pairs_hook phải bắt duplicate key ở object lồng."""
+    path = tmp_path / "duplicate-nested.json"
+    path.write_text('{"state": {"mode": "deep", "mode": "extract"}}',
+                    encoding="utf-8")
+    assert_raises(cp.InvalidCheckpoint, "Duplicate JSON key: mode",
+                  cp.read_json, path)
+
+
+def test_cp_a04_save_rejects_duplicate_revision_key(cp, fx, tmp_path):
+    """RT/CP-A04: save() không được lặng lẽ lấy giá trị cuối của revision."""
+    old, new = _old_new(fx)
+    target = tmp_path / "state.json"
+    candidate = tmp_path / "candidate.json"
+    _write_state_file(cp, target, old)
+    before = target.read_bytes()
+    candidate_text = json.dumps(new, ensure_ascii=False).replace(
+        '"revision": 2', '"revision": 3, "revision": 2', 1)
+    candidate.write_text(candidate_text, encoding="utf-8")
+    assert_raises(cp.InvalidCheckpoint, "Duplicate JSON key: revision",
+                  cp.save, target, candidate)
+    assert target.read_bytes() == before
+
+
+@pytest.mark.parametrize("excerpt", ["X", "X may", "improve Y"])
+def test_cp_a02_short_excerpt_rejected(cp, fx, excerpt):
+    """RT/CP-A02: excerpt dưới 10 ký tự hoặc dưới 2 từ không đạt grounding."""
+    unit = fx.unit_k01()
+    unit["citations"][0]["excerpt"] = excerpt
+    state = fx.state(units=[unit])
+    assert_raises(cp.InvalidCheckpoint, "Excerpt too short for grounding",
+                  cp.validate, state)
+
+
+def test_cp_a02_excerpt_at_minimum_grounding_threshold_passes(cp, fx):
+    """RT/CP-A02: excerpt đúng ngưỡng 10 ký tự và ít nhất 2 từ vẫn hợp lệ."""
+    unit = fx.unit_k01()
+    unit["citations"][0]["excerpt"] = "under cond"
+    state = fx.state(units=[unit])
+    assert cp.validate(state) is state
+
+
+def test_cp_a05_read_json_rejects_file_over_cap(cp, tmp_path, monkeypatch):
+    """RT/CP-A05: file JSON/state vượt MAX_JSON_BYTES bị từ chối sạch."""
+    monkeypatch.setattr(cp, "MAX_JSON_BYTES", 32)
+    path = tmp_path / "oversized.json"
+    path.write_text('{"revision": 1, "padding": "0123456789"}',
+                    encoding="utf-8")
+    assert_raises(cp.InvalidCheckpoint,
+                  "JSON file too large: maximum 32 bytes",
+                  cp.read_json, path)
+
+
+def test_cp_a05_read_json_cap_is_checked_before_decoding(cp, tmp_path,
+                                                          monkeypatch):
+    """RT/CP-A05: file vượt cap bị chặn trước khi decoder nạp/phân tích nó."""
+    monkeypatch.setattr(cp, "MAX_JSON_BYTES", 8)
+    path = tmp_path / "oversized-invalid.json"
+    path.write_text("this is not json and it is too long", encoding="utf-8")
+    assert_raises(cp.InvalidCheckpoint,
+                  "JSON file too large: maximum 8 bytes",
+                  cp.read_json, path)
+
+
+def test_cp_a05_sha256_streams_file_in_chunks(cp, tmp_path, monkeypatch):
+    """RT/CP-A05: sha256() đọc theo chunk, không gọi Path.read_bytes()."""
+    from pathlib import Path
+
+    data = b"a" * (cp._SHA256_CHUNK_BYTES + 123)
+    path = tmp_path / "large-source.bin"
+    path.write_bytes(data)
+    original_read_bytes = Path.read_bytes
+
+    def guarded_read_bytes(self, *args, **kwargs):
+        if self == path:
+            raise AssertionError("sha256 must not load the whole file at once")
+        return original_read_bytes(self, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "read_bytes", guarded_read_bytes)
+    import hashlib
+    assert cp.sha256(path) == hashlib.sha256(data).hexdigest()
+
+
+def test_cp_a03_source_outside_source_root_rejected(cp, fx, tmp_path):
+    """RT/CP-A03: source resolve ra ngoài source_root khai báo phải FAIL."""
+    allowed = tmp_path / "allowed"
+    allowed.mkdir()
+    book = fx.book()
+    state = fx.state(book, source_root=str(allowed))
+    assert_raises(cp.InvalidCheckpoint, "Source outside source_root: S01",
+                  cp.validate, state)
+
+
+def test_cp_a03_source_inside_source_root_passes(cp, fx, tmp_path):
+    """RT/CP-A03: source nằm trong source_root vẫn validate bình thường."""
+    book = fx.book()
+    state = fx.state(book, source_root=str(tmp_path))
+    assert cp.validate(state) is state
+
+
+def test_cp_a03_export_without_source_root_warns_sources_are_self_declared(
+        cp, fx, tmp_path):
+    """RT/CP-A03: export phải cảnh báo khi source chưa gắn gốc phạm vi."""
+    state = fx.state(units=[fx.unit_k01()])
+    target = tmp_path / "state.json"
+    _write_state_file(cp, target, state)
+    output = tmp_path / "handoff.md"
+    cp.export(target, output)
+    text = output.read_text(encoding="utf-8")
+    assert ("state không khai báo source_root; các nguồn là tự khai "
+            "và chưa được gắn với gốc phạm vi đã kiểm") in text
+
+
+def test_cp_a03_export_with_source_root_omits_unbound_scope_warning(
+        cp, fx, tmp_path):
+    """RT/CP-A03: state đã gắn source_root thì không cần cảnh báo chưa gắn gốc."""
+    book = fx.book()
+    state = fx.state(book, units=[fx.unit_k01()], source_root=str(tmp_path))
+    target = tmp_path / "state.json"
+    _write_state_file(cp, target, state)
+    output = tmp_path / "handoff.md"
+    cp.export(target, output)
+    text = output.read_text(encoding="utf-8")
+    assert "chưa được gắn với gốc phạm vi đã kiểm" not in text
+
+
+def _many_lines_book(fx, count=20000):
+    lines = [f"Dòng đệm {i} cho nguồn dài." for i in range(1, count - 1)]
+    lines.append("Dòng áp cuối giữ mốc kiểm tra.")
+    lines.append("Dòng cuối cùng của nguồn dài.")
+    return fx.write_book(lines, "many.txt"), count
+
+
+def test_cp_a05_validate_reads_citation_near_end_of_long_source(cp, fx):
+    """RT/CP-A05: validate() đọc theo luồng — trích dẫn ở cuối nguồn nhiều
+    dòng (kể cả excerpt vắt qua hai dòng) vẫn kiểm đúng mà không cần nạp
+    toàn bộ lines; mức RAM được đo riêng bằng script nghiệm thu."""
+    book, count = _many_lines_book(fx)
+    unit = fx.unit_k01()
+    unit["citations"] = [{
+        "source_id": "S01", "line_start": count - 1, "line_end": count,
+        "excerpt": "giữ mốc kiểm tra.\nDòng cuối cùng của nguồn dài",
+    }]
+    state = fx.state(book, units=[unit])
+    assert cp.validate(state) is state
+
+
+def test_cp_a05_validate_rejects_excerpt_missing_near_end_of_long_source(cp, fx):
+    """RT/CP-A05: excerpt không có ở khoảng dòng cuối của nguồn dài vẫn bị
+    chặn với đúng thông điệp như bản nạp toàn bộ lines."""
+    book, count = _many_lines_book(fx)
+    unit = fx.unit_k01()
+    unit["citations"] = [{
+        "source_id": "S01", "line_start": count - 1, "line_end": count,
+        "excerpt": "Đoạn trích hoàn toàn không tồn tại ở đây",
+    }]
+    state = fx.state(book, units=[unit])
+    assert_raises(cp.InvalidCheckpoint, "Excerpt not found in cited lines",
+                  cp.validate, state)
+
+
+def test_cp_a05_validate_rejects_source_with_single_line_over_cap(cp, fx,
+                                                                  tmp_path):
+    """RT/CP-A05 (biến thể canonical): file mà một dòng đơn vượt
+    MAX_LINE_BYTES (như file 256 MB toàn NUL không newline của Red Team)
+    bị validate chặn sạch bằng thông điệp giới hạn dòng, thay vì dòng đó
+    được nạp trọn vào RAM."""
+    path = tmp_path / "one_long_line.txt"
+    with path.open("w", encoding="utf-8") as stream:
+        stream.write("Dòng mở đầu ngắn.\n")
+        stream.write("x" * (cp.MAX_LINE_BYTES + 1))
+    state = fx.state(path)
+    assert_raises(cp.InvalidCheckpoint, "Source line exceeds maximum length",
+                  cp.validate, state)
+
+
+def test_cp_a05_validate_accepts_multiline_source_of_several_mb(cp, fx):
+    """RT/CP-A05: file nhiều dòng với tổng dung lượng vài MB vẫn validate
+    bình thường — cap độ dài dòng không gây hồi quy cho nguồn hợp lệ, và
+    trích dẫn ở dòng cuối vẫn kiểm đúng."""
+    lines = ["Dòng đệm " + "y" * 1000 + f" {i}" for i in range(1, 6000)]
+    lines.append("Dòng cuối cùng của nguồn dài.")
+    book = fx.write_book(lines, "several_mb.txt")
+    assert book.stat().st_size > 5 * 1024 * 1024
+    unit = fx.unit_k01()
+    unit["citations"] = [{
+        "source_id": "S01", "line_start": len(lines), "line_end": len(lines),
+        "excerpt": "Dòng cuối cùng của nguồn dài",
+    }]
+    state = fx.state(book, units=[unit])
+    assert cp.validate(state) is state
