@@ -158,7 +158,7 @@ Các helper đã được gia cố đúng vào những đường mà probe đố
 
 ### Khoảng trống đã khai báo
 
-- **KC-08:** `reference_plan('transfer')` hiện trả `[R09, R04, R06]` và thiếu `R13`. Test khóa hành vi hiện tại này và đánh dấu là khoảng trống định tuyến đã biết, chờ quyết định riêng.
+- **KC-08 (đã giải quyết):** `reference_plan('transfer')` nay trả `[R09, R13, R04, R06]`; `R13` (chủ sở hữu ví dụ và transfer) không còn thiếu trong kế hoạch truy hồi của transfer. Khoảng trống định tuyến đã khai trước đây được đóng (quyết định 2026-10-23).
 - Chỉ dẫn định tuyến hiện chưa có ví dụ few-shot cho routing và chưa có luật ưu tiên/phân xử chung khi nhiều trigger chồng nhau. Giới hạn sửa lỗi tường minh duy nhất hiện nằm cục bộ trong validation `R14`; chưa có ngân sách vòng lặp runtime dùng chung.
 - Định dạng trace/sidecar đã được đặc tả trong contract, nhưng phiên bản này chưa có bước ghi trace hoặc xuất sidecar chuyên biệt.
 

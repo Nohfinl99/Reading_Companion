@@ -2,6 +2,10 @@
 
 These notes summarize user-facing and compatibility changes. / Ghi chú này tóm tắt thay đổi đối với người dùng và khả năng tương thích.
 
+## Routing fix / Sửa định tuyến — unreleased
+
+- **KC-08:** the `transfer` reference plan now includes `R13` — `reference_plan('transfer')` returns `[R09, R13, R04, R06]` — so the examples & transfer owner section is retrieved directly instead of only via R09's prose pointer, closing the known routing gap. Decision by NohFinl, 2026-10-23. / **KC-08:** kế hoạch truy hồi của `transfer` nay có `R13` — `reference_plan('transfer')` trả `[R09, R13, R04, R06]` — nên section chủ sở hữu ví dụ và transfer được truy hồi trực tiếp thay vì chỉ qua con trỏ văn xuôi của R09, đóng khoảng trống định tuyến đã biết. Quyết định của NohFinl, 2026-10-23.
+
 ## Documentation update / Cập nhật tài liệu — unreleased
 
 - Added paired Vietnamese/English architecture, principle and quality guides; clarified document navigation and canonical owners. / Bổ sung cặp tài liệu kiến trúc, nguyên lý và chất lượng VI/EN; làm rõ điều hướng và file canonical.

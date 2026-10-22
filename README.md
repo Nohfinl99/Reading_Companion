@@ -158,7 +158,7 @@ The helpers were hardened against the adversarial probes that initially bypassed
 
 ### Declared gaps
 
-- **KC-08:** `reference_plan('transfer')` currently returns `[R09, R04, R06]` and omits `R13`. The test locks this current behavior and marks it as a known routing gap pending a separate decision.
+- **KC-08 (resolved):** `reference_plan('transfer')` now returns `[R09, R13, R04, R06]`; `R13` (the examples & transfer owner) is no longer missing from the transfer reference plan. This closes the previously declared routing gap (decision 2026-10-23).
 - Routing instructions currently have no few-shot routing examples and no global precedence/tie-break rule for overlapping triggers. The only explicit repair cap is local to `R14` validation; there is no general runtime loop budget.
 - Trace/sidecar formats are specified in the contracts, but this version has no dedicated trace writer or sidecar export step.
 

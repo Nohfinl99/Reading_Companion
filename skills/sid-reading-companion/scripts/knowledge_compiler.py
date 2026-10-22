@@ -76,7 +76,7 @@ def reference_plan(task, mode, validated_content=False, ia_views=None, portable=
             'extract': ['R02', 'R07', 'R09', 'R06'],
             'compare': ['R03', 'R09', 'R06', 'R07'],
             'map': ['R08', 'R09'],
-            'transfer': ['R09', 'R04', 'R06'],
+            'transfer': ['R09', 'R13', 'R04', 'R06'],
             'continue': ['R11', 'R12', 'R07'],
         }[task]
         if mode == 'combined' and task == 'extract':
