@@ -135,19 +135,29 @@ python -m pip install pytest
 python -m pytest tests/ -q
 ```
 
-**Ảnh chụp kiểm chứng — 22/10/2026, Python 3.12.3, pytest 9.1.1:**
+**Ảnh chụp kiểm chứng — 22/10/2026, Python 3.12.3, pytest 9.1.1, sau đợt vá an ninh:**
 
-- **234 case guard đã đặc tả** cho bốn helper.
-- Kết quả chạy tại chỗ: **476 passed, 2 xfailed**.
-- Kiểm tra độc lập: **234/234 ID case đều có mặt**, toàn bộ danh sách stage/section khớp, và **6/6 mutation probe đều bị bắt**.
-- Hai xfail đều là `strict`, nên nếu sửa code nền mà quên gỡ marker, bộ test sẽ chuyển đỏ.
+- **234 case guard đã đặc tả** cho bốn helper, cộng thêm các test an ninh CLI và test hồi quy của đợt vá.
+- Kết quả toàn bộ suite: **542 passed, 0 xfailed**.
+- Kiểm tra độc lập: **234/234 ID case đều có mặt**, toàn bộ danh sách stage/section khớp, mutation probe **8/8 bị bắt** trên ngân hàng mở rộng.
+- Nghiệm thu đối kháng độc lập: **39/39 probe red team bị chặn** — gồm viết xuyên symlink, trường checkpoint tự phong, duplicate JSON key, JSON lồng sâu và nguồn quá khổ (nguồn 256 MB nhiều dòng được validate bằng đọc luồng với peak bộ nhớ ~19 MB; một dòng đơn vượt 1 MiB bị từ chối sạch).
 
 Bộ test khóa **lớp cơ học/cấu trúc hiện tại**. Nó không chứng minh đúng sai về ngữ nghĩa, hành vi của host LLM, benchmark thành công hay kết quả học tập. Các case benchmark `B01–B08` vẫn là đặc tả cho tới khi từng case được chạy với input, output và bằng chứng chấm thực tế.
 
+### Lớp hardening an ninh (từ vòng red team / pen test)
+
+Các helper đã được gia cố đúng vào những đường mà probe đối kháng từng lọt qua:
+
+- `checkpoint.validate()` khóa tập trường ở mọi cấp — trường tự khai như `semantic_verified` hay `mastery_claim` bị từ chối thay vì được save như thể đã kiểm.
+- Mọi điểm nạp JSON đều chặn key trùng và input quá khổ; JSON lồng sâu trả `{ok: false}` sạch ở cả 3 CLI thay vì sập traceback.
+- Kiểm tra symlink ở output nhất quán trên cả 3 CLI, kể cả dangling symlink.
+- Excerpt dùng làm căn cứ phải đạt ngưỡng tối thiểu (≥ 10 ký tự và ≥ 2 từ) ở cả checkpoint và evidence của phiên.
+- File nguồn được đọc theo luồng với giới hạn 1 MiB mỗi dòng; state có thể khai `source_root`, và export gắn cảnh báo tường minh khi nguồn là tự khai mà chưa gắn gốc.
+- Support của phiên không còn “giảm vào unknown”: chuyển về `unknown` từ mức đã biết bị coi là mất thông tin và bị chặn. Chu trình learning_order được kiểm bất kể views yêu cầu, và từ khóa dành riêng của Mermaid bị cấm làm ID node của map.
+- Hai lỗi trước đây đã sửa: `timestamp()` trả đúng thông điệp chẩn đoán “needs timezone” (trước là [issue #1](https://github.com/Nohfinl99/Reading_Companion/issues/1)), và guard `Cannot overwrite source` trong `export()` đã chạm tới được trở lại (trước là [issue #2](https://github.com/Nohfinl99/Reading_Companion/issues/2)).
+
 ### Khoảng trống đã khai báo
 
-- **CP-05 — [issue #1](https://github.com/Nohfinl99/Reading_Companion/issues/1):** `timestamp()` thay thông điệp chẩn đoán dự kiến “needs timezone” bằng lỗi timestamp chung. Input không hợp lệ vẫn bị chặn.
-- **CP-78 — [issue #2](https://github.com/Nohfinl99/Reading_Companion/issues/2):** guard chuyên biệt “cannot overwrite source” trong `export()` không thể chạm tới vì guard kiểm tra đích đã tồn tại chạy trước. File nguồn vẫn được guard đầu tiên bảo vệ.
 - **KC-08:** `reference_plan('transfer')` hiện trả `[R09, R04, R06]` và thiếu `R13`. Test khóa hành vi hiện tại này và đánh dấu là khoảng trống định tuyến đã biết, chờ quyết định riêng.
 - Chỉ dẫn định tuyến hiện chưa có ví dụ few-shot cho routing và chưa có luật ưu tiên/phân xử chung khi nhiều trigger chồng nhau. Giới hạn sửa lỗi tường minh duy nhất hiện nằm cục bộ trong validation `R14`; chưa có ngân sách vòng lặp runtime dùng chung.
 - Định dạng trace/sidecar đã được đặc tả trong contract, nhưng phiên bản này chưa có bước ghi trace hoặc xuất sidecar chuyên biệt.
