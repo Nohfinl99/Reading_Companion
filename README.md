@@ -8,7 +8,7 @@
 <p align="center"><em>Vietnamese-first reading and knowledge compilation, with bilingual project documentation.</em></p>
 
 <p align="center">
-  <a href="plugin.json"><img src="https://img.shields.io/badge/Plugin-0.3.3-15324F?style=flat-square" alt="Plugin version 0.3.3" /></a>
+  <a href="plugin.json"><img src="https://img.shields.io/badge/Plugin-0.3.5-15324F?style=flat-square" alt="Plugin version 0.3.5" /></a>
   <a href="#verification"><img src="https://img.shields.io/badge/Helper%20guard%20cases-234-2E8B57?style=flat-square" alt="234 helper guard cases" /></a>
   <a href="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml"><img src="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml/badge.svg?branch=main" alt="GitHub Actions validation status" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-2E8B57?style=flat-square" alt="MIT License" /></a>
@@ -135,12 +135,12 @@ python -m pip install pytest
 python -m pytest tests/ -q
 ```
 
-**Verification snapshot — 2026-10-23, Python 3.12.3, pytest 9.1.1, after the continuity-fix wave:**
+**Verification snapshot — 2026-10-23, Python 3.12.3, pytest 9.1.1, for the 0.3.5 release (continuity fix, KC-08 routing fix and sibling-guard fixes included):**
 
 - **234 specified guard cases** across the four helpers, plus CLI-security and regression tests added by the fix waves.
 - Full suite result: **556 passed, 0 xfailed**.
 - Independent re-checks: **234/234 case IDs present**, all stage/section lists matched, mutation probes **8/8 caught** on the extended bank.
-- Independent adversarial acceptance: **39/39 red-team probes blocked** — including symlink write-through, forged checkpoint fields, duplicate JSON keys, deeply nested JSON, and oversized sources (a 256 MB multi-line source validates by streaming at ~19 MB peak memory; a single line over 1 MiB is rejected cleanly).
+- Independent adversarial acceptance from the red-team / pen-test wave: **39/39 red-team probes blocked** — including symlink write-through, forged checkpoint fields, duplicate JSON keys, deeply nested JSON, and oversized sources (a 256 MB multi-line source validates by streaming at ~19 MB peak memory; a single line over 1 MiB is rejected cleanly).
 
 The suite locks the current **mechanical/structural layer**. It does not establish semantic correctness, host-LLM behavior, benchmark success or learning outcomes. The `B01–B08` benchmark cases remain specifications until a case is run with actual inputs, outputs and grading evidence.
 
@@ -205,4 +205,4 @@ assets/                       Product logo and explanatory illustrations
 
 Read the [contribution guide](CONTRIBUTING.md); changes should preserve routing, provenance, IDs, contracts and pending-question state. See the [changelog](CHANGELOG.md). The repository is distributed under the [MIT License](LICENSE).
 
-Technical plugin ID: `sid-reading-companion` · Display name: **Reading Companion** · Version: **0.3.3**.
+Technical plugin ID: `sid-reading-companion` · Display name: **Reading Companion** · Version: **0.3.5**.
