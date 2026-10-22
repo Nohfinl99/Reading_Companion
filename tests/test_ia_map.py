@@ -727,3 +727,46 @@ def test_ia_35_cli_malformed_json(tmp_path):
     result = _run_ia_cli(src, out)
     assert result.returncode == 1
     assert json.loads(result.stdout)["ok"] is False
+
+
+# ------------------------------------------------------- Red Team regression
+# IA-A02: a learning_order cycle used to slip through whenever the learning
+# view was not requested, even though learning edges are always emitted.
+
+def test_ia_a02_learning_cycle_rejected_without_learning_view():
+    edges = [
+        learning_edge(id="E2"),
+        learning_edge(id="E3", **{"from": "B", "to": "A"}),
+    ]
+    assert_invalid(
+        lambda: ia.compile_map(make_map(relations=[], learning_order=edges)),
+        "Learning-order cycle; review affected branch before rendering",
+    )
+
+
+def test_ia_a02_learning_cycle_rejected_with_partial_views():
+    edges = [
+        learning_edge(id="E2"),
+        learning_edge(id="E3", **{"from": "B", "to": "A"}),
+    ]
+    assert_invalid(
+        lambda: ia.compile_map(
+            make_map(views=["conceptual"], relations=[], learning_order=edges)
+        ),
+        "Learning-order cycle; review affected branch before rendering",
+    )
+
+
+# IA-A03: node IDs that are Mermaid keywords used to be accepted and broke
+# the emitted diagram syntax; only "end" was reserved.
+
+@pytest.mark.parametrize(
+    "bad_id",
+    ["subgraph", "flowchart", "graph", "class", "classDef", "style", "click",
+     "Subgraph", "CLASS"],
+)
+def test_ia_a03_reserved_mermaid_keyword_ids(bad_id):
+    assert_invalid(
+        lambda: ia.compile_map(make_map(nodes=[make_ia_node(id=bad_id), node_b()])),
+        "Reserved Mermaid node ID",
+    )

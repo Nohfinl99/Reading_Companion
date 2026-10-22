@@ -1118,3 +1118,71 @@ def test_kc_58_cli_missing_input_file(tmp_path):
     result = _run_kc_cli(tmp_path / "does-not-exist.json", tmp_path / "plan.json")
     assert result.returncode == 1
     assert json.loads(result.stdout)["ok"] is False
+
+
+# ------------------------------------------------------- Red Team regressions
+
+def test_json_a02_cli_deeply_nested_json_fails_cleanly(tmp_path):
+    src = tmp_path / "request.json"
+    out = tmp_path / "plan.json"
+    depth = 20_000
+    src.write_text('{"a":' * depth + "1" + "}" * depth, encoding="utf-8")
+    result = _run_kc_cli(src, out)
+    assert result.returncode == 1
+    assert json.loads(result.stdout) == {
+        "ok": False,
+        "error": "JSON input is nested too deeply",
+    }
+    assert "Traceback" not in result.stderr
+    assert "RecursionError" not in result.stderr
+    assert not out.exists()
+
+
+def test_cp_a04_parse_json_rejects_duplicate_keys():
+    assert_invalid(
+        lambda: kc.parse_json('{"task": "explain", "task": "extract"}'),
+        "Duplicate JSON key: task",
+    )
+    assert_invalid(
+        lambda: kc.parse_json('{"outer": {"mode": "deep", "mode": "extract"}}'),
+        "Duplicate JSON key: mode",
+    )
+
+
+def test_cp_a04_cli_rejects_duplicate_keys(tmp_path):
+    src = tmp_path / "request.json"
+    out = tmp_path / "plan.json"
+    src.write_text(
+        '{"task": "explain", "mode": "deep", "mode": "extract"}',
+        encoding="utf-8",
+    )
+    result = _run_kc_cli(src, out)
+    assert result.returncode == 1
+    assert json.loads(result.stdout) == {
+        "ok": False,
+        "error": "Duplicate JSON key: mode",
+    }
+    assert not out.exists()
+
+
+def test_cp_a05_read_json_file_rejects_oversize_input(monkeypatch, tmp_path):
+    src = tmp_path / "request.json"
+    src.write_text('{"task": "explain"}', encoding="utf-8")
+    monkeypatch.setattr(kc, "MAX_JSON_BYTES", 4)
+    assert_invalid(
+        lambda: kc.read_json_file(src),
+        "JSON input exceeds the 4-byte limit",
+    )
+
+
+def test_cp_a05_cli_rejects_oversize_input(tmp_path):
+    src = tmp_path / "request.json"
+    out = tmp_path / "plan.json"
+    _write_json(src, make_request(padding="x" * kc.MAX_JSON_BYTES))
+    result = _run_kc_cli(src, out)
+    assert result.returncode == 1
+    assert json.loads(result.stdout) == {
+        "ok": False,
+        "error": f"JSON input exceeds the {kc.MAX_JSON_BYTES}-byte limit",
+    }
+    assert not out.exists()
