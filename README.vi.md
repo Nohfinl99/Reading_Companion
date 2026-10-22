@@ -135,10 +135,10 @@ python -m pip install pytest
 python -m pytest tests/ -q
 ```
 
-**Ảnh chụp kiểm chứng — 22/10/2026, Python 3.12.3, pytest 9.1.1, sau đợt vá an ninh:**
+**Ảnh chụp kiểm chứng — 23/10/2026, Python 3.12.3, pytest 9.1.1, sau đợt vá continuity:**
 
-- **234 case guard đã đặc tả** cho bốn helper, cộng thêm các test an ninh CLI và test hồi quy của đợt vá.
-- Kết quả toàn bộ suite: **542 passed, 0 xfailed**.
+- **234 case guard đã đặc tả** cho bốn helper, cộng thêm các test an ninh CLI và test hồi quy của các đợt vá.
+- Kết quả toàn bộ suite: **556 passed, 0 xfailed**.
 - Kiểm tra độc lập: **234/234 ID case đều có mặt**, toàn bộ danh sách stage/section khớp, mutation probe **8/8 bị bắt** trên ngân hàng mở rộng.
 - Nghiệm thu đối kháng độc lập: **39/39 probe red team bị chặn** — gồm viết xuyên symlink, trường checkpoint tự phong, duplicate JSON key, JSON lồng sâu và nguồn quá khổ (nguồn 256 MB nhiều dòng được validate bằng đọc luồng với peak bộ nhớ ~19 MB; một dòng đơn vượt 1 MiB bị từ chối sạch).
 
@@ -154,10 +154,12 @@ Các helper đã được gia cố đúng vào những đường mà probe đố
 - Excerpt dùng làm căn cứ phải đạt ngưỡng tối thiểu (≥ 10 ký tự và ≥ 2 từ) ở cả checkpoint và evidence của phiên.
 - File nguồn được đọc theo luồng với giới hạn 1 MiB mỗi dòng; state có thể khai `source_root`, và export gắn cảnh báo tường minh khi nguồn là tự khai mà chưa gắn gốc.
 - Support của phiên không còn “giảm vào unknown”: chuyển về `unknown` từ mức đã biết bị coi là mất thông tin và bị chặn. Chu trình learning_order được kiểm bất kể views yêu cầu, và từ khóa dành riêng của Mermaid bị cấm làm ID node của map.
+- Support cũng không còn bị “rửa” lên trên: một câu hỏi đang chờ có support `unknown` không thể bị ghi lại thành `none` qua một lần save trung gian, một câu hỏi legacy không có context không thể bị gắn context có support đã biết hoặc một assessment `independent`, và assessment khi resolve không được ghi support thấp hơn support thật của câu hỏi (`worked_example → hint` bị từ chối, không chỉ các lần hạ xuống `none`). Thay đổi này đóng đường vòng continuity hai bước được theo dõi ở [issue #8](https://github.com/Nohfinl99/Reading_Companion/issues/8); kỳ vọng test trước đây cho phép `unknown → none` đã bị supersede theo SC04/R11.
 - Hai lỗi trước đây đã sửa: `timestamp()` trả đúng thông điệp chẩn đoán “needs timezone” (trước là [issue #1](https://github.com/Nohfinl99/Reading_Companion/issues/1)), và guard `Cannot overwrite source` trong `export()` đã chạm tới được trở lại (trước là [issue #2](https://github.com/Nohfinl99/Reading_Companion/issues/2)). Hai instance anh em cùng pattern cũng đã được sửa ([issue #5](https://github.com/Nohfinl99/Reading_Companion/issues/5)): chẩn đoán timezone của `checked_at` cho unit `current_source` trong `validate()`, và thứ tự guard differ-from-source trong `initialize()`.
 
 ### Khoảng trống đã khai báo
 
+- Các guard continuity bảo vệ những chuyển đổi đi qua `save()`; một file state bị sửa trực tiếp ngoài helper thì validator tĩnh không phát hiện được.
 - **KC-08 (đã giải quyết):** `reference_plan('transfer')` nay trả `[R09, R13, R04, R06]`; `R13` (chủ sở hữu ví dụ và transfer) không còn thiếu trong kế hoạch truy hồi của transfer. Khoảng trống định tuyến đã khai trước đây được đóng (quyết định 2026-10-23).
 - Chỉ dẫn định tuyến hiện chưa có ví dụ few-shot cho routing và chưa có luật ưu tiên/phân xử chung khi nhiều trigger chồng nhau. Giới hạn sửa lỗi tường minh duy nhất hiện nằm cục bộ trong validation `R14`; chưa có ngân sách vòng lặp runtime dùng chung.
 - Định dạng trace/sidecar đã được đặc tả trong contract, nhưng phiên bản này chưa có bước ghi trace hoặc xuất sidecar chuyên biệt.

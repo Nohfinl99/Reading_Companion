@@ -135,10 +135,10 @@ python -m pip install pytest
 python -m pytest tests/ -q
 ```
 
-**Verification snapshot — 2026-10-22, Python 3.12.3, pytest 9.1.1, after the security-fix wave:**
+**Verification snapshot — 2026-10-23, Python 3.12.3, pytest 9.1.1, after the continuity-fix wave:**
 
-- **234 specified guard cases** across the four helpers, plus CLI-security and regression tests added by the fix wave.
-- Full suite result: **542 passed, 0 xfailed**.
+- **234 specified guard cases** across the four helpers, plus CLI-security and regression tests added by the fix waves.
+- Full suite result: **556 passed, 0 xfailed**.
 - Independent re-checks: **234/234 case IDs present**, all stage/section lists matched, mutation probes **8/8 caught** on the extended bank.
 - Independent adversarial acceptance: **39/39 red-team probes blocked** — including symlink write-through, forged checkpoint fields, duplicate JSON keys, deeply nested JSON, and oversized sources (a 256 MB multi-line source validates by streaming at ~19 MB peak memory; a single line over 1 MiB is rejected cleanly).
 
@@ -154,10 +154,12 @@ The helpers were hardened against the adversarial probes that initially bypassed
 - Grounding excerpts must meet a minimum size (≥ 10 characters and ≥ 2 words) in checkpoints and session evidence.
 - Source files are read by streaming with a 1 MiB per-line cap; states may declare a `source_root`, and exports warn explicitly when sources are self-declared without one.
 - Session support can no longer “decrease into the unknown”: moving to `unknown` from a known support level is treated as a loss and blocked. Learning-order cycles are checked regardless of the requested views, and Mermaid reserved words are rejected as map node IDs.
+- Support also cannot be laundered upward: a pending question whose support is `unknown` cannot be rewritten to `none` through an intermediate save, a legacy question without context cannot be given a known-support context or an `independent` assessment, and a resolving assessment cannot record less support than the question actually had (`worked_example → hint` is rejected, not just drops to `none`). This closes the two-step continuity bypass tracked in [issue #8](https://github.com/Nohfinl99/Reading_Companion/issues/8); the previous test expectation that allowed `unknown → none` was superseded against SC04/R11.
 - Two earlier defects are fixed: `timestamp()` reports its intended “needs timezone” diagnostic (was [issue #1](https://github.com/Nohfinl99/Reading_Companion/issues/1)), and the `Cannot overwrite source` guard in `export()` is reachable again (was [issue #2](https://github.com/Nohfinl99/Reading_Companion/issues/2)). Two sibling instances of the same patterns are fixed as well ([issue #5](https://github.com/Nohfinl99/Reading_Companion/issues/5)): the `checked_at` timezone diagnostic of `current_source` units in `validate()`, and the differ-from-source guard order in `initialize()`.
 
 ### Declared gaps
 
+- The continuity guards protect transitions that go through `save()`; a state file edited directly outside the helper cannot be detected by the static validator.
 - **KC-08 (resolved):** `reference_plan('transfer')` now returns `[R09, R13, R04, R06]`; `R13` (the examples & transfer owner) is no longer missing from the transfer reference plan. This closes the previously declared routing gap (decision 2026-10-23).
 - Routing instructions currently have no few-shot routing examples and no global precedence/tie-break rule for overlapping triggers. The only explicit repair cap is local to `R14` validation; there is no general runtime loop budget.
 - Trace/sidecar formats are specified in the contracts, but this version has no dedicated trace writer or sidecar export step.
