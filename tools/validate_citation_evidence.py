@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import re
 from pathlib import Path
@@ -10,6 +11,9 @@ ROOT = Path(__file__).resolve().parents[1]
 REVIEW = Path("evaluation/citeguard/self-review.json")
 CHECKS = {f"CR{i:02}" for i in range(1, 7)}
 STATUSES = {"PASS", "FAIL", "PARTIAL", "NOT_RUN"}
+_gate_spec = importlib.util.spec_from_file_location("sid_gate_records", Path(__file__).with_name("validate_gate_records.py"))
+gate_checker = importlib.util.module_from_spec(_gate_spec)
+_gate_spec.loader.exec_module(gate_checker)
 
 
 class EvidenceError(ValueError):
@@ -61,6 +65,17 @@ def check_span(root, span):
     require(excerpt in "\n".join(lines[start - 1:end]), "Excerpt not at declared locator")
 
 
+def unit_declarations(text):
+    """Count declaration rows in canonical Units, not references elsewhere."""
+    headers = list(re.finditer(r"^## Units[ \t]*\r?$", text, re.MULTILINE))
+    require(len(headers) == 1, "Expected exactly one canonical Units section")
+    body = text[headers[0].end():]
+    boundary = re.search(r"^#{1,2}[ \t]+", body, re.MULTILINE)
+    if boundary:
+        body = body[:boundary.start()]
+    return re.findall(r"^\| (CG-\d+) \|", body, re.MULTILINE)
+
+
 def validate(root=ROOT):
     root = Path(root)
     review = load_json(root / REVIEW)
@@ -79,39 +94,16 @@ def validate(root=ROOT):
     for record in records:
         case = case_map[record["case_id"]]
         gate = record["gate_record"]
-        require(gate["gate_id"] == "G-CITATION-REVIEW", "Unexpected gate")
-        require(gate["status"] in STATUSES, "Invalid SC05 gate status")
         require(gate["applicable"] is case["applicable"], "Applicability mismatch")
-        require(bool(gate["reason"]), "Missing applicability reason")
         require(gate.get("artifact_revision") == 1, "Unexpected fixture artifact revision")
-        artifact_path = contained(root, gate["artifact_ref"])
-        source_spans, output_spans = gate["source_spans"], gate["output_spans"]
-        require(bool(output_spans), "Missing output evidence")
-        for span in source_spans + output_spans:
-            check_span(root, span)
-        require(all(contained(root, span["path"]) == artifact_path for span in output_spans),
-                "Output evidence does not match reviewed artifact")
-        if not gate["applicable"]:
-            require(gate["status"] == "NOT_RUN", "Non-applicable gate cannot PASS")
-            continue
-        checks = gate["checks"]
-        require(set(checks) == CHECKS, "Required review check missing or unknown")
-        for check in checks.values():
-            require(check["status"] in STATUSES | {"N/A"}, "Invalid check status")
-            require(bool(check.get("reason")), "Missing check reason")
-        if gate["status"] == "PASS":
-            require(bool(source_spans), "PASS lacks source evidence")
-            require(not gate["unresolved"], "PASS has unresolved checks")
-            require(all(c["status"] in {"PASS", "N/A"} for c in checks.values()),
-                    "PASS contains a failing or unrun check")
-            for check in checks.values():
-                refs = check.get("output_span_refs", [])
-                require(bool(refs) and all(type(i) is int and 0 <= i < len(output_spans) for i in refs),
-                        "PASS check lacks output evidence")
+        try:
+            gate_checker.validate_record(root, gate, legacy=True)
+        except gate_checker.GateValidationError as error:
+            raise EvidenceError(str(error)) from error
     knowledge = root / "skills/sid-reading-companion/references/knowledge"
     source = load_json(knowledge / "citeguard-source.json")
     text = (knowledge / "citeguard.md").read_text(encoding="utf-8")
-    unit_ids = re.findall(r"^\| (CG-\d+) \|", text, re.MULTILINE)
+    unit_ids = unit_declarations(text)
     require(len(unit_ids) == len(set(unit_ids)), "Duplicate knowledge unit")
     require(set(unit_ids) == set(source["unit_revisions"]), "Manifest/unit ID mismatch")
     relations = load_json(knowledge / "citeguard-relations.json")

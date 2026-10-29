@@ -21,3 +21,19 @@ H1: truy vết claim tới đoạn nguồn và giữ ngữ cảnh có thể gi�
 Selection: chọn các unit phục vụ quyết định tích hợp retrieval, citation và đánh giá; không tuyên bố bao phủ toàn bài. Chưa trích related work, mọi ví dụ và appendices. Kiến thức nghiên cứu được xử lý như historical/source-reported; giá/API/model ranking hiện tại phải kiểm riêng qua R07. [Relations](citeguard-relations.json) là diễn giải có nhãn của SID; không tự chuyển thành learning prerequisites.
 
 Hướng dẫn áp dụng và gate nằm ở [CE01–CE06](../citation-evidence.md). Không có search engine hoặc citation validator được cài bởi file này.
+
+## Application notes — SID recommendations
+
+Các ghi chú này hướng dẫn dùng bảy unit, không thêm phát hiện thực nghiệm hoặc thay nghĩa/revision của nghiên cứu đã tóm lược. Ví dụ dưới đây do SID tạo; hiệu quả trên Reading Companion chưa được đo.
+
+| Unit | Điều kiện cần giữ khi dùng | Ví dụ áp dụng / phản ví dụ |
+|---|---|---|
+| CG-01 | Giữ riêng metric tìm reference và mức hỗ trợ proposition | Đúng reference chưa đủ kết luận mọi claim đúng sự thật. |
+| CG-02 | Chỉ tìm trong nguồn/tập tài liệu thực truy cập và index được | Không gọi snippet-search chỉ vì host có tìm web theo title. |
+| CG-03 | Iteration bị giới hạn bởi candidates và coverage | Không hứa luôn tìm được citation thay thế sau nhiều lượt. |
+| CG-04 | Giữ dataset, thiết lập và metric báo cáo; model trung bình năm run | Không dùng số nghiên cứu như accuracy của Reading Companion. |
+| CG-05 | Ablation là so sánh trong setup báo cáo; thay backend/task cần đo lại | Thử baseline/candidate cùng input trước khi kết luận thêm retrieval cải thiện SID. |
+| CG-06 | Đánh đổi full context/retrieval phụ thuộc setup và token budget | Không áp một hệ số tiết kiệm token cố định cho mọi sách/host. |
+| CG-07 | Giữ access/coverage và portability khác equal performance | Nguồn thiếu làm claim unresolved; không mặc định claim sai. |
+
+Khi cần nội dung sâu hơn, mở đúng source locator và bổ sung definition/evidence/conditions/limitations trong artifact có revision. Không lấy bảng này thay source spans của tài liệu người dùng. Ví dụ ứng dụng thuộc Recommendation/Hypothesis, không phải kết quả học tập đã quan sát.

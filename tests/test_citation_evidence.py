@@ -83,3 +83,21 @@ def test_unknown_graph_endpoint_is_rejected(copy_repo):
     path.write_text(json.dumps(obj), encoding="utf-8")
     with pytest.raises(checker.EvidenceError, match="Unknown relation endpoint"):
         checker.validate(copy_repo)
+
+
+def test_application_note_references_do_not_declare_units(copy_repo):
+    path = copy_repo / "skills/sid-reading-companion/references/knowledge/citeguard.md"
+    text = path.read_text(encoding="utf-8")
+    # Both existing IDs and a reference-only unknown ID stay outside declarations.
+    text += "\n## Application notes regression fixture\n\n| CG-01 | reference |\n| CG-99 | reference only |\n"
+    path.write_text(text, encoding="utf-8")
+    assert checker.validate(copy_repo)["knowledge_units"] == 7
+
+
+def test_duplicate_declaration_inside_units_is_still_rejected(copy_repo):
+    path = copy_repo / "skills/sid-reading-companion/references/knowledge/citeguard.md"
+    text = path.read_text(encoding="utf-8")
+    text = text.replace("## Units\n", "## Units\n\n| CG-01 | duplicate declaration | locator |\n", 1)
+    path.write_text(text, encoding="utf-8")
+    with pytest.raises(checker.EvidenceError, match="Duplicate knowledge unit"):
+        checker.validate(copy_repo)

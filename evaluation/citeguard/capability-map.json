@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "purpose": "Planned audit mapping, not execution results or confirmed root causes",
+  "records": [
+    {
+      "case_id": "CE-T01",
+      "primary": "C06",
+      "secondary": [
+        "C02"
+      ],
+      "failure_classes": [
+        "F04"
+      ],
+      "owner_candidates": [
+        "CE04",
+        "R02"
+      ]
+    },
+    {
+      "case_id": "CE-T02",
+      "primary": "C02",
+      "secondary": [],
+      "failure_classes": [
+        "F02"
+      ],
+      "owner_candidates": [
+        "CE02",
+        "KC01"
+      ]
+    },
+    {
+      "case_id": "CE-T03",
+      "primary": "C02",
+      "secondary": [
+        "C06"
+      ],
+      "failure_classes": [
+        "F02",
+        "F04"
+      ],
+      "owner_candidates": [
+        "CE04"
+      ]
+    },
+    {
+      "case_id": "CE-T04",
+      "primary": "C02",
+      "secondary": [],
+      "failure_classes": [
+        "F02"
+      ],
+      "owner_candidates": [
+        "CE04"
+      ]
+    },
+    {
+      "case_id": "CE-T05",
+      "primary": "C06",
+      "secondary": [
+        "C02"
+      ],
+      "failure_classes": [
+        "F04"
+      ],
+      "owner_candidates": [
+        "CE04"
+      ]
+    },
+    {
+      "case_id": "CE-T06",
+      "primary": "C02",
+      "secondary": [],
+      "failure_classes": [
+        "F02"
+      ],
+      "owner_candidates": [
+        "M01",
+        "CE02"
+      ]
+    },
+    {
+      "case_id": "CE-T07",
+      "primary": "C10",
+      "secondary": [
+        "C01"
+      ],
+      "failure_classes": [
+        "F09"
+      ],
+      "owner_candidates": [
+        "M06",
+        "R10"
+      ]
+    },
+    {
+      "case_id": "CE-T08",
+      "primary": "C07",
+      "secondary": [
+        "C10",
+        "C02"
+      ],
+      "failure_classes": [
+        "F08",
+        "F09"
+      ],
+      "owner_candidates": [
+        "CE05",
+        "R10"
+      ]
+    },
+    {
+      "case_id": "CE-T09",
+      "primary": "C06",
+      "secondary": [
+        "C02"
+      ],
+      "failure_classes": [
+        "F04",
+        "F02"
+      ],
+      "owner_candidates": [
+        "CE04"
+      ]
+    },
+    {
+      "case_id": "CE-T10",
+      "primary": "C02",
+      "secondary": [
+        "C01"
+      ],
+      "failure_classes": [
+        "F02"
+      ],
+      "owner_candidates": [
+        "M06",
+        "CE05"
+      ]
+    }
+  ],
+  "coverage_gaps": [
+    "Existing CE-T01–10 do not directly test IA representation/relations (C08); add a separate real fixture before claiming C08 performance."
+  ]
+}

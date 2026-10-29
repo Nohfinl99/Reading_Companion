@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "version": "0.3.7",
+  "baseline_commit": "709d19bc27c65270a487a5aa0a6eb6fde67d74f7",
+  "source_release": {
+    "status": "LOCAL_SCOPED_PASS",
+    "linux_python": "3.12.15",
+    "full_suite_passed": 662,
+    "additional_sync_validator_tests_passed": 12,
+    "host_activation": "NOT_RUN"
+  },
+  "delegated_run": {
+    "model": "gpt-6-luna",
+    "cases": 1,
+    "final_required_criteria_passed": 3,
+    "scope_repair_attempts": 1,
+    "independent_external_review": false
+  },
+  "github_ci": {
+    "status": "PENDING"
+  },
+  "account_update": {
+    "status": "PENDING"
+  },
+  "limits": [
+    "Helpers and schema checks do not prove semantic truth or host activation",
+    "No installed-host new-chat persistence, quality/cost gain or learner outcome measurements"
+  ]
+}

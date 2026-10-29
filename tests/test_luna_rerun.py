@@ -57,8 +57,23 @@ def test_missing_output_is_rejected(evidence_copy):
         checker.validate(evidence_copy)
 
 
-def test_current_candidate_must_match_run(evidence_copy):
-    path = evidence_copy / "skills/sid-reading-companion/references/citation-evidence.md"
+def test_referenced_source_snapshot_must_match_run(evidence_copy):
+    folder = evidence_copy / "evaluation/citeguard" / checker.RUNS[-1]
+    override = json.loads((folder / "source-snapshot.json").read_text(encoding="utf-8"))["overrides"]
+    path = evidence_copy / override["skills/sid-reading-companion/references/citation-evidence.md"]
     path.write_text(path.read_text(encoding="utf-8") + "\nNew runtime rule.\n", encoding="utf-8")
     with pytest.raises(ValueError, match="Candidate source fingerprint"):
         checker.validate(evidence_copy)
+
+
+def test_historical_raw_is_unchanged_and_schema_finding_stays_visible(evidence_copy):
+    raw = evidence_copy / "evaluation/citeguard" / checker.RUNS[-1] / "raw/CE-T01.md"
+    before = raw.read_bytes()
+    result = checker.validate(evidence_copy)
+    assert raw.read_bytes() == before
+    assert result["ok"] is True  # Frozen run integrity, not old SC05 certification.
+    assert result["historical_sc05_certified"] is False
+    finding = result["historical_schema_findings"][0]
+    assert finding["schema_valid"] is False
+    assert finding["sha256"] == checker.sha(raw)
+    assert "artifact_revision" in finding["missing_fields"]

@@ -1,0 +1,10 @@
+{
+  "frozen_at": "2026-10-29T12:59:10.856937+00:00",
+  "criteria": [
+    "Interpret the fixture metrics/conditions faithfully; distinguish reference recovery from factual truth without universal transfer.",
+    "Mode remains extract, no learner quiz/assessment or invented tool/host evidence.",
+    "New SC05 sidecar passes strict structural validator with separately supplied artifact revision baseline."
+  ],
+  "review_layer": "primary_review_of_delegated_run",
+  "limits": "One case, same project reviewers, no statistical reliability or installed-host proof"
+}

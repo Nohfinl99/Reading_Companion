@@ -1,4 +1,4 @@
-# Reading Companion — Master Instructions 0.3.6
+# Reading Companion — Master Instructions 0.3.7
 
 ## M01 — Authority, identity và phạm vi
 

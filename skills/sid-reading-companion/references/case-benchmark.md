@@ -388,6 +388,22 @@ Performance chỉ trên records applicable đã chạy ở lớp đang báo: t�
 
 Dimensions gợi ý: C01 goal/mode/scope; C02 source access/locator/injection/missing media; C03 boundary/granularity/conditions; C04 relation type/basis/prerequisite vs reference; C05 technical/argument/interpretation; C06 polarity/modality/conditions/exceptions/numbers/additions; C07 pending/hint/feedback/FS; C08 representation/shared views/cycle/unresolved/display; C09 stable/dynamic/historical/product/version/time/proactive/unchanged/reason/impact/comparability/notification/cache; C10 source hash/revision/navigation/paused support/handoff. Audit phải chỉ ra gap quan sát, không ép số case tối thiểu hoặc score giả.
 
+### B05.4 — Citation integration coverage (0.3.7)
+
+CE-T01–10 dùng registry C/F hiện có; không thêm capability hoặc failure enum. [Mapping dữ liệu](https://github.com/Nohfinl99/Reading_Companion/blob/feat/sid-v5-citeguard-reading/evaluation/citeguard/capability-map.json) là planned intent/owner candidates, không tự chứng minh execution hoặc root cause. C02 có owner CE02/CE04; C06 có CE04; C07/C10 có CE05/CE06 khi task liên quan; C08 có CE03. R14 và SC05 vẫn sở hữu gate/contract.
+
+| Cases | Primary | Required diagnostic scope |
+|---|---|---|
+| CE-T01/05/09 | C06 | proposition/conditions/numbers; CE04, upstream C02 |
+| CE-T02/03/04/06 | C02 | actual access, matching source, support vs attribution; CE02/CE04 |
+| CE-T07 | C10 | snapshot thật; Progress không chạy CE |
+| CE-T08 | C07 | pending Q/hint, không trả lời hoặc hạ support; C10 |
+| CE-T10 | C02 | Không biến Knowledge thành tool/capability; M06/CE05 |
+
+CE-T01–10 chưa trực tiếp đo representation/relations của C08; cần fixture IA riêng trước khi báo performance C08. Không đổi primary chỉ để phủ đủ capability.
+
+Historical behavioral PASS và schema completeness là lớp kiểm riêng. CE-T01 R3 còn finding thiếu SC05 field dù frozen rubric behavior đạt. Record/run mới phải kiểm schema strict và kiểm nghĩa riêng; thiếu host/persistence evidence vẫn NOT_RUN ở lớp đó.
+
 ## B06 — Failure diagnosis, trace và báo cáo (E1)
 
 ### B06.1 — Failure taxonomy và diagnostic graph
@@ -513,3 +529,4 @@ Upstream thực kiểm: source→units→argument→example; units/relations→I
 PS14 giữ author-three-artifacts đúng marker52/Ch4–7 scope (primary C02, secondary C03/C06/C08; F02/F03/F04/F07 nếu sai). PS15 dùng nguyên câu hỏi user tìm vấn đề, R15 repair đúng issue/mode/Q (primary C01, secondary C05/C06/C10; F01/F06/F04/F09). PS16 kiểm learner-visible bridge khác sidecar referential integrity (primary C05, secondary C04/C08; F06/F05/F07).
 
 Historical shared output có captured input/output và retrospective assistant review, plugin/model version unknown; không gọi matched baseline0.3.2 run hoặc candidate PASS. Current user diagnostic question không nằm trong shared snapshot, response-to-that-question historical NOT_RUN. Source count3 có author evidence, count12 là organization disclosed partly nhưng criterion chưa có; không chẩn đoán tất cả numbers là AI quota hoặc nêu reason chọn12 từ tưởng tượng. Preserving source-supported enumeration là positive control. Fresh PS14–16/PS-CDH replay bắt đầu NOT_RUN.
+

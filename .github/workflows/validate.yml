@@ -36,6 +36,8 @@ jobs:
       run: |
         python tools/validate_citation_evidence.py
         python tools/validate_luna_rerun.py
+        python tools/validate_gate_records.py evaluation/citeguard/sync-0.3.7/sidecar.json --root evaluation/citeguard/sync-0.3.7 --expected-artifact artifact.md=1
+        python tools/validate_sync_evidence.py --root . --require-current-context
 
     - name: Run helper and evidence regression tests
       run: python -m pytest -q
@@ -49,4 +51,9 @@ jobs:
         python skills/sid-reading-companion/scripts/knowledge_compiler.py --help
         python skills/sid-reading-companion/scripts/checkpoint.py --help
         python skills/sid-reading-companion/scripts/reading_session.py --help
+
+    - name: Build and verify runtime package from source
+      run: |
+        python tools/build_plugin.py --root . --output "$RUNNER_TEMP/reading-companion.zip" --source-commit "$GITHUB_SHA"
+        python tools/verify_plugin_package.py "$RUNNER_TEMP/reading-companion.zip" --manifest "$RUNNER_TEMP/reading-companion.manifest.json"
 

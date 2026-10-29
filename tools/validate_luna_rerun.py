@@ -1,10 +1,15 @@
 """Check immutable runner/reviewer evidence, not semantic correctness."""
 from pathlib import Path
+import argparse
 import hashlib
+import importlib.util
 import json
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNS = ["luna-rerun-2026-10-29", "luna-rerun-2026-10-29-r2", "luna-rerun-2026-10-29-r3"]
+_gate_spec = importlib.util.spec_from_file_location("sid_gate_records", Path(__file__).with_name("validate_gate_records.py"))
+gate_checker = importlib.util.module_from_spec(_gate_spec)
+_gate_spec.loader.exec_module(gate_checker)
 
 
 def require(ok, message):
@@ -24,6 +29,28 @@ def file_at(root, relative):
     path = (root / relative).resolve()
     require(path.is_relative_to(root.resolve()) and path.is_file(), "Evidence path missing or outside root")
     return path
+
+
+def validate_sidecar(path, root=ROOT, *, expected_artifacts=None):
+    """Strict schema validation for NEW captured sidecars, not old prose records."""
+    return gate_checker.validate_envelope(root, gate_checker.load_json(path),
+                                         expected_artifacts=expected_artifacts)
+
+
+def historical_schema_findings(root):
+    """Known audit finding tied to preserved raw bytes; not a new behavior grade.
+
+    Call only after validate() has checked raw hashes against frozen manifests.
+    The historical integrity gate and frozen behavioral review remain separate
+    from SC05 completeness; keeping their PASS never certifies this old record.
+    """
+    relative = "evaluation/citeguard/" + RUNS[-1] + "/raw/CE-T01.md"
+    path = file_at(Path(root), relative)
+    return [{"finding_id": "A02", "run_id": RUNS[-1], "case_id": "CE-T01",
+             "artifact_ref": relative, "sha256": sha(path), "line_start": 5,
+             "line_end": 17, "schema_valid": False,
+             "missing_fields": ["artifact_ref", "artifact_revision", "applicable", "reason"],
+             "reason": "Historical prose GateRecord lacks mandatory SC05 fields; frozen behavioral PASS is not SC05 PASS."}]
 
 
 def validate(root=ROOT):
@@ -73,12 +100,19 @@ def validate(root=ROOT):
         else:
             require(review["status"] == "PASS" and all(r["status"] == "PASS" for r in review["records"]), "Final run has not passed primary review")
         total += len(output_map)
-    return {"ok": True, "attempts": len(RUNS), "raw_outputs": total, "final_cases": len(expected), "semantic_verified_by_tool": False, "installed_host_verified": False}
+    return {"ok": True, "attempts": len(RUNS), "raw_outputs": total, "final_cases": len(expected),
+            "semantic_verified_by_tool": False, "installed_host_verified": False,
+            "historical_schema_findings": historical_schema_findings(root),
+            "historical_sc05_certified": False}
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--sidecar", type=Path, help="Strictly validate a NEW captured JSON sidecar")
+    parser.add_argument("--root", type=Path, default=ROOT)
+    args = parser.parse_args()
     try:
-        print(json.dumps(validate()))
+        print(json.dumps(validate_sidecar(args.sidecar, args.root) if args.sidecar else validate(args.root)))
     except (ValueError, KeyError, TypeError, OSError) as error:
         print(json.dumps({"ok": False, "error": str(error)}))
         raise SystemExit(1)

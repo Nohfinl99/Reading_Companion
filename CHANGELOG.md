@@ -1,4 +1,12 @@
 # Changelog / Nhật ký thay đổi
+## 0.3.7
+
+- Unified source/account continuity guards: preserve assessment history, pending Q and support; added positive/negative regression cases.
+- Added strict SC05 validation for new gate sidecars while preserving historical raw runs and their separate schema findings.
+- Added deterministic allowlist packaging, package verification and an optional development handoff-bundle checker.
+- Updated bilingual README/usage and citation capability mapping. No checkpoint schema or helper CLI migration; no new account memory/search service.
+- See `docs/citeguard/correction-plan.md` for executed checks and evidence limits. Host activation and learner outcomes require separate evidence.
+
 
 These notes summarize user-facing and compatibility changes. / Ghi chú này tóm tắt thay đổi đối với người dùng và khả năng tương thích.
 

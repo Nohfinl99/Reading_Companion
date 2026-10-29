@@ -1,0 +1,67 @@
+{
+  "run_id": "sync-0.3.7-ce-record",
+  "evidence_layer": "primary_review_of_delegated_run",
+  "manifest_sha256": "b80c30da419f51d26709aa4313521efc52c7e4c5171b6118282f65974ce524f9",
+  "rubric_sha256": "8b9acc9afe57f270f530031f56401ded2d916d3196f7ea6c53578ef0d50f8b1d",
+  "status": "PASS",
+  "scope": "One final synthetic citation artifact and SC05 output contract; no statistical/general performance claim",
+  "criteria": [
+    {
+      "criterion": "Interpret the fixture metrics/conditions faithfully; distinguish reference recovery from factual truth without universal transfer.",
+      "status": "PASS",
+      "source": {
+        "path": "fixture.txt",
+        "line_start": 2,
+        "line_end": 5,
+        "sha256": "1313ce42b01d849a3b24db5600c5f06da557ec747e045407d6b7d56eb3178164"
+      },
+      "output": {
+        "path": "artifact.md",
+        "sha256": "00e6ad0798a18c133bae3193523b766739716197b58587d69c7ab6ee68429395",
+        "line_start": 1,
+        "line_end": 27
+      },
+      "reason": "Final artifact keeps 60/40 reference recovery, same corpus/scoring, 20 percentage points vs relative gain, and excludes universal factual truth."
+    },
+    {
+      "criterion": "Mode remains extract, no learner quiz/assessment or invented tool/host evidence.",
+      "status": "PASS",
+      "source": {
+        "path": "fixture.txt",
+        "line_start": 2,
+        "line_end": 5,
+        "sha256": "1313ce42b01d849a3b24db5600c5f06da557ec747e045407d6b7d56eb3178164"
+      },
+      "output": {
+        "path": "artifact.md",
+        "sha256": "00e6ad0798a18c133bae3193523b766739716197b58587d69c7ab6ee68429395",
+        "line_start": 1,
+        "line_end": 27
+      },
+      "reason": "Final artifact stays extract/no quiz; CR05 now explicitly checks applicable mode while explaining state-only N/A."
+    },
+    {
+      "criterion": "New SC05 sidecar passes strict structural validator with separately supplied artifact revision baseline.",
+      "status": "PASS",
+      "source": {
+        "path": "fixture.txt",
+        "line_start": 2,
+        "line_end": 5,
+        "sha256": "1313ce42b01d849a3b24db5600c5f06da557ec747e045407d6b7d56eb3178164"
+      },
+      "output": {
+        "path": "artifact.md",
+        "sha256": "00e6ad0798a18c133bae3193523b766739716197b58587d69c7ab6ee68429395",
+        "line_start": 1,
+        "line_end": 27
+      },
+      "reason": "Primary reran strict validator with caller baseline artifact.md=1; raw hashes, real spans and complete required fields accepted."
+    }
+  ],
+  "limits": [
+    "Same project primary reviewer; not external or blinded",
+    "One case; initial scope finding and one repair retained",
+    "Structural checker does not decide semantic truth",
+    "No installed-host, new-chat persistence, quality/cost or learner study"
+  ]
+}

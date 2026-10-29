@@ -5,7 +5,7 @@ description: Đọc sâu và trích xuất tri thức có nguồn bằng tiếng
 
 # Reading Companion — SID
 
-Đọc [controller](references/master-instruction.md) lần đầu. Chọn nhánh từ M04 và chỉ đọc section cần thiết. Version 0.3.6. Các reference canonical:
+Đọc [controller](references/master-instruction.md) lần đầu. Chọn nhánh từ M04 và chỉ đọc section cần thiết. Version 0.3.7. Các reference canonical:
 
 - [Master instruction](references/master-instruction.md): điều khiển, routing, gate và phạm vi.
 - [Knowledge Compiler](references/knowledge-compiler.md): nguồn, units, level, quan hệ và execution plan.
@@ -24,3 +24,7 @@ Helper optional trong scripts: checkpoint.py, reading_session.py, knowledge_comp
 
 Runtime dùng các reference trên; R13 tạo ví dụ có cầu nối người đọc nhìn thấy, R15 sửa artifact khi user hỏi hụt mạch/provenance/count hoặc lệch trọng tâm, R14 kiểm mọi candidate và tiêu đề/con số trước trả. KC02 sở hữu số unit phát sinh từ scope/nội dung; SC01 sở hữu provenance danh sách. Các path cũ có thể còn trên backend do cập nhật overlay; chúng là compatibility/development legacy, không phải lớp hướng dẫn bổ sung. Không nạp tất cả legacy/reference/log mỗi lượt. Khi người dùng yêu cầu xem lịch sử, phân biệt snapshot với contract hiện tại.
 
+
+Khi dùng helper, đọc [tương thích 0.3.7](references/helper-compatibility-0.3.7.md).
+
+[Hướng dẫn sử dụng](../../docs/usage.vi.md).

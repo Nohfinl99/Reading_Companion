@@ -1,5 +1,6 @@
 # Preserve the byte identities captured in delegated-run fingerprints.
 /evaluation/citeguard/luna-rerun-*/** -text
+/evaluation/citeguard/sync-0.3.7/** -text
 /evaluation/citeguard/fixture.txt -text
 /skills/sid-reading-companion/SKILL.md -text
 /skills/sid-reading-companion/references/master-instruction.md -text

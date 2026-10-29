@@ -130,6 +130,24 @@ checks, unresolved và repair_owner. Tách self-review, mechanical, host,
 independent review, learner outcome. Kèm readiness của phần đã kiểm.
 Khi yêu cầu rà gate, phải có record đủ fields SC05 và CR01–CR06 trong artifact
 hoặc sidecar; lời “đạt” không thay record. Record tự khai vẫn cần reviewer kiểm.
+Với output mới, bàn giao artifact và JSON sidecar có `gate_records` đầy đủ,
+không chỉ ghi nhãn “SC05” trong prose. Envelope dùng `contract_version: PS1`,
+`scope`, `evidence_layer`, và `artifacts` là danh sách
+`{artifact_ref, artifact_revision, sha256}` ràng buộc bản thật được review.
+Mỗi source/output span có `path`, raw-byte `sha256`, `line_start`, `line_end`,
+`excerpt`; mỗi check có status/reason và `output_span_refs` trỏ index span thật.
+Các path tính từ root đã khai báo, không tự tham chiếu hash của chính sidecar.
+Scope diễn giải fixture, helper, host và learner ghi riêng; NOT_RUN của lớp
+host không thay kết quả kiểm nghĩa đã thực hiện trong fixture.
+Khi có source tooling, chạy `tools/validate_gate_records.py SIDECAR --root ROOT`
+và truyền `--expected-artifact PATH=REVISION` từ baseline độc lập khi kiểm stale.
+Registry tự khai chỉ chứng minh nhất quán với revision đã khai, không chứng minh
+đó là revision mới nhất. Tool kiểm schema/hash/range, không kiểm đúng nghĩa.
+Không có tool/file thì xuất JSON trong chat và ghi chưa kiểm/chưa persist;
+không giả rằng development validator đã được cài thành tool của plugin.
+Khi bàn giao nối phiên vẫn cần envelope/provenance SC00 và R12; validator gate
+không thay kiểm toàn bundle. Raw/rubric/review lịch sử giữ nguyên: replay integrity
+khác SC05 mới; finding schema cũ được giữ riêng, không nâng thành SC05 PASS.
 [Evaluation] Kiểm đủ CR01–CR06 dưới đây; mỗi check có evidence hoặc lý do
 không áp dụng; có lỗi sửa đúng owner rồi kiểm lại phần ảnh hưởng.
 ```
@@ -145,4 +163,4 @@ không áp dụng; có lỗi sửa đúng owner rồi kiểm lại phần ảnh 
 
 Thiếu bằng chứng → NOT_RUN/PARTIAL theo SC05; nguồn giả, sai nghĩa cốt lõi, capability giả hoặc lộ answer Q → FAIL và chặn phần phụ thuộc. PASS chỉ cho artifact/revision và lớp evidence đã kiểm. Sửa tối đa hai vòng cùng lỗi theo R14, rồi ghi gap/chặn phần phụ thuộc. Source/unit thay revision phải tái kiểm; không tái dùng PASS cũ từ tên file giống nhau.
 
-Handoff dùng R12 + sidecar; không thêm fields vào unit/pending_question/helper. Tool hiện có chỉ kiểm cấu trúc; CR02/CR03 cần kiểm nghĩa bởi reviewer. [Ca và hồ sơ tự kiểm](../../../evaluation/citeguard/README.md) không chứng minh host đã nạp bản này.
+Handoff dùng R12 + sidecar; không thêm fields vào unit/pending_question/helper. Tool hiện có chỉ kiểm cấu trúc; CR02/CR03 cần kiểm nghĩa bởi reviewer. [Ca và hồ sơ tự kiểm](https://github.com/Nohfinl99/Reading_Companion/tree/709d19bc27c65270a487a5aa0a6eb6fde67d74f7/evaluation/citeguard) không chứng minh host đã nạp bản này.
