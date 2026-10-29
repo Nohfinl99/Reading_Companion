@@ -1,29 +1,56 @@
 {
   "schema_version": 1,
   "version": "0.3.7",
+  "source_commit": "e66add5996125eb200da28922dab12408f8eea8b",
   "baseline_commit": "709d19bc27c65270a487a5aa0a6eb6fde67d74f7",
   "source_release": {
-    "status": "LOCAL_SCOPED_PASS",
-    "linux_python": "3.12.15",
-    "full_suite_passed": 662,
-    "additional_sync_validator_tests_passed": 12,
-    "host_activation": "NOT_RUN"
+    "status": "PASS",
+    "local_linux_python": "3.12.15",
+    "local_full_suite_passed_before_capture_validator": 662,
+    "additional_capture_validator_tests_passed": 12,
+    "package_file_count": 27,
+    "deterministic_build": true,
+    "package_archive_sha256": "b53e8a4d500fcc5ff5c33b7f174be21027dc6356877862c384470e7cd6a9d0d4",
+    "staged_continuity_negative_cases": {
+      "passed": 5,
+      "total": 5,
+      "apis": [
+        "guard_transition",
+        "checkpoint.validate_transition"
+      ]
+    }
   },
   "delegated_run": {
     "model": "gpt-6-luna",
     "cases": 1,
     "final_required_criteria_passed": 3,
-    "scope_repair_attempts": 1,
-    "independent_external_review": false
+    "scope_repairs": 1,
+    "external_independent_review": false
   },
   "github_ci": {
-    "status": "PENDING"
+    "status": "PASS",
+    "run_id": 40879985804,
+    "url": "https://github.com/Nohfinl99/Reading_Companion/actions/runs/40879985804",
+    "tested_head": "e66add5996125eb200da28922dab12408f8eea8b",
+    "python_matrix": [
+      "3.10",
+      "3.11",
+      "3.12"
+    ],
+    "tests_passed_per_job": 674
   },
   "account_update": {
-    "status": "PENDING"
+    "status": "SAVED_AND_READ_BACK",
+    "version": "0.3.7",
+    "canonical_files_compared": 27,
+    "canonical_matches": true,
+    "metadata_preserved": true,
+    "audience_preserved": true
   },
+  "host_activation": "NOT_RUN",
   "limits": [
-    "Helpers and schema checks do not prove semantic truth or host activation",
-    "No installed-host new-chat persistence, quality/cost gain or learner outcome measurements"
+    "New-chat installed-host workflow/persistence not exercised",
+    "No measured quality/cost gain or learner outcomes",
+    "Structural/schema validation is separate from primary semantic review"
   ]
 }
