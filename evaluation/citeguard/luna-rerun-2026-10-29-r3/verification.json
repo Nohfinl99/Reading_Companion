@@ -95,8 +95,28 @@
     "failure": "Existing deeply-nested JSON diagnostic expectation differs on Python 3.14; not relabelled PASS or fixed in this scoped change"
   },
   "github_ci": {
-    "status": "NOT_RUN",
-    "reason": "Awaiting the conditional GitHub update and new CI run"
+    "status": "PASS",
+    "run_id": 40861900949,
+    "url": "https://github.com/Nohfinl99/Reading_Companion/actions/runs/40861900949",
+    "tested_commit": "fc7d6052fab373c236f2ae4f4497efa6355c5682",
+    "python_matrix": {
+      "3.10": {
+        "job_id": 123406990608,
+        "passed": 570,
+        "failed": 0
+      },
+      "3.11": {
+        "job_id": 123406990655,
+        "passed": 570,
+        "failed": 0
+      },
+      "3.12": {
+        "job_id": 123406990266,
+        "passed": 570,
+        "failed": 0
+      }
+    },
+    "checks": "Metadata, docs links, author evidence, delegated run fingerprints, full regression, compile and CLI"
   },
   "boundaries": {
     "installed_plugin_activation": "NOT_RUN",

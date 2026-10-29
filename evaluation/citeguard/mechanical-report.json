@@ -134,6 +134,8 @@
     "linux_tests_passed": 570,
     "failed": 0,
     "runner": "gpt-6-luna",
-    "historical_failures_retained": true
+    "historical_failures_retained": true,
+    "github_ci_url": "https://github.com/Nohfinl99/Reading_Companion/actions/runs/40861900949",
+    "github_ci_status": "PASS"
   }
 }
