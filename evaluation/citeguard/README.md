@@ -2,7 +2,11 @@
 
 Ngày 2026-10-29, Asia/Bangkok. Những output trong thư mục này được tác giả AI viết và tự đối chiếu trong phiên phát triển. Không có lời đáp learner thật, independent reviewer hay captured installed-host run. Model identity không được suy đoán từ tên ứng dụng; host/config ngoài thông tin phiên là unknown.
 
-## Inputs, outputs, review
+## Latest source-snapshot evidence / Bằng chứng mới
+
+Source candidate 0.3.7 có [capture và primary review riêng](sync-0.3.7/README.md): [artifact model sinh](sync-0.3.7/artifact.md), [strict SC05 sidecar](sync-0.3.7/sidecar.json), [manifest](sync-0.3.7/run-manifest.json), [review](sync-0.3.7/review.json) và [release checks](sync-0.3.7/release-checks.json). Một case và một scope repair không là độ chính xác tổng quát. [Artifact catalogue](../../docs/artifacts.vi.md) tách ví dụ tài liệu, model output, helper và host evidence.
+
+## Inputs, outputs, review — authored walkthrough lịch sử
 
 - [Synthetic source](fixture.txt): tài liệu minh họa tự viết, không trích sách riêng.
 - [Case specifications](cases.json): input và expected behavior được giữ riêng với outputs.
@@ -32,6 +36,8 @@ RTC-COE design self-check: CE01–CE06 đều có sáu nhãn R/T/Context/Constra
 
 ## Next evidence layers
 
-Lượt kiểm lại có runner Luna riêng, rubric đóng băng và primary review được lưu tại [roadmap](../../docs/citeguard/roadmap.md) và [attempt cuối](luna-rerun-2026-10-29-r3/README.md). Các author walkthrough ở trên giữ nguyên lịch sử; không đổi nhãn chúng thành model-run evidence. Dùng `python tools/validate_luna_rerun.py` để kiểm provenance/byte fingerprints của ba attempt; validator không chấm nghĩa.
+Lượt kiểm lại 0.3.6 có runner Luna riêng, rubric đóng băng và primary review được lưu tại [roadmap lịch sử](../../docs/citeguard/roadmap.md) và [attempt 3 lịch sử](luna-rerun-2026-10-29-r3/README.md). Các author walkthrough ở trên giữ nguyên lịch sử; không đổi nhãn chúng thành model-run evidence. Dùng `python tools/validate_luna_rerun.py` để kiểm provenance/byte fingerprints của ba attempt; validator không chấm nghĩa và công bố lỗi completeness SC05 cũ riêng.
+
+Với capture 0.3.7, chạy `python tools/validate_sync_evidence.py --root . --require-current-context` và strict sidecar validator theo [quality guide](../../docs/quality.vi.md). [Artifact index](../../ARTIFACTS.md) chỉ đến output minh họa, hồ sơ kiểm và package/verification files của từng CI run. File được upload không tự chứng minh PASS; đọc trạng thái đúng job/run.
 
 Host retrieval/activation NOT_RUN; independent semantic review NOT_RUN; baseline/candidate quality/cost comparison NOT_RUN; learner outcome NOT_RUN. Để chạy host, dùng cùng cases/source/config, lưu raw output trước grading, không thay expected behavior theo output. Khi so baseline/candidate, đổi thứ tự hoặc blind reviewer nếu có thể; báo rõ reviewer và điều còn thiếu theo B01.

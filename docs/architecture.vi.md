@@ -1,6 +1,6 @@
 # Kiến trúc Reading Companion
 
-[English version](architecture.en.md) · [README](../README.vi.md)
+[English version](architecture.en.md) · [Bản đồ tài liệu](README.md) · [README](../README.vi.md)
 
 ## Phạm vi và người dùng
 
@@ -21,11 +21,13 @@ flowchart TD
   R --> D[Deep reading]
   R --> X[Extraction]
   R --> M[Map or compare]
+  R --> CE[Citation and evidence when requested]
   R --> E[Example or learner response]
   R --> T[Session navigation or handoff]
   D --> V[Validate applicable evidence gates]
   X --> V
   M --> V
+  CE --> V
   E --> V
   T --> V
   V --> O[Present checked result and limits]
@@ -44,10 +46,11 @@ Sơ đồ thể hiện định tuyến có điều kiện, không phải pipelin
 | Master instruction M01–M07 | Authority, framing, route selection, applicable gates, continuity and maintenance audit | That every route runs in every turn |
 | Knowledge Compiler KC01–KC05 | Source/task metadata, unit boundaries, relations, compilation plan and helper limits | Semantic correctness from a valid JSON plan |
 | Reading protocols R00–R15 | Reading, extraction, comparison, assessment, mapping, examples, session state and handoff operations | A result when its input/evidence is absent |
+| Citation and evidence CE00–CE06 | Conditional claim/source review and application, routed by M04; CE06 uses R14/SC05 | A search service, an additional gate system or proof from relevance alone |
 | Stack contracts SC00–SC05 | Shared artifact, provenance, question, argument, example and gate data | A second schema in a protocol or README |
 | Case benchmark B01–B06, B08 | Case definitions and evaluation procedure | Passing results unless input, output and grading evidence exist |
 | Python helpers | Structural and state operations documented by their interfaces | Book comprehension, web-source verification, semantic grading or learner outcomes |
-| GitHub Actions | Manifest, repository/link, compile and CLI smoke checks | Installed-host behavior or learning gain |
+| Repository tools and GitHub Actions | Manifest/links, helper regression, evidence and strict gate checks, source-context integrity, deterministic package build/verification | Installed-host behavior, general citation accuracy or learning gain |
 
 ## Decisions and rationale
 
@@ -65,5 +68,8 @@ Source identity, revision/hash when available, scope, locator, unit IDs/revision
 
 - [Principle-to-owner map](principles.vi.md)
 - [Quality and evidence model](quality.vi.md)
+- [Danh mục artifact theo tác vụ](artifacts.vi.md) và [ví dụ đầu ra](examples/outputs.md)
+- [Hồ sơ đồng bộ 0.3.7 và giới hạn](citeguard/correction-plan.md)
 - [Runtime routes](../skills/sid-reading-companion/references/master-instruction.md)
 - [Data contracts](../skills/sid-reading-companion/references/stack-contracts.md)
+

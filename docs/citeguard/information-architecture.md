@@ -1,5 +1,7 @@
 # Information Architecture pack
 
+[Bản đồ tài liệu](../README.md) · [CiteGuard project pack](README.md) · [Danh mục artifact](../artifacts.vi.md)
+
 Thiết kế của SID cho dự án này, dựa trên các phân biệt trong bài IA của khóa SID. Không gán taxonomy hay hierarchy dưới đây cho tác giả CiteGuard. Mục tiêu: người đọc tìm đúng nguồn, maintainer sửa đúng owner, reviewer truy được bằng chứng.
 
 ## Taxonomy — phân theo trách nhiệm artifact
@@ -7,38 +9,47 @@ Thiết kế của SID cho dự án này, dựa trên các phân biệt trong b�
 | Nhóm | Điều kiện đưa vào | Owner / nơi chuẩn |
 |---|---|---|
 | Product orientation | Giải thích cho người mới dùng hoặc contributor | README VI/EN, docs map |
+| Output guide | Giúp chọn và nhận biết artifact, dẫn ví dụ và contract | ARTIFACTS.md, docs/artifacts.*, docs/examples/outputs.md |
 | Runtime instruction | Quy định AI phải làm khi nào và chuyển tiếp ra sao | SKILL, M04, CE01–CE06, R14 |
 | Research knowledge | Mệnh đề được quy nguồn, không điều khiển tool | references/knowledge/citeguard.* |
 | Project design | Framing, IA, SID mapping và quyết định chuyển giao | docs/citeguard/ |
 | Evaluation evidence | Case, output, reviewer, logs và giới hạn | evaluation/citeguard/ |
 | Mechanical assurance | Kiểm schema/links/fingerprints/guard thực thi | tools/, tests/, CI |
+| Package and release | Xác định file phân phối, source identity và parity | packaging/runtime-files.json, build/verify tools, release checks |
 
 Tiêu chí duy nhất là trách nhiệm chính. Một artifact có thể link nhóm khác, nhưng không nhân bản instruction để duy trì hai owner.
 
 ## Hierarchy — đường dẫn thật và navigation
 
 ```text
-README.vi.md / README.md
-  docs/README.md
-    docs/citeguard/README.md
-      framing.md
-      information-architecture.md
-      sid-v5-mapping.md
-      revision-notes.md
+Reading_Companion/
+  README.vi.md / README.md           orientation and usage
+  ARTIFACTS.md                      output/documentation entry point
+  CONTRIBUTING.md                   contributor entry → docs map
+  docs/
+    README.md                       goal-based documentation map
+    usage.vi.md / usage.en.md
+    artifacts.vi.md / artifacts.en.md → canonical RA/SC + examples/outputs.md
+    architecture.* / principles.* / quality.*
+    citeguard/
+      README.md → framing / IA / SID mapping / revision notes
+      correction-plan.md            current 0.3.7 correction scope
+      roadmap.md                    historical 0.3.6 rerun plan
   skills/sid-reading-companion/
     SKILL.md → references/master-instruction.md (M04)
-    references/citation-evidence.md (CE01–CE06)
-      knowledge/citeguard.md
-      knowledge/citeguard-source.json
-      knowledge/citeguard-relations.json
-    references/reading-protocols.md (R14)
+    references/citation-evidence.md (CE01–CE06) → R14 / SC05
+    references/knowledge/citeguard.*
   evaluation/citeguard/
-    README.md → cases.json / outputs/ / self-review.json / mechanical-report.json
-  tools/validate_citation_evidence.py
-  tests/test_citation_evidence.py
+    README.md → cases / outputs / authored self-review
+    luna-rerun-2026-10-29*           historical immutable runs
+    sync-0.3.7/                     captured artifact / sidecar / review / checks
+  packaging/runtime-files.json     runtime allowlist
+  tools/                           validators / bundle checker / build / verify
+  tests/                           structural and regression cases
+  .github/workflows/validate.yml    CI checks and package job
 ```
 
-Đây là hierarchy tài liệu dự án, không mục lục bài nghiên cứu hoặc thứ tự mastery của người học. Runtime path cũ giữ nguyên; thêm liên kết theo nhu cầu, không chuyển file để đẹp sơ đồ.
+Đây là view chọn lọc của đường dẫn dự án; dấu thụt lề thể hiện file/thư mục, các mũi tên thể hiện liên kết. Đây không phải mục lục bài nghiên cứu hoặc thứ tự mastery của người học. Runtime path cũ giữ nguyên; thêm liên kết theo nhu cầu, không chuyển file để đẹp sơ đồ. Cách tổ chức này là lựa chọn IA của SID, không phải chuẩn IA chung do GitHub quy định.
 
 ## Conceptual decomposition
 
@@ -87,4 +98,6 @@ Source/version có accessed ranges; Unit/revision dựa trên source locator; Cl
 
 ## Lộ trình đọc tài liệu đề xuất
 
-Người mới: framing → quick start → một walkthrough. Maintainer: CE → owner matrix → cases → revision. Reviewer: source manifest → output → self-review → mechanical report. Đây là đường đọc đề xuất theo vai trò, không bằng chứng một người đã hiểu hay đạt level.
+Người mới: usage → danh mục artifact → ví dụ đầu ra → framing/quick start khi cần CiteGuard. Maintainer: architecture → owner matrix → canonical CE/R/SC → quality/build checks. Reviewer: correction record → source manifest → captured artifact/sidecar → review → release checks; lịch sử Luna được đọc riêng. Đây là đường đọc đề xuất theo vai trò, không bằng chứng một người đã hiểu hay đạt level.
+
+Tại lần rà soát 2026-10-29, source 0.3.7 ở PR #11 và `main` 0.3.5 chưa đồng bộ. Docs, ZIP, account-plugin readback và installed-host activation có scope riêng; xác nhận từng lớp bằng commit/release và hồ sơ tương ứng. Human docs ngoài runtime allowlist có thể đổi mà không thay package đã phát hành. Khi sửa file có trong allowlist, cần build/verify và kiểm parity lại.

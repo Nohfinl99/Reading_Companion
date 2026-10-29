@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-29",
+  "scope": "Repository IA, documentation artifacts, runtime source/account file synchronization",
+  "baseline_head": "661a36ea7c584e68653336957d4e51ab099ce9ba",
+  "package_source_commit": "e66add5996125eb200da28922dab12408f8eea8b",
+  "source_status": {
+    "pull_request": 11,
+    "branch": "feat/sid-v5-citeguard-reading",
+    "branch_runtime_version": "0.3.7",
+    "main_version_at_check": "0.3.5",
+    "merged": false
+  },
+  "account_plugin": {
+    "version": "0.3.7",
+    "audience": "PRIVATE",
+    "fresh_readback_files": 27,
+    "canonical_source_package_backend_match": true
+  },
+  "runtime_payload_changed": false,
+  "documentation": {
+    "catalogues": [
+      "docs/artifacts.vi.md",
+      "docs/artifacts.en.md"
+    ],
+    "example_file": "docs/examples/outputs.md",
+    "ra_ids": [
+      "RA-01",
+      "RA-02",
+      "RA-03",
+      "RA-04",
+      "RA-05",
+      "RA-06",
+      "RA-07",
+      "RA-08",
+      "RA-09"
+    ],
+    "example_layer": "AI-authored synthetic documentation examples; not observed learner/model outputs"
+  },
+  "downloadable_artifacts": {
+    "prior_run_id": 40880580098,
+    "prior_artifact_count": 0,
+    "new_upload_workflow": "implemented; pending verified run",
+    "configured_retention_days": 30,
+    "github_releases_at_check": 0
+  },
+  "evidence_limits": {
+    "observed_model_case_count": 1,
+    "all_nine_outputs_measured": false,
+    "host_new_chat": "NOT_RUN",
+    "learner_outcomes": "NOT_RUN"
+  }
+}

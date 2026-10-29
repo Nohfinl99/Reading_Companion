@@ -42,6 +42,14 @@ required_docs = [
     "docs/quality.vi.md", "docs/quality.en.md",
 ]
 for rel in required_docs: require((ROOT / rel).is_file(), f"Required documentation page missing: {rel}")
+artifact_docs = ['ARTIFACTS.md', 'docs/artifacts.vi.md', 'docs/artifacts.en.md', 'docs/examples/outputs.md']
+for rel in artifact_docs:
+    require((ROOT / rel).is_file(), f'Artifact navigation page missing: {rel}')
+for rel in artifact_docs[1:]:
+    page = ROOT / rel
+    if page.is_file():
+        ids = set(re.findall(r'RA-0[1-9]', page.read_text(encoding='utf-8')))
+        require(ids == {f'RA-{i:02}' for i in range(1, 10)}, f'Incomplete RA documentation coverage: {rel}')
 for rel in ("README.md", "README.vi.md"):
     readme = (ROOT / rel).read_text(encoding="utf-8")
     require(root_manifest["name"] in readme, f"Technical plugin identity missing from {rel}")
