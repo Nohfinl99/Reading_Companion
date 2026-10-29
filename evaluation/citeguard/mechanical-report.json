@@ -81,11 +81,49 @@
     ]
   },
   "github_ci": {
-    "status": "NOT_RUN"
+    "status": "PASS",
+    "run_id": 40857655792,
+    "url": "https://github.com/Nohfinl99/Reading_Companion/actions/runs/40857655792",
+    "tested_commit": "2367aba78954e8230497c0669183a7ff685b3d30",
+    "platform": "ubuntu-latest",
+    "python_matrix": {
+      "3.10": {
+        "job_id": 123392568161,
+        "passed": 565,
+        "failed": 0
+      },
+      "3.11": {
+        "job_id": 123392568128,
+        "passed": 565,
+        "failed": 0
+      },
+      "3.12": {
+        "job_id": 123392567691,
+        "passed": 565,
+        "failed": 0
+      }
+    },
+    "scope": "Mechanical source validation; not installed-host or semantic performance"
   },
   "semantic_verified_by_tool": false,
   "host_activation": "NOT_RUN",
   "independent_semantic_review": "NOT_RUN",
   "baseline_candidate_quality_gain": "NOT_RUN",
-  "learner_outcome": "NOT_RUN"
+  "learner_outcome": "NOT_RUN",
+  "source_publication_gate": {
+    "gate_id": "PUB-REVIEW",
+    "status": "PASS",
+    "scope": "Source candidate and public review artifacts only",
+    "basis": [
+      "Local metadata/links/evidence/compile/CLI checks",
+      "Author diff/privacy/preservation review",
+      "Linux full-suite CI across Python 3.10-3.12"
+    ],
+    "remaining": [
+      "Installed-host activation",
+      "Independent semantic review",
+      "Measured quality/cost gain",
+      "Learner outcome"
+    ]
+  }
 }
