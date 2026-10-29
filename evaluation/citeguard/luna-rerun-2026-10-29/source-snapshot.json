@@ -1,0 +1,7 @@
+{
+  "purpose": "Historical candidate sources that later changed; reconstructed or captured after the run and verified against runner input fingerprints",
+  "overrides": {
+    "skills/sid-reading-companion/references/citation-evidence.md": "evaluation/citeguard/luna-rerun-2026-10-29/source-snapshot/citation-evidence.txt",
+    "skills/sid-reading-companion/references/reading-protocols.md": "evaluation/citeguard/luna-rerun-2026-10-29/source-snapshot/reading-protocols.txt"
+  }
+}

@@ -4,6 +4,9 @@ These notes summarize user-facing and compatibility changes. / Ghi chú này tó
 
 ## 0.3.6 — 2026-10-29 (source candidate)
 
+- Source recheck rendered the selected ACL PDF pages, pinned its binary hash and verified all seven unit locators plus the SID V5 fingerprints.
+- A delegated gpt-6-luna run, separate primary review and two recorded revisions now exercise ten frozen cases. Fixed exact source/range binding, learner-support versus claim-support semantics, visible critical conditions and missing-state Progress reporting. Historical failures remain immutable.
+- Added delegated-run integrity checks and tamper tests; raw bytes and candidate fingerprints are preserved across Git checkouts. No installed-host or external independent validation is implied.
 - Added conditional CE01–CE06 RTC-COE prompts based on SID V5, two mini-reviews and R14-owned G-CITATION-REVIEW after reading application.
 - Added sourced CiteGuard knowledge, source/interpretation/transfer boundaries and a public IA/project pack.
 - Added synthetic author walkthroughs, evidence fingerprint validation and guard tests; CI runs the existing helper suite. Mechanical/self-review remain separate from host, independent and learner evidence.

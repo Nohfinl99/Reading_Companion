@@ -1,0 +1,1 @@
+Mình chưa thể kiểm claim trong PDF đó: file không được cung cấp và mình không có quyền mở, nên chưa có đoạn nguồn hay locator để đối chiếu. Điều này **chưa xác định claim đúng hay sai**. Hãy cung cấp PDF hoặc trích đoạn liên quan (kèm số trang/đoạn); khi có nguồn, mình sẽ kiểm claim trong đúng phạm vi đó.

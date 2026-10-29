@@ -63,3 +63,4 @@ Record criterion cần dữ liệu thực `[{claim,source_locator,critical_condi
 PASS cần evidence và mọi check áp dụng đạt. Gate runtime R14 khác benchmark run B; output chưa tồn tại là NOT_RUN. Helper structural PASS không đổi semantic gate. Chưa chạy render/host/learner thì lớp tương ứng NOT_RUN. Status READY chỉ khi gate bắt buộc artifact đạt; PARTIAL cho phần độc lập đã kiểm; BLOCKED cho target phụ thuộc lỗi; PROVISIONAL cho outline identified.
 
 GateRecord.status chỉ thuộc PASS/FAIL/PARTIAL/NOT_RUN. BLOCKED/READY/PROVISIONAL là readiness của artifact, không giá trị gate status. Target thiếu source có readiness=BLOCKED và G-MEANING=NOT_RUN khi chưa có nội dung để kiểm; không dùng readiness thay enum status. Delta dự kiến cũng chỉ dùng field/schema R10/R11; pending_question không thêm status/answer/hint, revision nếu phát sinh phải là số dựa trên revision thực, không chuỗi “prior+1”. Không có state/revision đủ thì ghi proposal/gap, không khẳng định đã lưu checkpoint.
+

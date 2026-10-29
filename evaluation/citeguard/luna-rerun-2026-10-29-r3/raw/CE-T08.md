@@ -1,0 +1,1 @@
+Dòng 7 nói một chỉ mục chưa đầy đủ không thể chứng minh tài liệu bị thiếu là không tồn tại. Vì vậy, nếu fixture là phần đã truy xuất, không thấy tài liệu trong đó chỉ cho phép nói “chưa tìm thấy trong phạm vi/chỉ mục được kiểm”, không kết luận tài liệu không tồn tại. Giữ mode deep và Q-SYN đang pending; tôi không điều hướng phiên hoặc giải đáp câu hỏi đó.

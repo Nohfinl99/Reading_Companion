@@ -1,0 +1,109 @@
+{
+  "run_id": "luna-rerun-2026-10-29-r2",
+  "evidence_layer": "delegated_model_prompt_run",
+  "configured_model": "gpt-6-luna",
+  "input_sha256": "10cc5deb277d552d0f52f5b9d19a1451b58f2cf2a0b673c15fec7794ee79f5a3",
+  "outputs": [
+    {
+      "case_id": "CE-T01",
+      "output_path": "raw/CE-T01.md",
+      "sha256": "7a2ea64ce9ac442f8d3de8a8645b900eb9d317fd3bc973d8dee41feaea0f0202"
+    },
+    {
+      "case_id": "CE-T02",
+      "output_path": "raw/CE-T02.md",
+      "sha256": "37320a616997140cf7ef7f1591680e5524ee40c4ecfb7216718bb051b55d859d"
+    },
+    {
+      "case_id": "CE-T03",
+      "output_path": "raw/CE-T03.md",
+      "sha256": "8f9386cb2df2196a2167e0d9876b05dd69daf32cb402d1bc89208d733fdac8e9"
+    },
+    {
+      "case_id": "CE-T04",
+      "output_path": "raw/CE-T04.md",
+      "sha256": "1392d109fb8a2e102b633eca008dd23a21bd8fafbefe2ee9224bd7ea652dfa01"
+    },
+    {
+      "case_id": "CE-T05",
+      "output_path": "raw/CE-T05.md",
+      "sha256": "38e1cc42942b9281117d7eadd8739174745e596e2fadc6fad7868b43ab064781"
+    },
+    {
+      "case_id": "CE-T06",
+      "output_path": "raw/CE-T06.md",
+      "sha256": "022a14271dc48794cda83bf33aa96b23524702efcfd31bf57b44bb891ebcdff2"
+    },
+    {
+      "case_id": "CE-T07",
+      "output_path": "raw/CE-T07.md",
+      "sha256": "1a6fed059e74100c7e0aa9bfe06451e596e60442218f938ffe4f5de7a013e65b"
+    },
+    {
+      "case_id": "CE-T08",
+      "output_path": "raw/CE-T08.md",
+      "sha256": "30aca1a348797a092cf23dc8e7578de3158c295d431295d94ad4cebb6cf3fa47"
+    },
+    {
+      "case_id": "CE-T09",
+      "output_path": "raw/CE-T09.md",
+      "sha256": "b134bbbb6d216e6ae29cbc6013bcc32bcfad117f873e0ec49cac2617e247c7f4"
+    },
+    {
+      "case_id": "CE-T10",
+      "output_path": "raw/CE-T10.md",
+      "sha256": "f096f55aa4958170b5e45cdedee1b8cef89437580d4ea9f446baed8a255189b1"
+    }
+  ],
+  "candidate_source_fingerprints": {
+    "skills/sid-reading-companion/SKILL.md": {
+      "expected_sha256": "56876999bdcfba5e61aee5088fb1053da234b87a6fc80eb13e2cbd66795ee960",
+      "actual_sha256": "56876999bdcfba5e61aee5088fb1053da234b87a6fc80eb13e2cbd66795ee960",
+      "verified": true
+    },
+    "skills/sid-reading-companion/references/master-instruction.md": {
+      "expected_sha256": "7a182bfac3fdba6418924d709bbf95e5c04877d64cad3bf99882ef33c1313911",
+      "actual_sha256": "7a182bfac3fdba6418924d709bbf95e5c04877d64cad3bf99882ef33c1313911",
+      "verified": true
+    },
+    "skills/sid-reading-companion/references/citation-evidence.md": {
+      "expected_sha256": "33ce9794e5431fb72b79b19aafebb55616923c1491e23ea5b63402e90d6f1612",
+      "actual_sha256": "33ce9794e5431fb72b79b19aafebb55616923c1491e23ea5b63402e90d6f1612",
+      "verified": true
+    },
+    "skills/sid-reading-companion/references/knowledge-compiler.md": {
+      "expected_sha256": "f94efd7eebf90a548d808dda120486e79ba9543cc94e3410c4d845e5660fa44f",
+      "actual_sha256": "f94efd7eebf90a548d808dda120486e79ba9543cc94e3410c4d845e5660fa44f",
+      "verified": true
+    },
+    "skills/sid-reading-companion/references/stack-contracts.md": {
+      "expected_sha256": "6e5b3e2bb8891a6d2281af49a1365324a1c7f55b30ad93e00b4b6852b536a63f",
+      "actual_sha256": "6e5b3e2bb8891a6d2281af49a1365324a1c7f55b30ad93e00b4b6852b536a63f",
+      "verified": true
+    },
+    "skills/sid-reading-companion/references/reading-protocols.md": {
+      "expected_sha256": "6002175094f86c808cfd60eb24fa27f17f59e083e1568f365f632e7f7047f15a",
+      "actual_sha256": "6002175094f86c808cfd60eb24fa27f17f59e083e1568f365f632e7f7047f15a",
+      "verified": true
+    },
+    "skills/sid-reading-companion/references/knowledge/citeguard.md": {
+      "expected_sha256": "17a074c332681e8378f08ac8d02fb5795888090bda4e4647919ef8ed11add566",
+      "actual_sha256": "17a074c332681e8378f08ac8d02fb5795888090bda4e4647919ef8ed11add566",
+      "verified": true
+    },
+    "evaluation/citeguard/fixture.txt": {
+      "expected_sha256": "9d438f0ce0f43bff3724d5d89b11b359deb513d9d04e5eee9a4d60c0a8aef988",
+      "actual_sha256": "9d438f0ce0f43bff3724d5d89b11b359deb513d9d04e5eee9a4d60c0a8aef988",
+      "verified": true
+    }
+  },
+  "date": "2026-10-29",
+  "timezone": "Asia/Bangkok",
+  "configuration_note": "Sampler settings and installed-host behavior are unexposed.",
+  "runtime_context": "manually loaded repository instructions; not installed-plugin activation",
+  "capture_method": "actual delegated-agent model responses saved before primary review",
+  "isolation_limits": [
+    "one context for ten logical cases",
+    "instruction-only exclusion of gold files"
+  ]
+}

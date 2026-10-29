@@ -31,6 +31,12 @@ Checklist cuối: source package đầy đủ, JSON/YAML parse, links tồn tạ
 
 ## Remaining validation
 
+Lượt chạy lại ngày 2026-10-29 theo [roadmap](roadmap.md) lưu ba attempt Luna với cùng case inputs/rubric và context mới. Attempt 1: 8 PASS, 1 PARTIAL, 1 FAIL; attempt 2: 9 PASS, 1 FAIL; attempt 3 được primary reviewer đối chiếu trên 20 tiêu chí hành vi. Các lỗi đã sửa tại CE02/CE05 (file–range, conditions, learner support khác claim support), CE06 (record thay lời tự khai) và R10/CE00 (Progress không có snapshot). Raw output lỗi và các snapshot nguồn tương ứng được giữ, không sửa lại cho đạt.
+
+[Review attempt 1](../../evaluation/citeguard/luna-rerun-2026-10-29/review.json) · [Review attempt 2](../../evaluation/citeguard/luna-rerun-2026-10-29-r2/review.json) · [Review attempt 3](../../evaluation/citeguard/luna-rerun-2026-10-29-r3/review.json).
+
+Runner là model được cấu hình gpt-6-luna, reviewer là primary agent. Đây là tách người thực hiện/chấm trong workflow phát triển, không external independent validation. Nhiều case trong một context không phải lặp thống kê độc lập; kết quả không chứng minh reliability, learning gain hoặc installed-host activation.
+
 - Host activation/retrieval: NOT_RUN trước khi chạy bản mới trên host.
 - Independent semantic review: NOT_RUN trong self-review này.
 - Baseline/candidate quality and cost comparison: NOT_RUN; chưa có measured gain.

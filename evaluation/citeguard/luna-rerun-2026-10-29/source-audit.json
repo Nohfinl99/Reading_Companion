@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-29",
+  "timezone": "Asia/Bangkok",
+  "reviewer": "primary reviewer",
+  "status": "PASS",
+  "scope": "Identity, selected source claims/locators and SID design provenance; no reproduction of scientific results",
+  "canonical_url": "https://aclanthology.org/2026.acl-long.282/",
+  "pdf_url": "https://aclanthology.org/2026.acl-long.282.pdf",
+  "pdf_sha256": "9d146239cef435dc5dc392f4be97a5f5b997fbc1bdd996fe003e0d1bfec8ffd0",
+  "pdf_pages": 17,
+  "pdf_publication": "ACL 2026, pages 6241-6257",
+  "identity_crosscheck": {
+    "url": "https://arxiv.org/abs/2510.17853v4",
+    "status": "PASS",
+    "scope": "title/authors identity only; ACL version remains canonical"
+  },
+  "visual_pages_checked": [
+    3,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "visual_capture_retention": "Private audit cache; PDF and page PNGs are not committed",
+  "unit_reviews": [
+    {
+      "id": "CG-01",
+      "status": "PASS",
+      "pdf_pages": [
+        3,
+        7
+      ],
+      "printed_pages": [
+        6243,
+        6247
+      ],
+      "locator": "2.1, Table 5"
+    },
+    {
+      "id": "CG-02",
+      "status": "PASS",
+      "pdf_pages": [
+        3,
+        5
+      ],
+      "printed_pages": [
+        6243,
+        6245
+      ],
+      "locator": "2.2, 4.1"
+    },
+    {
+      "id": "CG-03",
+      "status": "PASS",
+      "pdf_pages": [
+        3
+      ],
+      "printed_pages": [
+        6243
+      ],
+      "locator": "2.3"
+    },
+    {
+      "id": "CG-04",
+      "status": "PASS",
+      "pdf_pages": [
+        5
+      ],
+      "printed_pages": [
+        6245
+      ],
+      "locator": "Table 2"
+    },
+    {
+      "id": "CG-05",
+      "status": "PASS",
+      "pdf_pages": [
+        6,
+        7
+      ],
+      "printed_pages": [
+        6246,
+        6247
+      ],
+      "locator": "5.2, Table 7"
+    },
+    {
+      "id": "CG-06",
+      "status": "PASS",
+      "pdf_pages": [
+        6,
+        7
+      ],
+      "printed_pages": [
+        6246,
+        6247
+      ],
+      "locator": "5.3, Table 8"
+    },
+    {
+      "id": "CG-07",
+      "status": "PASS",
+      "pdf_pages": [
+        8,
+        9
+      ],
+      "printed_pages": [
+        6248,
+        6249
+      ],
+      "locator": "5.8, Table 12, Limitations"
+    }
+  ],
+  "relations_review": {
+    "status": "PASS",
+    "count": 2,
+    "basis": "source_interpretation retained; not experimental/causal proof"
+  },
+  "sid_source_fingerprints": {
+    "SID-Master-Instruction-V5.md": "ad20e89fb234ed9a0c5a483520d6b7e516f75aba830a275cefa5e66259cacd83",
+    "bai-02-prompt-stack-cognitive-interface.md": "1de39293a3f5711d27ca1e68464b3a1ea83432506a3afa9f5621b5e9b2b5b259",
+    "bai-04-information-architect-representation.md": "04d1907deff5c4c4dcfda9e267e32b2b9fb620d0010f798bab83232327c34619",
+    "bai-07-validation-epistemic-control.md": "79166d6a1da770090e3b37952cb5247415a6ba6f008f7cd93ecc8026ff034157",
+    "bai-08-synthesis-frameworking-transfer.md": "cbdafd1a490c6ddb5c8a43cae484fe685a0a4c64bffb7fa4a79a7c4c9bf7ed48"
+  },
+  "sid_fingerprint_comparison": "All five match the published SID V5 mapping",
+  "gaps": [
+    "No complete appendix or full-document visual review",
+    "No backend/API reproduction or installed-host activation",
+    "H1/H2 remain untested transfer hypotheses"
+  ]
+}

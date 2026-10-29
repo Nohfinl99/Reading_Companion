@@ -75,3 +75,4 @@ Output mới, khác input, không symlink/ghi đè. AI điền JSON từ nguồn
 - Plan: status/task/mode/target_ids/order/bridges/skipped_demonstrated/blocked/cycles/knowledge_levels/prerequisite_metadata/artifact_plan/stages/learner_level/reference_plan. semantic_verified và source_locators_verified false. Không dùng plan làm chứng nhận nguồn/learner.
 
 Registry RA-01–RA-09 có nơi sở hữu chính ở R09 của reading-protocols.md; helper đọc block JSON đó. Nếu account overlay còn giữ artifact-registry.json từ release cũ, file đó chỉ là bản tương thích lịch sử, không nơi định nghĩa/routing song song; khi đối chiếu dùng registry R09. Schema checkpoint/R11 và session/R10 độc lập với compiler node schema; IDs có thể đối chiếu nhưng không tự chuyển field hoặc nâng trạng thái.
+

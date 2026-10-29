@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-29",
+  "timezone": "Asia/Bangkok",
+  "status": "PASS",
+  "scope": "Scoped source/rerun review and mechanical regression; not installed-host readiness",
+  "base_commit": "1473b1b928e590bdfffcda3d52d6f548ee8de51e",
+  "source_audit": {
+    "status": "PASS",
+    "path": "../luna-rerun-2026-10-29/source-audit.json",
+    "checked_units": 7,
+    "sid_fingerprints": 5,
+    "visual_pdf_pages": [
+      3,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "runner": "gpt-6-luna",
+  "primary_review": {
+    "status": "PASS",
+    "cases": 10,
+    "required_behavioral_criteria": 20,
+    "attempts_retained": 3,
+    "historical_failures_preserved": true
+  },
+  "checks": {
+    "repository_links": {
+      "status": "PASS",
+      "command": "python tools/validate_repository.py",
+      "exit_code": 0,
+      "output": "Repository structure and local Markdown links passed; plugin version 0.3.6."
+    },
+    "author_evidence_integrity": {
+      "status": "PASS",
+      "command": "python tools/validate_citation_evidence.py",
+      "exit_code": 0,
+      "output": "{\"ok\": true, \"cases\": 8, \"knowledge_units\": 7, \"evidence_layer\": \"mechanical_helper\", \"semantic_verified\": false, \"host_verified\": false, \"fingerprint_mode\": \"UTF-8/LF\"}"
+    },
+    "delegated_run_integrity": {
+      "status": "PASS",
+      "command": "python tools/validate_luna_rerun.py",
+      "exit_code": 0,
+      "output": "{\"ok\": true, \"attempts\": 3, \"raw_outputs\": 30, \"final_cases\": 10, \"semantic_verified_by_tool\": false, \"installed_host_verified\": false}"
+    },
+    "compile": {
+      "status": "PASS",
+      "command": "python -m compileall -q tools skills/sid-reading-companion/scripts",
+      "exit_code": 0,
+      "output": ""
+    },
+    "metadata": {
+      "status": "PASS",
+      "scope": "JSON/YAML parsed; manifest version/interface match"
+    },
+    "cli": {
+      "status": "PASS",
+      "results": [
+        {
+          "helper": "checkpoint",
+          "exit_code": 0
+        },
+        {
+          "helper": "reading_session",
+          "exit_code": 0
+        },
+        {
+          "helper": "knowledge_compiler",
+          "exit_code": 0
+        },
+        {
+          "helper": "ia_map",
+          "exit_code": 0
+        }
+      ]
+    }
+  },
+  "linux_regression": {
+    "status": "PASS",
+    "environment": "Ubuntu WSL, portable CPython 3.12.15, pytest 9.2.0",
+    "command": "python3.12 -m pytest tests -q -p no:cacheprovider",
+    "passed": 570,
+    "failed": 0,
+    "duration_seconds": 17.83,
+    "symlink_tests": "Executed successfully on Linux",
+    "evidence": "Actual WSL exec output captured in development conversation; sanitized summary retained"
+  },
+  "additional_environment_probe": {
+    "python": "3.14.4",
+    "passed": 564,
+    "failed": 1,
+    "scope": "Outside declared CI support range 3.10-3.12",
+    "failure": "Existing deeply-nested JSON diagnostic expectation differs on Python 3.14; not relabelled PASS or fixed in this scoped change"
+  },
+  "github_ci": {
+    "status": "NOT_RUN",
+    "reason": "Awaiting the conditional GitHub update and new CI run"
+  },
+  "boundaries": {
+    "installed_plugin_activation": "NOT_RUN",
+    "external_independent_review": "NOT_RUN",
+    "measured_quality_cost_gain": "NOT_RUN",
+    "learner_outcomes": "NOT_RUN"
+  },
+  "publication_gate": {
+    "id": "PUB-REVIEW",
+    "status": "PASS",
+    "scope": "Source/evidence update to existing draft PR after local gates; no merge or account-plugin release"
+  }
+}

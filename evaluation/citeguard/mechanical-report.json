@@ -125,5 +125,15 @@
       "Measured quality/cost gain",
       "Learner outcome"
     ]
+  },
+  "report_scope": "Original candidate checks retained historically; latest scoped rerun is linked below.",
+  "latest_rerun": {
+    "status": "PASS",
+    "verification": "luna-rerun-2026-10-29-r3/verification.json",
+    "primary_review": "luna-rerun-2026-10-29-r3/review.json",
+    "linux_tests_passed": 570,
+    "failed": 0,
+    "runner": "gpt-6-luna",
+    "historical_failures_retained": true
   }
 }

@@ -2,7 +2,12 @@
   "package_version": "0.1.0",
   "source_id": "CG-ACL-2026",
   "title": "CiteGuard: Faithful Citation Attribution for LLMs via Retrieval-Augmented Validation",
-  "authors": ["Yee Man Choi", "Xuehang Guo", "Yi R. Fung", "Qingyun Wang"],
+  "authors": [
+    "Yee Man Choi",
+    "Xuehang Guo",
+    "Yi R. Fung",
+    "Qingyun Wang"
+  ],
   "version": "ACL 2026 proceedings, 2026.acl-long.282",
   "doi": "10.18653/v1/2026.acl-long.282",
   "access_method": "https://aclanthology.org/2026.acl-long.282.pdf",
@@ -10,12 +15,34 @@
   "checked_on": "2026-10-29",
   "timezone": "Asia/Bangkok",
   "requested_scope": "method, evaluation and integration limits",
-  "accessed_ranges": ["sections 2-5 and Limitations, PDF text extraction"],
-  "analyzed_ranges": ["2.1-2.3", "3.1-3.5", "4.1-4.3", "5.1-5.4", "5.8", "Limitations"],
-  "missing_ranges": ["complete related-work and appendix analysis"],
-  "media_gaps": ["No local PDF render captured; table values checked in extracted text, not a visual-layout review"],
-  "sha256": null,
-  "sha256_reason": "Remote PDF text access; no downloaded binary retained",
-  "unit_revisions": {"CG-01": 1, "CG-02": 1, "CG-03": 1, "CG-04": 1, "CG-05": 1, "CG-06": 1, "CG-07": 1},
-  "content_boundary": "Paraphrased research knowledge only; no independent reproduction or SID performance measurement"
+  "accessed_ranges": [
+    "sections 2-5 and Limitations, local PDF extraction",
+    "visual review of PDF pages 3,5,6,7,8,9"
+  ],
+  "analyzed_ranges": [
+    "2.1-2.3",
+    "3.1-3.5",
+    "4.1-4.3",
+    "5.1-5.4",
+    "5.8",
+    "Limitations"
+  ],
+  "missing_ranges": [
+    "complete related-work and appendix analysis"
+  ],
+  "media_gaps": [
+    "Full document and appendices not visually reviewed; selected unit pages were rendered and checked"
+  ],
+  "sha256": "9d146239cef435dc5dc392f4be97a5f5b997fbc1bdd996fe003e0d1bfec8ffd0",
+  "unit_revisions": {
+    "CG-01": 1,
+    "CG-02": 1,
+    "CG-03": 1,
+    "CG-04": 1,
+    "CG-05": 1,
+    "CG-06": 1,
+    "CG-07": 1
+  },
+  "content_boundary": "Paraphrased research knowledge only; no independent reproduction or SID performance measurement",
+  "verification_note": "2026-10-29 source recheck; private PDF/render retained outside public source"
 }

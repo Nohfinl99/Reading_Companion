@@ -32,4 +32,6 @@ RTC-COE design self-check: CE01–CE06 đều có sáu nhãn R/T/Context/Constra
 
 ## Next evidence layers
 
+Lượt kiểm lại có runner Luna riêng, rubric đóng băng và primary review được lưu tại [roadmap](../../docs/citeguard/roadmap.md) và [attempt cuối](luna-rerun-2026-10-29-r3/README.md). Các author walkthrough ở trên giữ nguyên lịch sử; không đổi nhãn chúng thành model-run evidence. Dùng `python tools/validate_luna_rerun.py` để kiểm provenance/byte fingerprints của ba attempt; validator không chấm nghĩa.
+
 Host retrieval/activation NOT_RUN; independent semantic review NOT_RUN; baseline/candidate quality/cost comparison NOT_RUN; learner outcome NOT_RUN. Để chạy host, dùng cùng cases/source/config, lưu raw output trước grading, không thay expected behavior theo output. Khi so baseline/candidate, đổi thứ tự hoặc blind reviewer nếu có thể; báo rõ reviewer và điều còn thiếu theo B01.

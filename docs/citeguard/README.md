@@ -15,6 +15,7 @@ Gói này đưa kiến thức có nguồn vào tác vụ đọc qua sáu phase R
 | Đọc Knowledge Package | [Tri thức CiteGuard](../../skills/sid-reading-companion/references/knowledge/citeguard.md) |
 | Xem ví dụ áp dụng vào reading và tự kiểm | [Walkthrough và bằng chứng](../../evaluation/citeguard/README.md) |
 | Xem prototype, sửa lỗi và release checklist | [Revision notes](revision-notes.md) |
+| Xem roadmap và lượt chạy Luna có reviewer riêng | [Roadmap chạy lại](roadmap.md), [kết quả lượt cuối](../../evaluation/citeguard/luna-rerun-2026-10-29-r3/README.md) |
 
 ## Quick start
 

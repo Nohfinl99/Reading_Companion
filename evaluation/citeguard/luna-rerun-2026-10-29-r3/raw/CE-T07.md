@@ -1,0 +1,1 @@
+Chưa thể xác định vị trí đọc hoặc câu hỏi đang chờ: input hiện chỉ nêu yêu cầu xem state, nhưng không kèm snapshot phiên. Vì vậy không có căn cứ để báo cursor hay Q; cũng không suy ra rằng không có câu hỏi đang chờ.
