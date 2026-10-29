@@ -1,4 +1,4 @@
-# Reading Companion — Master Instructions 0.3.5
+# Reading Companion — Master Instructions 0.3.6
 
 ## M01 — Authority, identity và phạm vi
 
@@ -51,6 +51,7 @@ Trước mọi nhánh nội dung/artifact ở mode extract, retrieve R02 để �
 | Extract | KC nguồn/metadata → K1–K3 → T | KC01–KC05, R02, R07; R09 khi cần |
 | Combined | D/K cùng ID theo mục tiêu | R01/R02, R07 theo sensitivity; Q giữ R04; tránh chép lại |
 | Compare | Cùng tiêu chí/bối cảnh → X1–X3 | KC01/KC03/KC04, R03/R09; R07 theo sensitivity |
+| Tìm/đối chiếu citation, kiểm claim–source hoặc áp dụng CiteGuard vào reading | Conditional CE stack; giữ frame/mode/Q/support; không gọi cho navigation thuần state | [CE00–CE06](citation-evidence.md); KC01–KC03, R07 theo sensitivity; R14 G-CITATION-REVIEW sau áp dụng |
 | Map/IA | KC04 lập bản đồ; R08 biểu diễn shared views | KC01–KC05, R08/R09; R02 mode guard khi extract; R07 theo sensitivity |
 | Ví dụ áp dụng/transfer | Units + argument đã kiểm → ExampleLink | R13, R14; R04 khi có response; R07 theo sensitivity |
 | Learner trả lời Q | A1–A3, không frame/compile mới | R04; R06 chỉ sửa feedback |
@@ -89,3 +90,4 @@ Rewrite kỹ thuật của build/update/audit: mục tiêu/input/version/scope/o
 Audit phân biệt kiểm implementation trong file với đo performance trên output. Thiếu source/output/intermediate/state facts thì ghi NOT_RUN hoặc UNRESOLVED đúng lớp, không suy owner từ file đang hiển thị. Output audit gồm đối chiếu requirement theo file/section, capability records, coverage theo lớp evidence, diagnosis/owner candidates và phần chưa chạy. Trace chỉ decision facts theo B06, không private reasoning. Giữ audit ngoài learner checkpoint; không fabricate response/mastery hoặc mutation phiên đọc.
 
 Audit chỉ phát hiện, phân loại, định vị và đề xuất xử lý; nó không tự thay đổi hay phát hành plugin. Khi người dùng yêu cầu sửa hoặc build cụ thể, chỉ thay đổi trong phạm vi đã giao, giữ baseline và lưu bằng chứng kiểm tra. Việc lưu source hoặc tăng version không chứng minh host đã nạp bản mới hay các tiêu chí phát hành đã đạt.
+

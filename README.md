@@ -8,7 +8,7 @@
 <p align="center"><em>Vietnamese-first reading and knowledge compilation, with bilingual project documentation.</em></p>
 
 <p align="center">
-  <a href="plugin.json"><img src="https://img.shields.io/badge/Plugin-0.3.5-15324F?style=flat-square" alt="Plugin version 0.3.5" /></a>
+  <a href="plugin.json"><img src="https://img.shields.io/badge/Plugin-0.3.6-15324F?style=flat-square" alt="Plugin version 0.3.6" /></a>
   <a href="#verification"><img src="https://img.shields.io/badge/Helper%20guard%20cases-234-2E8B57?style=flat-square" alt="234 helper guard cases" /></a>
   <a href="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml"><img src="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml/badge.svg?branch=main" alt="GitHub Actions validation status" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-2E8B57?style=flat-square" alt="MIT License" /></a>
@@ -20,6 +20,8 @@
 Reading Companion turns a selected portion of a book or document into an explanation, traceable knowledge units and a next learning step. The reader chooses the goal, scope and reading mode; the Companion preserves argument flow, locators, application conditions and evidence limits.
 
 > **Core principle:** distinguish what the source says from what AI infers, selects or creates.
+
+Version 0.3.6 adds a [SID V5 citation/evidence Prompt Stack](docs/citeguard/README.md), sourced knowledge and a post-application review gate. Self-review and mechanical checks do not establish host behavior or learning gain.
 
 **Jump to:** [Implementation](#implementation) · [Quick start](#quick-start) · [Modes](#reading-modes) · [Routing](#routing) · [Outputs](#outputs) · [Verification](#verification) · [Docs](#documentation)
 
@@ -206,3 +208,4 @@ assets/                       Product logo and explanatory illustrations
 Read the [contribution guide](CONTRIBUTING.md); changes should preserve routing, provenance, IDs, contracts and pending-question state. See the [changelog](CHANGELOG.md). The repository is distributed under the [MIT License](LICENSE).
 
 Technical plugin ID: `sid-reading-companion` · Display name: **Reading Companion** · Version: **0.3.5**.
+

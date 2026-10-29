@@ -335,6 +335,7 @@ V4 là kiểm bản người đọc sẽ thấy: selection dùng biểu diễn t
 | G-UNITS | Boundary đủ nghĩa, không ép count; preserve ID/revision/coverage, count là kết quả trong scope | KC02 hoặc R02.K2 |
 | G-SELECTION | Mọi danh sách chọn có SC01: criterion cụ thể, origin từng mục, universe/completeness/omitted, count_basis/author locator | Bước chọn KC04/R03/R09/R13 |
 | G-MEANING | Proposition/premise/conclusion, negation, modality, conditions, exceptions, numbers, unsupported addition và locator giữ nghĩa | R01/R02/R06 theo intermediate |
+| G-CITATION-REVIEW | Sau artifact áp dụng CE: CR01–CR06 kiểm source/support/epistemic boundary/IA/state/final delta; SC05, không pass khi thiếu evidence | [CE06](citation-evidence.md#ce06--g-citation-review-after-application), R14 dispatch |
 | G-MAP | Endpoints và A[relation]B có basis/source; references khác prerequisite; cây tác giả khác AI grouping/learning graph | KC03/KC04 |
 | G-EXAMPLE | Target revision tồn tại; mọi mapping có tương ứng nghĩa; scenario → premise/link → conclusion, conditions/limits đủ; AI example có nhãn; learner-visible bridge/purpose/permitted inference, hypothetical không thành proof | R13 |
 | G-HEADING | Đọc riêng title, subtitle, caption, lời dẫn và số thứ tự: có gây hiểu AI chọn N là N nguyên tắc tác giả/toàn bộ sách không? Đối chiếu SC01 và author locator; subset/tổng sách/count unit phân biệt | R09/R06; count/basis sai quay bước chọn |
@@ -367,3 +368,4 @@ Với câu hỏi gồm cả count/origin và hụt mạch, bản sửa cần xu�
 - Sửa chính ví dụ cũ: giữ outcome/dữ kiện/ID đã có, chỉ thay chỗ sai có giải thích. Xuất cầu nối ngay cạnh ví dụ theo mẫu nội dung: điểm ở phần trước + unit ID → bước trong ví dụ → quan hệ lập luận/điều kiện → điều được minh họa và điều chưa chứng minh. Khi unit cũ chưa đủ nguồn kiểm, ghi mapping theo artifact cũ và phạm vi chưa xác minh; không nâng nó thành tri thức sách đã kiểm. Một ví dụ mới chỉ bổ sung khi người dùng yêu cầu hoặc ví dụ cũ không thể sửa, phải nói lý do.
 - Phần artifact/công cụ: xuất mạch input → thao tác → output → artifact tiếp theo, nguồn/basis mỗi vai trò, scope enumeration tác giả và phần diễn giải do AI thêm. Danh sách tác giả được giữ đúng phạm vi; tính toàn sách/ranking không suy từ enumeration cục bộ.
 - Trước trả, đối chiếu lại từng issue nguyên văn với một đoạn trả lời cụ thể; thiếu đoạn nào ghi PARTIAL và gap. Trace nội bộ đủ nhưng learner view thiếu cầu nối vẫn chưa đạt G-EXAMPLE.
+

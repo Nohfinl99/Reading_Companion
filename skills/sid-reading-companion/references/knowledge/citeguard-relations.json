@@ -1,0 +1,11 @@
+{
+  "package_version": "0.1.0",
+  "source_id": "CG-ACL-2026",
+  "unit_revision": 1,
+  "relations": [
+    {"from": "CG-05", "type": "references", "target": "CG-02", "basis": "source_interpretation", "proposition": "The action ablation evaluates the retrieval actions described by CG-02.", "locator": "section 5.2, Table 7; section 2.2"},
+    {"from": "CG-07", "type": "limits", "target": "CG-04", "basis": "source_interpretation", "proposition": "Backend coverage limits transferring the reported benchmark result to another retrieval environment.", "locator": "section 5.8, Table 12; Limitations"}
+  ],
+  "prerequisites": [],
+  "transfer_status": "SID hypotheses not tested"
+}

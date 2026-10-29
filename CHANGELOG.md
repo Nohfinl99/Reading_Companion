@@ -2,6 +2,13 @@
 
 These notes summarize user-facing and compatibility changes. / Ghi chú này tóm tắt thay đổi đối với người dùng và khả năng tương thích.
 
+## 0.3.6 — 2026-10-29 (source candidate)
+
+- Added conditional CE01–CE06 RTC-COE prompts based on SID V5, two mini-reviews and R14-owned G-CITATION-REVIEW after reading application.
+- Added sourced CiteGuard knowledge, source/interpretation/transfer boundaries and a public IA/project pack.
+- Added synthetic author walkthroughs, evidence fingerprint validation and guard tests; CI runs the existing helper suite. Mechanical/self-review remain separate from host, independent and learner evidence.
+- Preserved identity/presentation, helper APIs and checkpoint/session schemas. No retrieval service, account memory or measured learning gain is introduced.
+
 ## 0.3.5 — 2026-10-23
 
 - **Continuity (issue #8):** session support can no longer be laundered from `unknown` to `none` through an intermediate save; legacy questions without a context cannot be assigned a known support or resolved as `independent`; a resolving assessment cannot record less support than the question actually had. The `test_rs_a01` expectation that treated `unknown → none` as allowed was superseded against SC04/R11 — see the supersession note in the test. Behavior change from this release onward; transitions are guarded, past states are not rewritten retroactively. / **Continuity (issue #8):** support của phiên không còn bị “rửa” từ `unknown` thành `none` qua một lần save trung gian; câu hỏi legacy không có context không thể bị gắn support đã biết hoặc được resolve thành `independent`; assessment khi resolve không được ghi support thấp hơn support thật của câu hỏi. Kỳ vọng cũ của `test_rs_a01` cho phép `unknown → none` đã bị supersede theo SC04/R11 — xem ghi chú supersession trong test. Đây là thay đổi hành vi từ bản này; guard chỉ chặn chuyển đổi mới, không hồi tố state cũ.
@@ -33,3 +40,4 @@ These notes summarize user-facing and compatibility changes. / Ghi chú này tó
 - Clarified the `deep`, `extract` and `combined` reading modes and how source links and learning state are preserved.
 - Improved guidance for knowledge extraction, example-to-concept links, checkpoints and session handoff.
 - Added repository and helper checks for maintainers.
+

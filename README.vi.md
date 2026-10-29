@@ -8,7 +8,7 @@
 <p align="center"><em>A Vietnamese-first, source-grounded reading and knowledge-compilation plugin.</em></p>
 
 <p align="center">
-  <a href="plugin.json"><img src="https://img.shields.io/badge/Plugin-0.3.5-15324F?style=flat-square" alt="Plugin version 0.3.5" /></a>
+  <a href="plugin.json"><img src="https://img.shields.io/badge/Plugin-0.3.6-15324F?style=flat-square" alt="Plugin version 0.3.6" /></a>
   <a href="#verification"><img src="https://img.shields.io/badge/Helper%20guard%20cases-234-2E8B57?style=flat-square" alt="234 case kiểm tra guard của helper" /></a>
   <a href="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml"><img src="https://github.com/Nohfinl99/Reading_Companion/actions/workflows/validate.yml/badge.svg?branch=main" alt="Trạng thái kiểm tra GitHub Actions" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-2E8B57?style=flat-square" alt="Giấy phép MIT" /></a>
@@ -20,6 +20,8 @@
 Reading Companion biến một phạm vi sách hoặc tài liệu thành lời giải thích, đơn vị tri thức và bước học tiếp theo có thể truy ngược về nguồn. Người đọc chọn mục tiêu, phạm vi và cách đọc; Companion giữ mạch lập luận, locator, điều kiện áp dụng và giới hạn bằng chứng.
 
 > **Nguyên tắc cốt lõi:** phân biệt điều tài liệu nói với điều AI suy luận, chọn hoặc biên soạn.
+
+Bản 0.3.6 bổ sung [Prompt Stack citation/evidence theo SID V5](docs/citeguard/README.md), tri thức có nguồn và gate sau áp dụng. Self-review và mechanical checks không chứng minh host đã nạp hoặc có learning gain.
 
 **Đi nhanh:** [Hiện trạng triển khai](#implementation) · [Bắt đầu](#quick-start) · [Modes](#reading-modes) · [Định tuyến](#routing) · [Đầu ra](#outputs) · [Kiểm chứng](#verification) · [Tài liệu](#documentation)
 
@@ -206,3 +208,4 @@ assets/                       Product logo and explanatory illustrations
 Đọc [hướng dẫn đóng góp](CONTRIBUTING.md); thay đổi cần giữ định tuyến, provenance, IDs, contracts và trạng thái câu hỏi. Xem [CHANGELOG](CHANGELOG.md). Repository phát hành theo [MIT License](LICENSE).
 
 Technical plugin ID: `sid-reading-companion` · Display name: **Reading Companion** · Version: **0.3.5**.
+
