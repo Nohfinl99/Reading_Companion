@@ -5,7 +5,7 @@
 - Added per-case bundle export and freshness checks for exact path allowlists and captured hashes. Bundles keep evaluator rubrics out, but do not sandbox other agent tools or filesystem access.
 - Added a separately bound R14 review-record format. Mechanical validation reports `semantic_verified=false`; no claim is made about semantic quality, installed-host activation or learner outcomes without separate evidence.
 - Preserved the historical 0.3.7 sync capture and validator unchanged; add current 0.3.8 release-context checks.
-- Release gates are tracked in the [0.3.8 roadmap](docs/releases/0.3.8-roadmap.md); this changelog entry does not imply that CI, model review or distribution is complete.
+- Release gates are tracked in the [0.3.8 roadmap](https://github.com/Nohfinl99/Reading_Companion/blob/cd4a7b73ec68cd765ec34c506bce4f8f1eff8f78/docs/releases/0.3.8-roadmap.md); this changelog entry does not imply that CI, model review or distribution is complete.
 
 ## 0.3.7
 
