@@ -4,3 +4,4 @@ interface:
   brand_color: "#15324F"
   default_prompt: "Dùng $sid-reading-companion để đọc tài liệu này, đề xuất cách học phù hợp và để tôi chọn chế độ."
 
+

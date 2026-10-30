@@ -10,6 +10,8 @@ SourceManifest: source_id, version/edition hoặc unknown, path/access_method, s
 
 Các records SelectionRecord/ArgumentRecord/ExampleLink/QuestionContract/GateRecord lưu trong Markdown hoặc JSON sidecar bên cạnh state; không thêm field vào pending_question, unit hoặc reading_session mà helper chưa hỗ trợ. Sidecar header: contract_version PS1, source_id/hash/version, state_revision, unit_revisions, artifact_refs. Trước reuse so hash và revision; stale thì chặn phần phụ thuộc và tái kiểm. Các ID SC00–SC05 là contract IDs; C01–C10 trong B05 vẫn là capability IDs, không cùng namespace.
 
+Project evidence audit có profile additive riêng tại `references/project-evidence-profile.json`, được helper `scripts/project_evidence.py` kiểm và render. Profile chỉ giữ record audit ngoài learner checkpoint; không mở rộng session, unit, assessment, pending_question hoặc checkpoint schema. SC00 vẫn sở hữu source provenance/handoff, SC01 selection, SC05 gate semantics.
+
 State cũ thiếu sidecar vẫn đọc được; không suy provenance đã kiểm. Không sidecar thì phát handoff trong chat và ghi chưa lưu. Audit trace là decision facts, không suy luận riêng tư.
 
 Revision state chỉ tăng do navigation/style/pause/resume: đối chiếu source hash, unit revisions, Q ID và lịch sử support trước khi rebind sidecar sang state revision mới; giữ provenance/criterion cũ và log rebind, không đánh stale content chỉ vì cursor đổi. Source/unit/target đổi thật thì tái kiểm phần phụ thuộc. Không rebind để xóa support hoặc claim đã chuẩn bị criterion trước Q.
@@ -63,3 +65,4 @@ Record criterion cần dữ liệu thực `[{claim,source_locator,critical_condi
 PASS cần evidence và mọi check áp dụng đạt. Gate runtime R14 khác benchmark run B; output chưa tồn tại là NOT_RUN. Helper structural PASS không đổi semantic gate. Chưa chạy render/host/learner thì lớp tương ứng NOT_RUN. Status READY chỉ khi gate bắt buộc artifact đạt; PARTIAL cho phần độc lập đã kiểm; BLOCKED cho target phụ thuộc lỗi; PROVISIONAL cho outline identified.
 
 GateRecord.status chỉ thuộc PASS/FAIL/PARTIAL/NOT_RUN. BLOCKED/READY/PROVISIONAL là readiness của artifact, không giá trị gate status. Target thiếu source có readiness=BLOCKED và G-MEANING=NOT_RUN khi chưa có nội dung để kiểm; không dùng readiness thay enum status. Delta dự kiến cũng chỉ dùng field/schema R10/R11; pending_question không thêm status/answer/hint, revision nếu phát sinh phải là số dựa trên revision thực, không chuỗi “prior+1”. Không có state/revision đủ thì ghi proposal/gap, không khẳng định đã lưu checkpoint.
+

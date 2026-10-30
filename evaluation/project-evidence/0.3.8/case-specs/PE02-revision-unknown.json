@@ -1,0 +1,26 @@
+{
+  "profile_version": "project-evidence-audit-0.3.8",
+  "case_id": "PE02-revision-unknown",
+  "input": "evaluation/project-evidence/0.3.8/cases/PE02-revision-unknown/input.md",
+  "sources": [
+    {
+      "path": "evaluation/project-evidence/0.3.8/cases/PE02-revision-unknown/sources/ledger-snapshot.md"
+    }
+  ],
+  "runtime_context": [
+    "plugin.json",
+    ".codex-plugin/plugin.json",
+    "skills/sid-reading-companion/SKILL.md",
+    "skills/sid-reading-companion/references/master-instruction.md",
+    "skills/sid-reading-companion/references/knowledge-compiler.md",
+    "skills/sid-reading-companion/references/stack-contracts.md",
+    "skills/sid-reading-companion/references/citation-evidence.md",
+    "skills/sid-reading-companion/references/reading-protocols.md",
+    "skills/sid-reading-companion/references/project-evidence.md",
+    "skills/sid-reading-companion/references/project-evidence-profile.json",
+    "skills/sid-reading-companion/references/project-evidence-record.schema.json",
+    "skills/sid-reading-companion/scripts/project_evidence.py",
+    "docs/project-evidence.vi.md",
+    "docs/project-evidence.en.md"
+  ]
+}

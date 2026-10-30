@@ -350,11 +350,20 @@ def progress(state):
 
 def guard_transition(old, new):
     a, b = old.get('reading_session'), new.get('reading_session')
+    added_assessments = new['assessments'][len(old['assessments']):]
+    need(new['assessments'][:len(old['assessments'])] == old['assessments'], 'Observed assessments cannot disappear/change')
     if a is None:
         if b is not None:
             need(all(new.get(k) == v for k, v in old.items() if k != 'revision'), 'Enable must preserve existing checkpoint')
             need(b['cursor'] is None and b['return_position'] is None and b['pending_context'] is None and
                  all(not b[k] for k in ('navigation_history', 'visited', 'paused_questions', 'connections')), 'Enable cannot invent session history')
+        elif old['pending_question'] is not None:
+            q = old['pending_question']
+            resolutions = [r for r in added_assessments if r['question_id'] == q['id']]
+            resolved = any(text(r['response']) and r['result'] != 'unassessed' for r in resolutions)
+            need(new['pending_question'] == q or resolved, 'Unanswered question cannot disappear/change')
+            for result in resolutions:
+                need(result['support'] != 'none', 'Assessment cannot erase question support')
         return
     need(b is not None, 'Reading session cannot disappear')
     need(a['chapter_index'] == b['chapter_index'], 'Index replacement requires a new session/reimport')
@@ -372,10 +381,9 @@ def guard_transition(old, new):
     new_questions = [r['question'] for r in b['paused_questions']]
     if new['pending_question'] is not None:
         new_questions.append(new['pending_question'])
-    added_assessments = new['assessments'][len(old['assessments']):]
-    need(new['assessments'][:len(old['assessments'])] == old['assessments'], 'Observed assessments cannot disappear/change')
     for q in questions:
-        resolved = any(r['question_id'] == q['id'] and text(r['response']) for r in added_assessments)
+        resolved = any(r['question_id'] == q['id'] and text(r['response']) and
+                       r['result'] != 'unassessed' for r in added_assessments)
         need(q in new_questions or resolved, 'Unanswered question cannot disappear/change')
     for row in a['paused_questions']:
         newer = next((r for r in b['paused_questions'] if r['question']['id'] == row['question']['id']), None)
@@ -395,7 +403,7 @@ def guard_transition(old, new):
             need(newer is None or newer['support'] == 'unknown', 'Legacy question support must remain unknown')
         for result in added_assessments:
             if result['question_id'] == old['pending_question']['id']:
-                need(_assessment_support_ok('unknown', result['support']), 'Assessment cannot erase question support')
+                need(result['support'] != 'none', 'Assessment cannot erase question support')
     if old['pending_question'] is not None and a['pending_context'] is not None:
         context = a['pending_context']
         if new['pending_question'] == old['pending_question']:
@@ -408,7 +416,9 @@ def guard_transition(old, new):
                 need(all(row[k] == context[k] for k in ('cursor', 'resume_note', 'support')), 'Pause must preserve context/support')
         for result in added_assessments:
             if result['question_id'] == old['pending_question']['id']:
-                need(_assessment_support_ok(context['support'], result['support']), 'Assessment cannot erase question support')
+                need((result['support'] != 'none' if context['support'] == 'unknown' else
+                      _support_not_decreased(context['support'], result['support'])),
+                     'Assessment cannot erase question support')
 
 
 def main():
@@ -446,3 +456,4 @@ def main():
 
 if __name__ == '__main__':
     raise SystemExit(main())
+

@@ -1,0 +1,100 @@
+{
+  "contract_version": "PS1",
+  "scope": "Một artifact citation tổng hợp từ Fixture S trong run sync-0.3.7-ce-record; phạm vi chỉ là kết quả setup mô phỏng. Validator cơ học chạy riêng. Host và outcome người học không được kiểm tra.",
+  "evidence_layer": "assistant_authored_self_review; mechanical_helper validation if run; host NOT_RUN; learner NOT_RUN; not independent",
+  "artifacts": [
+    {
+      "artifact_ref": "artifact.md",
+      "artifact_revision": 1,
+      "sha256": "355e681ce2744fdf637ab6d538a1dc1af433dd4f1a2e96aa6cf1bd9e779daed9"
+    }
+  ],
+  "gate_records": [
+    {
+      "gate_id": "G-CITATION-REVIEW",
+      "artifact_ref": "artifact.md",
+      "artifact_revision": 1,
+      "applicable": true,
+      "reason": "Yêu cầu áp dụng CE06 cho artifact đọc mới.",
+      "status": "PASS",
+      "source_spans": [
+        {
+          "path": "fixture.txt",
+          "sha256": "1313ce42b01d849a3b24db5600c5f06da557ec747e045407d6b7d56eb3178164",
+          "line_start": 2,
+          "line_end": 5,
+          "excerpt": "Method B recovered 60% of references and baseline A recovered 40%.\nThe comparison used the same corpus and scoring rule.\nThis test measured reference recovery, not the truth of every claim.\nFindings apply only to the simulated setup described above."
+        }
+      ],
+      "output_spans": [
+        {
+          "path": "artifact.md",
+          "sha256": "355e681ce2744fdf637ab6d538a1dc1af433dd4f1a2e96aa6cf1bd9e779daed9",
+          "line_start": 1,
+          "line_end": 26,
+          "excerpt": "# Đối chiếu claim với Fixture S\n\n## Kết luận\n\nFixture S **không hỗ trợ** claim “Method B làm mọi claim đúng sự thật hơn 20%”. Fixture chỉ cho biết B khôi phục 60% tài liệu tham khảo, còn baseline A khôi phục 40%, trên cùng corpus và cùng quy tắc chấm. Phép đo là **khôi phục tài liệu tham khảo**, không phải độ đúng sự thật của từng claim.\n\nChênh lệch quan sát được là **20 điểm phần trăm** về tỷ lệ khôi phục tham khảo (60% − 40%). Có thể mô tả tỷ lệ khôi phục của B cao hơn A 50% theo mức tương đối (20/40), nhưng không thể đổi phép đo đó thành “20% đúng sự thật hơn”. Cả hai cách diễn đạt chỉ nói về metric khôi phục tham khảo trong setup mô phỏng này.\n\n## Áp dụng vào một artifact đọc ngắn\n\n**Ví dụ minh họa do AI tạo:** Một bản tóm tắt gắn đúng tài liệu tham khảo cho một câu. Điều đó cho thấy sự gắn nguồn đã khớp theo tiêu chí tương ứng; tự nó chưa chứng minh câu đó đúng sự thật. Tương tự, ngay cả khi một phương pháp khôi phục được nhiều tham khảo hơn, metric ấy không xác lập rằng mọi câu có tham khảo đều đúng.\n\nCầu nối: hãy tách câu hỏi “có khôi phục đúng tham khảo không?” khỏi câu hỏi “tham khảo có hỗ trợ mệnh đề, và mệnh đề có đúng không?”. Fixture S chỉ trả lời câu hỏi đầu ở mức tỷ lệ tổng hợp; nó không cung cấp kiểm tra từng cặp mệnh đề–nguồn.\n\n## Rà soát CE06 (tự rà, không độc lập)\n\n| Check | Kết quả | Căn cứ / giới hạn |\n|---|---|---|\n| CR01 — Nguồn | PASS | Dùng đúng các dòng 2–5 của Fixture S; phạm vi là setup mô phỏng. |\n| CR02 — Mức hỗ trợ | PASS | 60% và 40% là tỷ lệ khôi phục tham khảo; dòng 4 loại trừ phép diễn giải thành độ đúng sự thật của mọi claim. |\n| CR03 — Ranh giới nhận thức | PASS | Ví dụ được ghi rõ là minh họa do AI tạo, không phải kết quả thử nghiệm. Không xác minh ngoài fixture. |\n| CR04 — Cấu trúc và provenance | PASS | Artifact ngắn, nêu phạm vi, metric và phần chưa được đo; không lập danh sách chọn lọc hay tuyên bố bao phủ nguồn. |\n| CR05 — Trạng thái đọc | N/A | Tác vụ extract đơn, không có câu hỏi người học hoặc trạng thái học cần cập nhật. |\n| CR06 — Bản cuối | PASS | Đã đối chiếu các con số và giới hạn trong bản cuối với Fixture S; không có sửa đổi sau lượt rà này. |\n\n**Phạm vi rà:** tự rà nội dung artifact với fixture được cung cấp. Đây không phải review độc lập. Kiểm cơ học sidecar có thể chạy riêng; kiểm host và kết quả người học chưa chạy."
+        }
+      ],
+      "checks": {
+        "CR01": {
+          "status": "PASS",
+          "reason": "Các số liệu và giới hạn được trỏ tới fixture; phạm vi setup mô phỏng được giữ nguyên.",
+          "source_span_refs": [
+            0
+          ],
+          "output_span_refs": [
+            0
+          ]
+        },
+        "CR02": {
+          "status": "PASS",
+          "reason": "Artifact phân biệt tỷ lệ khôi phục tham khảo với support/độ đúng sự thật của claim.",
+          "source_span_refs": [
+            0
+          ],
+          "output_span_refs": [
+            0
+          ]
+        },
+        "CR03": {
+          "status": "PASS",
+          "reason": "Ví dụ giả định được dán nhãn AI-created; không nhận là kết quả đo hoặc sự thật ngoài fixture.",
+          "source_span_refs": [
+            0
+          ],
+          "output_span_refs": [
+            0
+          ]
+        },
+        "CR04": {
+          "status": "PASS",
+          "reason": "Cấu trúc và provenance đọc được; không có selection record cần đánh giá.",
+          "source_span_refs": [
+            0
+          ],
+          "output_span_refs": [
+            0
+          ]
+        },
+        "CR05": {
+          "status": "N/A",
+          "reason": "Không có learner question/state trong yêu cầu extract này.",
+          "source_span_refs": [],
+          "output_span_refs": []
+        },
+        "CR06": {
+          "status": "PASS",
+          "reason": "Bản cuối giữ các điều kiện, con số và giới hạn; không có chỉnh sửa hậu rà.",
+          "source_span_refs": [
+            0
+          ],
+          "output_span_refs": [
+            0
+          ]
+        }
+      },
+      "repair_owner": null,
+      "unresolved": []
+    }
+  ]
+}

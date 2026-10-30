@@ -42,6 +42,14 @@ required_docs = [
     "docs/quality.vi.md", "docs/quality.en.md",
 ]
 for rel in required_docs: require((ROOT / rel).is_file(), f"Required documentation page missing: {rel}")
+artifact_docs = ['ARTIFACTS.md', 'docs/artifacts.vi.md', 'docs/artifacts.en.md', 'docs/examples/outputs.md']
+for rel in artifact_docs:
+    require((ROOT / rel).is_file(), f'Artifact navigation page missing: {rel}')
+for rel in artifact_docs[1:]:
+    page = ROOT / rel
+    if page.is_file():
+        ids = set(re.findall(r'RA-0[1-9]', page.read_text(encoding='utf-8')))
+        require(ids == {f'RA-{i:02}' for i in range(1, 10)}, f'Incomplete RA documentation coverage: {rel}')
 for rel in ("README.md", "README.vi.md"):
     readme = (ROOT / rel).read_text(encoding="utf-8")
     require(root_manifest["name"] in readme, f"Technical plugin identity missing from {rel}")
@@ -66,8 +74,19 @@ for doc in ROOT.rglob("*.md"):
         elif separator and resolved.suffix.lower() == ".md" and fragment:
             if fragment not in markdown_anchors(resolved):
                 errors.append(f"Broken local Markdown anchor: {doc.relative_to(ROOT)} -> {target}")
+mapping = json.loads((ROOT / 'evaluation/citeguard/capability-map.json').read_text(encoding='utf-8'))
+planned = json.loads((ROOT / 'evaluation/citeguard/luna-rerun-2026-10-29-r3/inputs.json').read_text(encoding='utf-8'))
+records = mapping['records']
+require(len(records) == len({r['case_id'] for r in records}), 'Duplicate citation capability mapping')
+require({r['case_id'] for r in records} == {c['id'] for c in planned['cases']}, 'Citation capability case coverage mismatch')
+for record in records:
+    caps = [record['primary']] + record['secondary']
+    require(len(caps) == len(set(caps)) and all(c in {f'C{i:02}' for i in range(1, 11)} for c in caps), 'Invalid mapped capability')
+    require(all(f in {f'F{i:02}' for i in range(1, 11)} for f in record['failure_classes']), 'Invalid mapped failure class')
+    require(bool(record['owner_candidates']), 'Missing citation owner candidate')
 if errors:
     print("Repository validation failed:", file=sys.stderr)
     for error in errors: print(f"- {error}", file=sys.stderr)
     raise SystemExit(1)
 print(f"Repository structure and local Markdown links passed; plugin version {root_manifest['version']}.")
+

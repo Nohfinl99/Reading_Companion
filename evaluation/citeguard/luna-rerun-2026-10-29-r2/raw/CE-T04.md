@@ -1,0 +1,1 @@
+Không nhất thiết. Dòng 8 nói hai reference ứng viên có thể cùng hỗ trợ một claim, nhưng điều đó không xác định reference gốc (fixture.txt, dòng 8). Vì vậy “citation phù hợp” và “đã tìm đúng citation gốc” là hai kết luận khác nhau; muốn xác minh nguồn gốc cần thêm bằng chứng về provenance hoặc danh sách tài liệu ban đầu. Dòng này không cho biết citation cụ thể nào là gốc.

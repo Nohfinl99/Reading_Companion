@@ -1,0 +1,5 @@
+Signed build record
+Component: service/catalog
+Implementation revision: 7f2d19a
+Build identity: catalog-build-104
+The record establishes the revision used for this build only. It does not establish deployment or current runtime.

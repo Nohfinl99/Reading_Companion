@@ -1,0 +1,86 @@
+{
+  "run_id": "luna-rerun-2026-10-29",
+  "evidence_layer": "delegated_model_prompt_run",
+  "configured_model": "gpt-6-luna",
+  "configuration_note": "Requested model override; sampler settings and installed-host behavior are unexposed.",
+  "case_ids": [
+    "CE-T01",
+    "CE-T02",
+    "CE-T03",
+    "CE-T04",
+    "CE-T05",
+    "CE-T06",
+    "CE-T07",
+    "CE-T08",
+    "CE-T09",
+    "CE-T10"
+  ],
+  "outputs": [
+    {
+      "case_id": "CE-T01",
+      "output_path": "raw/CE-T01.md",
+      "sha256": "19c4a8a8505a58add3cba66342192915039c1158f182eb26b1c8fc5ea7f10a62"
+    },
+    {
+      "case_id": "CE-T02",
+      "output_path": "raw/CE-T02.md",
+      "sha256": "c4674957efd73a7768815039f25b95eb652104b4f595f0b65fbd185cd6205a2d"
+    },
+    {
+      "case_id": "CE-T03",
+      "output_path": "raw/CE-T03.md",
+      "sha256": "1822dd67229aba730aab44045410c9487d080f44b43b208206836806968af0d2"
+    },
+    {
+      "case_id": "CE-T04",
+      "output_path": "raw/CE-T04.md",
+      "sha256": "c82c2d8cb29ca3c4643beedd80b4ffbac6a051aa60e278d32416c74f5c9e38b1"
+    },
+    {
+      "case_id": "CE-T05",
+      "output_path": "raw/CE-T05.md",
+      "sha256": "f0c0e8accad5a3d838d77b0d2afec8207db1888205465f664ef8e706ada74a5e"
+    },
+    {
+      "case_id": "CE-T06",
+      "output_path": "raw/CE-T06.md",
+      "sha256": "aa8cd718628afe2fd16eeb16b85ea2b8df1b1527add99744f899de9061c98d1b"
+    },
+    {
+      "case_id": "CE-T07",
+      "output_path": "raw/CE-T07.md",
+      "sha256": "b564320e1393ad8197fe3731d06a823f72ff6ada58654b67f021179aaaf50fe8"
+    },
+    {
+      "case_id": "CE-T08",
+      "output_path": "raw/CE-T08.md",
+      "sha256": "64074078785a0aae2c5acb40229eb8d28da0dddc4b1491010f01c6fec7a622b9"
+    },
+    {
+      "case_id": "CE-T09",
+      "output_path": "raw/CE-T09.md",
+      "sha256": "1916add95f47aaa83d7851c0e62f197f6b7b385722d65c25d93a8b0ca8a03864"
+    },
+    {
+      "case_id": "CE-T10",
+      "output_path": "raw/CE-T10.md",
+      "sha256": "ba802967f7d49c381db94c83f7130c079032edf07467dbd42c720772e603e465"
+    }
+  ],
+  "inputs_sha256": "1e2e2853add01b339d86eb124e512af587beb190d711692a0e1f7e3f2eda00dd",
+  "candidate_source_fingerprints": {
+    "skills/sid-reading-companion/SKILL.md": "56876999bdcfba5e61aee5088fb1053da234b87a6fc80eb13e2cbd66795ee960",
+    "skills/sid-reading-companion/references/master-instruction.md": "7a182bfac3fdba6418924d709bbf95e5c04877d64cad3bf99882ef33c1313911",
+    "skills/sid-reading-companion/references/citation-evidence.md": "0bb56fb52644e1720321cd8eec34dcac83ac207dcc56afae28fd679131eefc46",
+    "skills/sid-reading-companion/references/knowledge-compiler.md": "f94efd7eebf90a548d808dda120486e79ba9543cc94e3410c4d845e5660fa44f",
+    "skills/sid-reading-companion/references/stack-contracts.md": "6e5b3e2bb8891a6d2281af49a1365324a1c7f55b30ad93e00b4b6852b536a63f",
+    "skills/sid-reading-companion/references/reading-protocols.md": "6002175094f86c808cfd60eb24fa27f17f59e083e1568f365f632e7f7047f15a",
+    "skills/sid-reading-companion/references/knowledge/citeguard.md": "17a074c332681e8378f08ac8d02fb5795888090bda4e4647919ef8ed11add566",
+    "evaluation/citeguard/fixture.txt": "9d438f0ce0f43bff3724d5d89b11b359deb513d9d04e5eee9a4d60c0a8aef988"
+  },
+  "date": "2026-10-29",
+  "timezone": "Asia/Bangkok",
+  "capture_method": "actual delegated-agent model responses saved before primary review",
+  "runtime_context": "manually loaded repository instructions; not installed-plugin activation",
+  "isolation_limits": "One model context for ten independent logical cases; instruction-only exclusion of gold files."
+}

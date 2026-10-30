@@ -1,0 +1,1 @@
+Không thể suy ra đã tìm đúng citation gốc. Dòng 8 nói hai tài liệu ứng viên có thể cùng hỗ trợ một claim, nhưng điều đó không xác định tài liệu nào là citation ban đầu. Có thể kết luận về mức hỗ trợ của từng nguồn sau khi đối chiếu; provenance của citation gốc cần bằng chứng riêng.

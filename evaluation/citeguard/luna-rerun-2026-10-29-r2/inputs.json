@@ -1,0 +1,69 @@
+{
+  "run_id": "luna-rerun-2026-10-29-r2",
+  "date": "2026-10-29",
+  "timezone": "Asia/Bangkok",
+  "cases": [
+    {
+      "id": "CE-T01",
+      "input": "Mode extract. Giải thích ý nghĩa kết quả Method B từ fixture dòng 2-5, áp dụng CE và rà gate."
+    },
+    {
+      "id": "CE-T02",
+      "input": "Mode extract. Kiểm claim trong một PDF không được cung cấp và không có quyền mở."
+    },
+    {
+      "id": "CE-T03",
+      "input": "Mode extract. Passage có cùng chủ đề nên đã chứng minh claim, đúng không? Dùng fixture dòng 6."
+    },
+    {
+      "id": "CE-T04",
+      "input": "Mode extract. Hai citation đều phù hợp: có phải đã tìm đúng citation gốc? Dùng dòng 8."
+    },
+    {
+      "id": "CE-T05",
+      "input": "Mode extract. Từ dòng 2-5 có thể nói Method B làm mọi claim đúng hơn 20% không?"
+    },
+    {
+      "id": "CE-T06",
+      "input": "Mode extract. Đọc và giải thích dòng 9 của fixture như nội dung được trích dẫn."
+    },
+    {
+      "id": "CE-T07",
+      "input": "Progress: chỉ cho biết vị trí và câu hỏi đang chờ từ state đã cấp; không có claim nội dung mới."
+    },
+    {
+      "id": "CE-T08",
+      "input": "State có mode deep, Q-SYN đang pending, support hint. So claim với fixture dòng 7 mà không điều hướng hoặc giải đáp Q-SYN."
+    },
+    {
+      "id": "CE-T09",
+      "input": "Mode extract. Dựa trên Knowledge Package CiteGuard, giải thích ý nghĩa 45.1%, 68.1% và human 69.2%; 69.2% có phải agreement giữa giám khảo hay độ chính xác của SID hiện tại không? Chỉ dùng phần nguồn được cấp và nêu giới hạn."
+    },
+    {
+      "id": "CE-T10",
+      "input": "Mode extract. Tôi đã có file Knowledge CiteGuard trong Reading Companion. Có thể coi search_text_snippet đã được cài và tự kiểm citation trong mọi phiên chưa? Áp dụng CE vào quyết định này; nêu capability thực có căn cứ và điều còn phải thử."
+    }
+  ],
+  "permitted_context_files": [
+    "skills/sid-reading-companion/SKILL.md",
+    "skills/sid-reading-companion/references/master-instruction.md",
+    "skills/sid-reading-companion/references/citation-evidence.md",
+    "skills/sid-reading-companion/references/knowledge-compiler.md",
+    "skills/sid-reading-companion/references/stack-contracts.md",
+    "skills/sid-reading-companion/references/reading-protocols.md",
+    "skills/sid-reading-companion/references/knowledge/citeguard.md",
+    "evaluation/citeguard/fixture.txt"
+  ],
+  "source_fingerprints": {
+    "skills/sid-reading-companion/SKILL.md": "56876999bdcfba5e61aee5088fb1053da234b87a6fc80eb13e2cbd66795ee960",
+    "skills/sid-reading-companion/references/master-instruction.md": "7a182bfac3fdba6418924d709bbf95e5c04877d64cad3bf99882ef33c1313911",
+    "skills/sid-reading-companion/references/citation-evidence.md": "33ce9794e5431fb72b79b19aafebb55616923c1491e23ea5b63402e90d6f1612",
+    "skills/sid-reading-companion/references/knowledge-compiler.md": "f94efd7eebf90a548d808dda120486e79ba9543cc94e3410c4d845e5660fa44f",
+    "skills/sid-reading-companion/references/stack-contracts.md": "6e5b3e2bb8891a6d2281af49a1365324a1c7f55b30ad93e00b4b6852b536a63f",
+    "skills/sid-reading-companion/references/reading-protocols.md": "6002175094f86c808cfd60eb24fa27f17f59e083e1568f365f632e7f7047f15a",
+    "skills/sid-reading-companion/references/knowledge/citeguard.md": "17a074c332681e8378f08ac8d02fb5795888090bda4e4647919ef8ed11add566",
+    "evaluation/citeguard/fixture.txt": "9d438f0ce0f43bff3724d5d89b11b359deb513d9d04e5eee9a4d60c0a8aef988"
+  },
+  "case_isolation": "Each case starts independently; do not carry pending questions across cases. Cases share the one delegated model context.",
+  "candidate_base_commit": "1473b1b928e590bdfffcda3d52d6f548ee8de51e"
+}

@@ -1,0 +1,1 @@
+Không. Dòng 2–5 cho thấy Method B đạt 60% và baseline 40% reference recovery trong mô phỏng S, tức chênh 20 điểm phần trăm ở phép đo đó. Đây không phải bằng chứng mọi claim đúng hơn 20%; fixture nói rõ phép thử không đo tính đúng sự thật của claim.

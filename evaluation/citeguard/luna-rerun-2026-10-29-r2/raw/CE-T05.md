@@ -1,0 +1,1 @@
+Không thể kết luận vậy. Method B đạt 60% so với baseline 40% về **reference recovery trong mô phỏng S**, tức hơn **20 điểm phần trăm** ở thiết lập đó (fixture.txt, dòng 2–4). Dòng 5 nói thí nghiệm không đo mọi claim có đúng sự thật hay không. Vì thế không có căn cứ nói Method B làm “mọi claim” đúng hơn 20%; chỉ có kết quả recovery giới hạn trong mô phỏng.

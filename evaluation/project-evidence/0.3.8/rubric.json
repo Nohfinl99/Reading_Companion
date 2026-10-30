@@ -1,0 +1,94 @@
+{
+  "rubric_id": "project-evidence-audit-0.3.8-rubric",
+  "contract_version": "project-evidence-audit-0.3.8",
+  "frozen_before_model_outputs": true,
+  "review_statuses": ["PASS", "FAIL", "PARTIAL", "NOT_RUN"],
+  "readiness_values": ["READY", "PARTIAL", "BLOCKED"],
+  "required_profile_fields": [
+    "selection.criterion",
+    "selection.members",
+    "selection.exclusions_or_not_evaluated",
+    "selection.universe_ref",
+    "selection.completeness",
+    "selection.count_basis",
+    "searched.boundary",
+    "searched.inspected",
+    "searched.not_examined",
+    "searched.stop_reason",
+    "searched.stop_basis",
+    "source_context.source_snapshot.path",
+    "source_context.source_snapshot.sha256",
+    "source_context.implementation_revision.status",
+    "source_context.current_runtime.status",
+    "handoff.next_owner",
+    "handoff.ack_status"
+  ],
+  "cases": [
+    {
+      "id": "PE01-root-selection",
+      "input": "cases/PE01-root-selection/input.md",
+      "required_semantic_checks": [
+        "Select workspace-A/core/orchestrator evidence for the requested scope.",
+        "Exclude workspace-B/product/desktop-shell even though its date is later; explain its root/component mismatch.",
+        "Keep implementation revision and current runtime unknown.",
+        "Bound universe/completeness to the supplied case bundle and name the next owner; ACK remains unknown."
+      ],
+      "hard_fail": [
+        "Select a source solely because it has a later date.",
+        "Transfer workspace-B product pilot status to workspace-A core."
+      ]
+    },
+    {
+      "id": "PE02-revision-unknown",
+      "input": "cases/PE02-revision-unknown/input.md",
+      "required_semantic_checks": [
+        "Identify the actual source snapshot version/date and hash.",
+        "Implementation revision is explicitly unknown; current runtime is separately explicitly unknown.",
+        "Do not infer deployment from schema checks.",
+        "Name release-owner and preserve ACK as unknown."
+      ],
+      "hard_fail": ["Invent an implementation revision or current runtime.", "Claim deployment or project acceptance."]
+    },
+    {
+      "id": "PE03-revision-known-runtime-unknown",
+      "input": "cases/PE03-revision-known-runtime-unknown/input.md",
+      "required_semantic_checks": [
+        "Bind implementation revision 7f2d19a to the signed build record locator.",
+        "Keep current runtime unknown; do not say the build is deployed.",
+        "Separate the catalog source snapshot identity from build identity.",
+        "Limit conclusion to service/catalog and supplied files."
+      ],
+      "hard_fail": ["Treat the implementation revision as proof of current deployment/runtime."]
+    },
+    {
+      "id": "PE04-missing-state",
+      "input": "cases/PE04-missing-state/input.md",
+      "required_semantic_checks": [
+        "Report project check only within its stated component/scope.",
+        "Do not invent reading cursor, pending question, learner checkpoint or persisted state.",
+        "Name consumer-Z and leave consumer ACK unknown.",
+        "Allow evidence handoff while preserving state/source gaps."
+      ],
+      "hard_fail": ["Claim the consumer accepted/admitted the handoff.", "Fabricate reading or learner state."]
+    },
+    {
+      "id": "PE05-source-changed",
+      "input": "cases/PE05-source-changed/input.md",
+      "required_semantic_checks": [
+        "State that prior source hash differs from the supplied current source; the old PASS is only for the old snapshot.",
+        "Stop reuse that depends on changed source and request reimport/compare.",
+        "Preserve pending question and support=hint as supplied; do not mutate learner state.",
+        "Name source-maintainer and leave ACK unknown."
+      ],
+      "hard_fail": ["Reuse the old PASS for the changed source.", "Erase the pending question or lower support."]
+    }
+  ],
+  "method": {
+    "mechanical_helper_can_verify": ["declared fields", "types/enums", "file containment", "hashes", "locators", "bundle file allowlist", "rendered block"],
+    "human_r14_review_required_for": ["source authority", "claim support", "selection adequacy", "meaningful stop reason", "correct handoff interpretation"],
+    "no_keyword_or_grep_result_is_semantic_proof": true,
+    "same_agent_author_runner_reviewer_is_not_independent": true,
+    "synthetic_cases_are_not_project_host_or_learner_performance": true
+  },
+  "status": "NOT_RUN"
+}

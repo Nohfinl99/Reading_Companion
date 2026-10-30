@@ -286,6 +286,8 @@ Connect RS-C1 chốt vấn đề từ goal, dùng units đã đọc; C2 tìm ngu
 
 Progress read-only: source/chapter/cursor/style, visited locators, processed coverage, remaining recorded sections, observed assessments, pending/paused Q và next. Truy cập/xử lý/hiểu riêng; không % sách/mastery/tỷ lệ node. Complete index chỉ có denominator số chương trong scope xác minh, không tự toàn sách; partial/unknown mẫu số null. Phần chưa ghi coverage không tự thành đã xác định remaining.
 
+Progress cần snapshot/state hoặc hồ sơ phiên thực sự truy cập được. Chỉ có lệnh “Progress” hay lời nhắc “state đã cấp” nhưng không có state thì báo thiếu dữ liệu; không suy tên lệnh là vị trí/chương, không suy Q không được cung cấp thành không có Q. Không dựng cursor, pending/paused Q hoặc account memory từ lời yêu cầu. Thiếu snapshot vẫn giữ route read-only, không compile nội dung và không lookup web.
+
 Helper reading_session.py actions enable/style/next/back/jump/return/read/pause/resume/connect/progress; --state bắt buộc, --input index/locator/connection JSON hoặc --value style/chapter/Q ID, --note. AI làm phần kỹ thuật, không bắt learner JSON. Mutations cp.validate/save, no-op giữ revision; helper không tự đọc/hiểu sách hoặc fetch web. Có file/Python optional, không có dùng cùng contract trong chat. R11 schema canonical.
 
 Căn cứ thiết kế (không proof plugin efficacy): Roediger/Karpicke 2006 luyện nhớ lại văn bản có lợi sau 2 ngày/1 tuần, không chứng minh quiz mọi cụm; Chi et al. 1994 14 học sinh tự giải thích so 10 đọc hai lần, không frequency cho anh; Leroy/Glomb 2018 ready-to-resume giảm attention residue trong bối cảnh công việc, áp vào đọc là suy luận. Provenance lưu trong development baseline, không tự làm mới ngày đọc. Links: https://pubmed.ncbi.nlm.nih.gov/16507066/ ; https://doi.org/10.1207/s15516709cog1803_3 ; https://doi.org/10.1287/orsc.2017.1184 .
@@ -328,6 +330,8 @@ V1 chọn required gates theo nội dung, không chỉ format. V2 kiểm evidenc
 
 V4 là kiểm bản người đọc sẽ thấy: selection dùng biểu diễn tối thiểu SC01; ví dụ dùng learner_bridge SC03; combined/điểm chờ theo R01/R04. Gate record tự ghi PASS không thay các evidence này. Giữ nguyên critical conditions và exceptions của nguồn; đề xuất nới điều kiện phải ghi là giả thuyết mới chưa được nguồn xác nhận, không dùng để certify ví dụ hoặc kết luận đã đúng theo unit.
 
+Project evidence audit có structured record additive ngoài learner state. Helper có thể fail-closed về field/hash/locator và render block hiển thị; semantic stop-reason, source authority/support và handoff claims vẫn cần reviewer R14. Thiếu record review riêng gắn exact rendered artifact SHA-256 và source SHA-256 thì readiness PARTIAL. Helper chỉ báo structural proof, `semantic_verified=false`; self-declared readiness trong model output không là review.
+
 | Gate | Required check | Owner sửa |
 |---|---|---|
 | G-FRAME | Đúng goal/mode/scope/output; khi user chỉ chỗ hụt mạch hoặc hỏi provenance, sửa đúng phần/câu hỏi trước thêm nội dung; không reset Q từ continue/answer | M02/M04/R15 |
@@ -335,6 +339,7 @@ V4 là kiểm bản người đọc sẽ thấy: selection dùng biểu diễn t
 | G-UNITS | Boundary đủ nghĩa, không ép count; preserve ID/revision/coverage, count là kết quả trong scope | KC02 hoặc R02.K2 |
 | G-SELECTION | Mọi danh sách chọn có SC01: criterion cụ thể, origin từng mục, universe/completeness/omitted, count_basis/author locator | Bước chọn KC04/R03/R09/R13 |
 | G-MEANING | Proposition/premise/conclusion, negation, modality, conditions, exceptions, numbers, unsupported addition và locator giữ nghĩa | R01/R02/R06 theo intermediate |
+| G-CITATION-REVIEW | Sau artifact áp dụng CE: CR01–CR06 kiểm source/support/epistemic boundary/IA/state/final delta; SC05, không pass khi thiếu evidence | [CE06](citation-evidence.md#ce06--g-citation-review-after-application), R14 dispatch |
 | G-MAP | Endpoints và A[relation]B có basis/source; references khác prerequisite; cây tác giả khác AI grouping/learning graph | KC03/KC04 |
 | G-EXAMPLE | Target revision tồn tại; mọi mapping có tương ứng nghĩa; scenario → premise/link → conclusion, conditions/limits đủ; AI example có nhãn; learner-visible bridge/purpose/permitted inference, hypothetical không thành proof | R13 |
 | G-HEADING | Đọc riêng title, subtitle, caption, lời dẫn và số thứ tự: có gây hiểu AI chọn N là N nguyên tắc tác giả/toàn bộ sách không? Đối chiếu SC01 và author locator; subset/tổng sách/count unit phân biệt | R09/R06; count/basis sai quay bước chọn |
@@ -367,3 +372,4 @@ Với câu hỏi gồm cả count/origin và hụt mạch, bản sửa cần xu�
 - Sửa chính ví dụ cũ: giữ outcome/dữ kiện/ID đã có, chỉ thay chỗ sai có giải thích. Xuất cầu nối ngay cạnh ví dụ theo mẫu nội dung: điểm ở phần trước + unit ID → bước trong ví dụ → quan hệ lập luận/điều kiện → điều được minh họa và điều chưa chứng minh. Khi unit cũ chưa đủ nguồn kiểm, ghi mapping theo artifact cũ và phạm vi chưa xác minh; không nâng nó thành tri thức sách đã kiểm. Một ví dụ mới chỉ bổ sung khi người dùng yêu cầu hoặc ví dụ cũ không thể sửa, phải nói lý do.
 - Phần artifact/công cụ: xuất mạch input → thao tác → output → artifact tiếp theo, nguồn/basis mỗi vai trò, scope enumeration tác giả và phần diễn giải do AI thêm. Danh sách tác giả được giữ đúng phạm vi; tính toàn sách/ranking không suy từ enumeration cục bộ.
 - Trước trả, đối chiếu lại từng issue nguyên văn với một đoạn trả lời cụ thể; thiếu đoạn nào ghi PARTIAL và gap. Trace nội bộ đủ nhưng learner view thiếu cầu nối vẫn chưa đạt G-EXAMPLE.
+

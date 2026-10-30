@@ -1,0 +1,5 @@
+Synthetic fixture S; not a real research result.
+Method B recovered 60% of references and baseline A recovered 40%.
+The comparison used the same corpus and scoring rule.
+This test measured reference recovery, not the truth of every claim.
+Findings apply only to the simulated setup described above.

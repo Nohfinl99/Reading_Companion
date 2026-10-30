@@ -1,0 +1,1 @@
+Không thể kiểm claim trong PDF hiện chưa được cung cấp và không có quyền mở: chưa có đoạn nguồn hay locator để đối chiếu. Điều này chưa xác định claim đúng hay sai. Hãy cung cấp file hoặc trích đoạn liên quan cùng số trang/phạm vi; khi đó có thể kiểm phần được cấp.

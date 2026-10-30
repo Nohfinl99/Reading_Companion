@@ -1,6 +1,32 @@
 # Changelog / Nhật ký thay đổi
+## 0.3.8
+
+- Added an explicitly routed project-evidence audit profile outside learner state, with a packaged standard-library helper that fails closed on missing fields and renders the required visible selection, stop basis, source snapshot, implementation/runtime, scope and handoff block.
+- Added per-case bundle export and freshness checks for exact path allowlists and captured hashes. Bundles keep evaluator rubrics out, but do not sandbox other agent tools or filesystem access.
+- Added a separately bound R14 review-record format. Mechanical validation reports `semantic_verified=false`; no claim is made about semantic quality, installed-host activation or learner outcomes without separate evidence.
+- Preserved the historical 0.3.7 sync capture and validator unchanged; add current 0.3.8 release-context checks.
+- Release gates are tracked in the [0.3.8 roadmap](https://github.com/Nohfinl99/Reading_Companion/blob/cd4a7b73ec68cd765ec34c506bce4f8f1eff8f78/docs/releases/0.3.8-roadmap.md); this changelog entry does not imply that CI, model review or distribution is complete.
+
+## 0.3.7
+
+- Unified source/account continuity guards: preserve assessment history, pending Q and support; added positive/negative regression cases.
+- Added strict SC05 validation for new gate sidecars while preserving historical raw runs and their separate schema findings.
+- Added deterministic allowlist packaging, package verification and an optional development handoff-bundle checker.
+- Updated bilingual README/usage and citation capability mapping. No checkpoint schema or helper CLI migration; no new account memory/search service.
+- See `docs/citeguard/correction-plan.md` for executed checks and evidence limits. Host activation and learner outcomes require separate evidence.
+
 
 These notes summarize user-facing and compatibility changes. / Ghi chú này tóm tắt thay đổi đối với người dùng và khả năng tương thích.
+
+## 0.3.6 — 2026-10-29 (source candidate)
+
+- Source recheck rendered the selected ACL PDF pages, pinned its binary hash and verified all seven unit locators plus the SID V5 fingerprints.
+- A delegated gpt-6-luna run, separate primary review and two recorded revisions now exercise ten frozen cases. Fixed exact source/range binding, learner-support versus claim-support semantics, visible critical conditions and missing-state Progress reporting. Historical failures remain immutable.
+- Added delegated-run integrity checks and tamper tests; raw bytes and candidate fingerprints are preserved across Git checkouts. No installed-host or external independent validation is implied.
+- Added conditional CE01–CE06 RTC-COE prompts based on SID V5, two mini-reviews and R14-owned G-CITATION-REVIEW after reading application.
+- Added sourced CiteGuard knowledge, source/interpretation/transfer boundaries and a public IA/project pack.
+- Added synthetic author walkthroughs, evidence fingerprint validation and guard tests; CI runs the existing helper suite. Mechanical/self-review remain separate from host, independent and learner evidence.
+- Preserved identity/presentation, helper APIs and checkpoint/session schemas. No retrieval service, account memory or measured learning gain is introduced.
 
 ## 0.3.5 — 2026-10-23
 
@@ -33,3 +59,4 @@ These notes summarize user-facing and compatibility changes. / Ghi chú này tó
 - Clarified the `deep`, `extract` and `combined` reading modes and how source links and learning state are preserved.
 - Improved guidance for knowledge extraction, example-to-concept links, checkpoints and session handoff.
 - Added repository and helper checks for maintainers.
+

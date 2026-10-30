@@ -25,9 +25,25 @@ jobs:
       run: |
         python -m json.tool plugin.json > /dev/null
         python -m json.tool .codex-plugin/plugin.json > /dev/null
+        python -m json.tool skills/sid-reading-companion/references/project-evidence-profile.json > /dev/null
+        python -m json.tool skills/sid-reading-companion/references/project-evidence-record.schema.json > /dev/null
 
     - name: Validate repository structure and documentation links
       run: python tools/validate_repository.py
+
+    - name: Install test dependencies
+      run: python -m pip install "pytest>=8,<10" "pyyaml>=6,<7"
+
+    - name: Validate citation evidence records
+      run: |
+        python tools/validate_citation_evidence.py
+        python tools/validate_luna_rerun.py
+        python tools/validate_gate_records.py evaluation/citeguard/sync-0.3.7/sidecar.json --root evaluation/citeguard/sync-0.3.7 --expected-artifact artifact.md=1
+        python tools/validate_sync_evidence.py --root .
+        python tools/validate_project_evidence_release_context.py --root .
+
+    - name: Run helper and evidence regression tests
+      run: python -m pytest -q --junitxml="$RUNNER_TEMP/reading-companion-tests.xml"
 
     - name: Compile helper scripts
       run: python -m compileall -q tools skills/sid-reading-companion/scripts
@@ -38,3 +54,55 @@ jobs:
         python skills/sid-reading-companion/scripts/knowledge_compiler.py --help
         python skills/sid-reading-companion/scripts/checkpoint.py --help
         python skills/sid-reading-companion/scripts/reading_session.py --help
+        python skills/sid-reading-companion/scripts/project_evidence.py --help
+
+    - name: Build and verify runtime package from source
+      run: |
+        python tools/build_plugin.py --root . --output "$RUNNER_TEMP/reading-companion.zip" --source-commit "$GITHUB_SHA"
+        python tools/verify_plugin_package.py "$RUNNER_TEMP/reading-companion.zip" --manifest "$RUNNER_TEMP/reading-companion.manifest.json"
+
+    - name: Retain verified runtime package
+      if: matrix.python-version == '3.12'
+      uses: actions/upload-artifact@v4
+      with:
+        name: reading-companion-runtime-${{ github.sha }}
+        path: |
+          ${{ runner.temp }}/reading-companion.zip
+          ${{ runner.temp }}/reading-companion.manifest.json
+        if-no-files-found: error
+        retention-days: 30
+
+    - name: Stage verification records
+      if: always()
+      env:
+        MATRIX_PYTHON: ${{ matrix.python-version }}
+      run: |
+        python - <<'PY'
+        from pathlib import Path
+        import json, os, shutil
+        output = Path(os.environ['RUNNER_TEMP']) / 'reading-companion-verification'
+        capture = output / 'capture'
+        capture.mkdir(parents=True, exist_ok=True)
+        junit = Path(os.environ['RUNNER_TEMP']) / 'reading-companion-tests.xml'
+        if junit.is_file():
+            shutil.copyfile(junit, output / junit.name)
+        source = Path(os.environ['GITHUB_WORKSPACE']) / 'evaluation/citeguard/sync-0.3.7'
+        for name in ('inputs.json', 'rubric.json', 'fixture.txt', 'artifact.md', 'sidecar.json', 'run-manifest.json', 'review.json', 'runner-notes.json'):
+            if (source / name).is_file():
+                shutil.copyfile(source / name, capture / name)
+        for name in ('context', 'attempt1'):
+            if (source / name).is_dir():
+                shutil.copytree(source / name, capture / name)
+        record = {'repository': os.environ['GITHUB_REPOSITORY'], 'workflow_run_id': os.environ['GITHUB_RUN_ID'], 'checkout_revision': os.environ['GITHUB_SHA'], 'python_version': os.environ['MATRIX_PYTHON'], 'captured_fixture_run': 'sync-0.3.7-ce-record', 'test_result_available': junit.is_file(), 'note': 'Artifact availability does not establish PASS; inspect the job and JUnit result.'}
+        (output / 'ci-run.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
+        PY
+
+    - name: Retain verification records
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: reading-companion-verification-py${{ matrix.python-version }}-${{ github.sha }}
+        path: ${{ runner.temp }}/reading-companion-verification/
+        if-no-files-found: warn
+        retention-days: 30
+

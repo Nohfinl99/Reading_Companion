@@ -1,0 +1,14 @@
+{
+  "overrides": {
+    "skills/sid-reading-companion/SKILL.md": "evaluation/citeguard/luna-rerun-2026-10-29-r3/source-snapshot/context/skills/sid-reading-companion/SKILL.md.txt",
+    "skills/sid-reading-companion/references/master-instruction.md": "evaluation/citeguard/luna-rerun-2026-10-29-r3/source-snapshot/context/skills/sid-reading-companion/references/master-instruction.md.txt",
+    "skills/sid-reading-companion/references/citation-evidence.md": "evaluation/citeguard/luna-rerun-2026-10-29-r3/source-snapshot/context/skills/sid-reading-companion/references/citation-evidence.md.txt",
+    "skills/sid-reading-companion/references/knowledge-compiler.md": "evaluation/citeguard/luna-rerun-2026-10-29-r3/source-snapshot/context/skills/sid-reading-companion/references/knowledge-compiler.md.txt",
+    "skills/sid-reading-companion/references/stack-contracts.md": "evaluation/citeguard/luna-rerun-2026-10-29-r3/source-snapshot/context/skills/sid-reading-companion/references/stack-contracts.md.txt",
+    "skills/sid-reading-companion/references/reading-protocols.md": "evaluation/citeguard/luna-rerun-2026-10-29-r3/source-snapshot/context/skills/sid-reading-companion/references/reading-protocols.md.txt",
+    "skills/sid-reading-companion/references/knowledge/citeguard.md": "evaluation/citeguard/luna-rerun-2026-10-29-r3/source-snapshot/context/skills/sid-reading-companion/references/knowledge/citeguard.md.txt",
+    "evaluation/citeguard/fixture.txt": "evaluation/citeguard/luna-rerun-2026-10-29-r3/source-snapshot/context/evaluation/citeguard/fixture.txt"
+  },
+  "purpose": "Historical source context captured after the original run, before 0.3.7 edits; verified byte-for-byte against original input fingerprints. Raw/input/rubric/review unchanged.",
+  "snapshot_completed_at": "2026-10-29T12:49:45.807867+00:00"
+}

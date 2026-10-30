@@ -1,0 +1,37 @@
+{
+  "run_id": "sync-0.3.7-ce-record",
+  "configured_model": "gpt-6-luna",
+  "runner_task": "/root/luna_gate_record_run",
+  "evidence_layer": "delegated_model_prompt_run",
+  "captured_at": "2026-10-29T13:06:46.602100+00:00",
+  "runtime_context": "Fresh delegated context on source snapshots, not installed-plugin activation; shared filesystem, instruction-only gold exclusion",
+  "input_sha256": "04515912c96e1cbd6ffacf494b68357be5d90f2cc79e178dfa3b183c07fa2b23",
+  "rubric_sha256": "8b9acc9afe57f270f530031f56401ded2d916d3196f7ea6c53578ef0d50f8b1d",
+  "fixture_sha256": "1313ce42b01d849a3b24db5600c5f06da557ec747e045407d6b7d56eb3178164",
+  "source_fingerprints": {
+    "SKILL.md": "400dfc2b173f231e004e02357bca2f3a5f416d8676d202a974cc776ddaa62b10",
+    "references/master-instruction.md": "4d96e3dc9ed5557d09a2b35bcb082c8551861a7eb3dd198c0bba865f58792926",
+    "references/knowledge-compiler.md": "f94efd7eebf90a548d808dda120486e79ba9543cc94e3410c4d845e5660fa44f",
+    "references/reading-protocols.md": "a40a0042b4826a8827770114253a489941d41627311dc2e41060619f527f8b6e",
+    "references/stack-contracts.md": "6e5b3e2bb8891a6d2281af49a1365324a1c7f55b30ad93e00b4b6852b536a63f",
+    "references/citation-evidence.md": "68311e06ea52f47b75223a7d87c04ea6902e9f1cf305b56e38232e6ccd097cbd",
+    "references/knowledge/citeguard.md": "6c68418a60ee8227bbb9a4826ea42b957794dd0fa4ca63dc4e1c2068845821d1"
+  },
+  "outputs": {
+    "artifact.md": "00e6ad0798a18c133bae3193523b766739716197b58587d69c7ab6ee68429395",
+    "sidecar.json": "6ffed1c95a37ea798d61c960fa3bf03e18e33306e6ac96544005a1c30b4f90fc",
+    "runner-notes.json": "9060059738dbf3e08b9aeae805ff186e9b4cc8a1a1d9018cd843754b29c53df5"
+  },
+  "prior_attempt": {
+    "files": {
+      "artifact.md": "355e681ce2744fdf637ab6d538a1dc1af433dd4f1a2e96aa6cf1bd9e779daed9",
+      "sidecar.json": "ba8633e3b7a1e5d4cc816ded70da8bf68119ace3894d76406efa237a2c630e68",
+      "runner-notes.json": "dde61988216d2ed185f037396f44e50263dcdc3dee8278e44931374a6aa92a00"
+    },
+    "finding": "CR05 marked entire check N/A despite applicable extract-mode guard; primary requested scoped repair; old files preserved"
+  },
+  "repairs": 1,
+  "host_activation": "NOT_RUN",
+  "learner_outcome": "NOT_RUN",
+  "external_independent_review": false
+}

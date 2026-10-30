@@ -1,0 +1,141 @@
+{
+  "date": "2026-10-29",
+  "timezone": "Asia/Bangkok",
+  "candidate_version": "0.3.6",
+  "baseline_commit": "570f679d5c1a0304375da9a8d1c0fae79d25d23c",
+  "evidence_layer": "mechanical_helper",
+  "local_platform": "Windows, CPython 3.12.14",
+  "tests": {
+    "command": "python -m pytest -q -p no:cacheprovider",
+    "baseline": {
+      "passed": 549,
+      "failed": 7
+    },
+    "candidate": {
+      "passed": 558,
+      "failed": 7
+    },
+    "new_evidence_guard_tests": {
+      "passed": 9,
+      "failed": 0
+    },
+    "status": "PARTIAL",
+    "limitation": "The same seven existing symlink fixtures fail before reaching guards because Windows denies symlink creation (WinError 1314), including outside the sandbox. No test was removed or relabelled PASS.",
+    "capture_method": "Actual exec outputs in the development conversation; sanitized counts transcribed here"
+  },
+  "repository_validation": {
+    "status": "PASS",
+    "command": "python tools/validate_repository.py",
+    "exit_code": 0,
+    "output": "Repository structure and local Markdown links passed; plugin version 0.3.6."
+  },
+  "evidence_validation": {
+    "status": "PASS",
+    "command": "python tools/validate_citation_evidence.py",
+    "exit_code": 0,
+    "output": "{\"ok\": true, \"cases\": 8, \"knowledge_units\": 7, \"evidence_layer\": \"mechanical_helper\", \"semantic_verified\": false, \"host_verified\": false, \"fingerprint_mode\": \"UTF-8/LF\"}"
+  },
+  "metadata_parse": {
+    "status": "PASS",
+    "checks": [
+      "JSON manifests match identity/version/interface",
+      "skill and agent YAML parsed",
+      "CI YAML parsed",
+      "shortDescription length <=30"
+    ]
+  },
+  "compile_and_cli": {
+    "status": "PASS",
+    "command": "python -m compileall -q tools skills/sid-reading-companion/scripts",
+    "exit_code": 0,
+    "output": "",
+    "cli_checks": [
+      {
+        "helper": "ia_map",
+        "exit_code": 0
+      },
+      {
+        "helper": "knowledge_compiler",
+        "exit_code": 0
+      },
+      {
+        "helper": "checkpoint",
+        "exit_code": 0
+      },
+      {
+        "helper": "reading_session",
+        "exit_code": 0
+      }
+    ]
+  },
+  "public_diff_review": {
+    "status": "PASS",
+    "evidence_layer": "assistant_authored_self_review",
+    "checks": [
+      "34 added/changed paths reviewed against pinned baseline",
+      "No original files removed",
+      "Four helper sources and APIs preserved",
+      "Manifest metadata preserved except version",
+      "No private course/proposal/PDF/credentials or machine paths in changed source",
+      "Synthetic fixture, self-review and host evidence remain separate"
+    ]
+  },
+  "github_ci": {
+    "status": "PASS",
+    "run_id": 40857655792,
+    "url": "https://github.com/Nohfinl99/Reading_Companion/actions/runs/40857655792",
+    "tested_commit": "2367aba78954e8230497c0669183a7ff685b3d30",
+    "platform": "ubuntu-latest",
+    "python_matrix": {
+      "3.10": {
+        "job_id": 123392568161,
+        "passed": 565,
+        "failed": 0
+      },
+      "3.11": {
+        "job_id": 123392568128,
+        "passed": 565,
+        "failed": 0
+      },
+      "3.12": {
+        "job_id": 123392567691,
+        "passed": 565,
+        "failed": 0
+      }
+    },
+    "scope": "Mechanical source validation; not installed-host or semantic performance"
+  },
+  "semantic_verified_by_tool": false,
+  "host_activation": "NOT_RUN",
+  "independent_semantic_review": "NOT_RUN",
+  "baseline_candidate_quality_gain": "NOT_RUN",
+  "learner_outcome": "NOT_RUN",
+  "source_publication_gate": {
+    "gate_id": "PUB-REVIEW",
+    "status": "PASS",
+    "scope": "Source candidate and public review artifacts only",
+    "basis": [
+      "Local metadata/links/evidence/compile/CLI checks",
+      "Author diff/privacy/preservation review",
+      "Linux full-suite CI across Python 3.10-3.12"
+    ],
+    "remaining": [
+      "Installed-host activation",
+      "Independent semantic review",
+      "Measured quality/cost gain",
+      "Learner outcome"
+    ]
+  },
+  "report_scope": "Original candidate checks retained historically; latest scoped rerun is linked below.",
+  "latest_rerun": {
+    "status": "PASS",
+    "verification": "luna-rerun-2026-10-29-r3/verification.json",
+    "primary_review": "luna-rerun-2026-10-29-r3/review.json",
+    "linux_tests_passed": 570,
+    "failed": 0,
+    "runner": "gpt-6-luna",
+    "historical_failures_retained": true,
+    "github_ci_url": "https://github.com/Nohfinl99/Reading_Companion/actions/runs/40861900949",
+    "github_ci_status": "PASS"
+  }
+}
