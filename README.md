@@ -2,12 +2,12 @@
 
 <img src="assets/logo.svg" alt="Reading Companion" width="96" />
 
-![Plugin version](https://img.shields.io/badge/Plugin-0.3.7-15324F)
+![Plugin version](https://img.shields.io/badge/Plugin-0.3.8-15324F)
 [Tiếng Việt](README.vi.md) · [Usage guide](docs/usage.en.md) · [Changes](CHANGELOG.md)
 
-Reading Companion is a Vietnamese-first plugin for source-grounded deep reading, knowledge extraction and portable reading checkpoints. Technical identity: `sid-reading-companion`. It contains one skill and four optional Python helpers.
+Reading Companion is a Vietnamese-first plugin for source-grounded deep reading, knowledge extraction and portable reading checkpoints. Technical identity: `sid-reading-companion`. It contains one skill and five optional Python helpers.
 
-Version 0.3.7 unifies source/account continuity guards, requires complete evidence-linked citation gate records for new reviews, and adds repository tools for reproducible packaging and handoff-bundle checks. See the [correction plan and evidence boundaries](docs/citeguard/correction-plan.md).
+Version 0.3.8 adds an explicit project-evidence route and a packaged helper that validates structured audit completeness and renders required fields. Semantic review remains separate. See the [project evidence guide](docs/project-evidence.en.md) and [release evidence boundaries](docs/citeguard/correction-plan.md).
 
 ## Start reading
 

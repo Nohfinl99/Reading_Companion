@@ -1,0 +1,6 @@
+{
+  "source_id": "SEARCH-SNAPSHOT-OLD",
+  "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+  "status": "PASS",
+  "scope": "service/search source snapshot only"
+}

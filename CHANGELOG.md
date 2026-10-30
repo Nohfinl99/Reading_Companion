@@ -1,4 +1,12 @@
 # Changelog / Nhật ký thay đổi
+## 0.3.8
+
+- Added an explicitly routed project-evidence audit profile outside learner state, with a packaged standard-library helper that fails closed on missing fields and renders the required visible selection, stop basis, source snapshot, implementation/runtime, scope and handoff block.
+- Added per-case bundle export and freshness checks for exact path allowlists and captured hashes. Bundles keep evaluator rubrics out, but do not sandbox other agent tools or filesystem access.
+- Added a separately bound R14 review-record format. Mechanical validation reports `semantic_verified=false`; no claim is made about semantic quality, installed-host activation or learner outcomes without separate evidence.
+- Preserved the historical 0.3.7 sync capture and validator unchanged; add current 0.3.8 release-context checks.
+- Release gates are tracked in the [0.3.8 roadmap](docs/releases/0.3.8-roadmap.md); this changelog entry does not imply that CI, model review or distribution is complete.
+
 ## 0.3.7
 
 - Unified source/account continuity guards: preserve assessment history, pending Q and support; added positive/negative regression cases.

@@ -1,0 +1,52 @@
+{
+  "candidate_version": "0.3.8",
+  "capture_state_at_freeze": {
+    "host_activation": "NOT_RUN",
+    "model_runs": "NOT_RUN",
+    "semantic_review": "NOT_RUN"
+  },
+  "case_count": 5,
+  "checker_sha256": "3d48649286f241c304a47269dc6355fa57b7a6d22f3a5b56038038690325d66a",
+  "evaluation_files": {
+    "evaluation/project-evidence/0.3.8/README.md": "d633a4f10fc08e0f2282e5e2fa397d60f353cfa8f6da64df58e945483cd0e8fd",
+    "evaluation/project-evidence/0.3.8/case-specs/PE01-root-selection.json": "e02153741de786860cf8287afb94520ffb48559bab020a0ed324d49556134114",
+    "evaluation/project-evidence/0.3.8/case-specs/PE02-revision-unknown.json": "7a2776efbd25e10cc7fa11bd258b943c41c1e9027c60f1720869cccdcad98746",
+    "evaluation/project-evidence/0.3.8/case-specs/PE03-known-revision.json": "7f2974a044cdd7648bb42647d70bf8158cb2d4ecd25cdb51d56e1729d42953a4",
+    "evaluation/project-evidence/0.3.8/case-specs/PE04-missing-state.json": "2a47c8549b6ae7e5f7e1404d09fd6f0866b76c4ed55c87c427d5225de8c9e9ee",
+    "evaluation/project-evidence/0.3.8/case-specs/PE05-source-changed.json": "9eeb4bc10feddc5eaf093093cb0f427bce9401afa7c3f3d23fd6492814672246",
+    "evaluation/project-evidence/0.3.8/cases/PE01-root-selection/input.md": "a10ccee013074138ccd8fa4da4f714d6be8e14a75dedea865f159cda395d40bd",
+    "evaluation/project-evidence/0.3.8/cases/PE01-root-selection/sources/workspace-A-orchestrator.md": "b233a8cf66baa71f7b0a5a379d49f1beadb38be7cb75ade1366238ef2592dffd",
+    "evaluation/project-evidence/0.3.8/cases/PE01-root-selection/sources/workspace-B-orchestrator.md": "4c860d76997a1d75d6c349fa7a01c476049dc63d75f90ae5102e2e504dfc6e76",
+    "evaluation/project-evidence/0.3.8/cases/PE02-revision-unknown/input.md": "fd32cb7396b2c113987fe370f2bbba9b3800b1d329ad6d66a63dcd8362ea3216",
+    "evaluation/project-evidence/0.3.8/cases/PE02-revision-unknown/sources/ledger-snapshot.md": "c4ef42446a16f4b6f40ff0563cc976696364e6e7f106006bc781d107d326e58b",
+    "evaluation/project-evidence/0.3.8/cases/PE03-revision-known-runtime-unknown/input.md": "ef376032ff91c8c9db6bed5ddfad37268f7f3f84974e68ceebcd29d1860c53f1",
+    "evaluation/project-evidence/0.3.8/cases/PE03-revision-known-runtime-unknown/sources/catalog-evidence.md": "ebc6543d619d6a0f765c72ebf3e20d96c7dffa1999c740db8acb922a5274214d",
+    "evaluation/project-evidence/0.3.8/cases/PE03-revision-known-runtime-unknown/sources/signed-build.txt": "57900e50453aec0e28ad0ae9c5a5bd71a18d5a397aaed646eebf4dfd8d12772d",
+    "evaluation/project-evidence/0.3.8/cases/PE04-missing-state/input.md": "8e1ca05f724cd7ef5ac31b05188d15c28aa5ebeb3782d22ed4819a830530d813",
+    "evaluation/project-evidence/0.3.8/cases/PE04-missing-state/sources/project-check.md": "df8f6f85a57983fd3df8ce3093b44f3960b2710e57b481d5fc632aeb24d48ba1",
+    "evaluation/project-evidence/0.3.8/cases/PE05-source-changed/input.md": "5027b3bcbbe0e2a85050c21dc6401f0da4c2f174c43e3b55bd9b4b9116335004",
+    "evaluation/project-evidence/0.3.8/cases/PE05-source-changed/sources/current-search.md": "1f5371f439b9b5c165bd335699f859a113bb14b530fb9917ff34f65ccdf44a02",
+    "evaluation/project-evidence/0.3.8/cases/PE05-source-changed/sources/prior-handoff.json": "2bbe3c7003ce6760504bb6dc7b4bbf1c1c1cc63ddcad8c0141f6f9e64bf5a41c",
+    "evaluation/project-evidence/0.3.8/rubric.json": "5d08826bd76935448ac84706534155615b7d7ab532537795102630bd1527f8d0"
+  },
+  "files": {
+    ".codex-plugin/plugin.json": "dc4d3bb3bcf5a71cfe84a09ce1050f628493925e9b8aa69fca8133d545eae7f8",
+    "docs/project-evidence.en.md": "61344feb1901c3df1fb463054fbecbfdf774b67f353c37617bbd3cd42a563753",
+    "docs/project-evidence.vi.md": "aaf176c24478e55dc69e7b66d3e2ef614f9c435c033ad431fff03074d93065c1",
+    "plugin.json": "c5ece626448c6e1434425db779fd64b91e01f740816eea416c1500ef4cf147a0",
+    "skills/sid-reading-companion/SKILL.md": "7a7a4539b9ca1737031837638e47ee3030c81330e156f96228f64f007da3c38d",
+    "skills/sid-reading-companion/references/citation-evidence.md": "68311e06ea52f47b75223a7d87c04ea6902e9f1cf305b56e38232e6ccd097cbd",
+    "skills/sid-reading-companion/references/knowledge-compiler.md": "f94efd7eebf90a548d808dda120486e79ba9543cc94e3410c4d845e5660fa44f",
+    "skills/sid-reading-companion/references/master-instruction.md": "7c5200c36ef45bf509ba4d1ce4daf29ca62ac9994aad7236c6f565ebf4a6ebb7",
+    "skills/sid-reading-companion/references/project-evidence-profile.json": "595e2e1458f632ebae13c85bb4db3be6eeae295a3f7fb5f94525d3fb2e08e5ea",
+    "skills/sid-reading-companion/references/project-evidence-record.schema.json": "61648b468ef597af77eea79c75f5b173786543a6e26f91058f635a8799549968",
+    "skills/sid-reading-companion/references/project-evidence.md": "ca114c59d671da238810e8c0906b6772ed163cde67dbb10112e64cdfa2a3987e",
+    "skills/sid-reading-companion/references/reading-protocols.md": "d089ae451cfc1b2aeec5f2360f906a2fda193b9cb48e134a917755e52e1a621c",
+    "skills/sid-reading-companion/references/stack-contracts.md": "9289f6b71c00be232ce0168f305217025b4ece69f9b4609f0dddbb6153557579",
+    "skills/sid-reading-companion/scripts/project_evidence.py": "d5263ee2608040212df5141ddd2309a1fd204c96f73bb996725d15b65fa32c83"
+  },
+  "lock_schema_version": 2,
+  "lock_version": "project-evidence-release-context-0.3.8",
+  "profile_version": "project-evidence-audit-0.3.8",
+  "purpose": "Fresh 0.3.8 candidate context; separate from immutable 0.3.7 historical capture."
+}

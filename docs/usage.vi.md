@@ -28,6 +28,10 @@ Không cần nhớ các mã CE. Cung cấp claim và tài liệu thực cần ki
 
 Kiểm này trả lời “nguồn có hỗ trợ claim không”; xác minh sự thật ngoài tài liệu là yêu cầu riêng. “Mức hỗ trợ claim” cũng khác mức gợi ý anh đã nhận khi trả lời câu hỏi học tập. Nếu cần hồ sơ rà soát kỹ thuật, thêm: “Xuất record **G-CITATION-REVIEW** với evidence cho CR01–CR06 và các điểm chưa kiểm; phân biệt tự rà của AI với kiểm độc lập.”
 
+## Audit bằng chứng cho một dự án
+
+Đây là route riêng khi anh yêu cầu tra cứu/chọn/đối chiếu/bàn giao evidence dự án; không tự bật trong một lượt đọc sách. Khi dùng, helper 0.3.8 sẽ render block bắt buộc từ audit record; reviewer vẫn phải đánh giá ý nghĩa và căn cứ của stop reason. Xem [hướng dẫn đầy đủ](project-evidence.vi.md).
+
 ## Điều khiển phiên
 
 | Anh nói | Cách xử lý |

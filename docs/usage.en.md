@@ -28,6 +28,10 @@ You do not need to memorize CE codes. Supply the claims and the actual document:
 
 This checks support within the supplied source. Verifying truth beyond it is a separate task. Claim support differs from hints or worked examples received during learning. For an advanced review record, add: “Produce **G-CITATION-REVIEW** with evidence for CR01–CR06 and unchecked gaps; distinguish AI self-review from independent review.”
 
+## Audit evidence for a project
+
+This is a separate route when you ask to find/select/compare/hand off project evidence; it does not run during ordinary book reading. The 0.3.8 helper renders a required block from the audit record, while a reviewer still judges the meaning and basis of the stop reason. See the [full guide](project-evidence.en.md).
+
 ## Reading controls and continuity
 
 | Request | Behavior |

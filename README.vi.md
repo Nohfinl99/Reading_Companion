@@ -2,12 +2,12 @@
 
 <img src="assets/logo.svg" alt="Reading Companion" width="96" />
 
-![Plugin version](https://img.shields.io/badge/Plugin-0.3.7-15324F)
+![Plugin version](https://img.shields.io/badge/Plugin-0.3.8-15324F)
 [English](README.md) · [Hướng dẫn sử dụng](docs/usage.vi.md) · [Thay đổi](CHANGELOG.md)
 
-Reading Companion hỗ trợ đọc sâu, trích xuất tri thức có nguồn và giữ checkpoint đọc bằng tiếng Việt. Tên kỹ thuật: `sid-reading-companion`. Gói gồm một skill và bốn helper Python tùy chọn.
+Reading Companion hỗ trợ đọc sâu, trích xuất tri thức có nguồn và giữ checkpoint đọc bằng tiếng Việt. Tên kỹ thuật: `sid-reading-companion`. Gói gồm một skill và năm helper Python tùy chọn.
 
-Bản 0.3.7 thống nhất guard giữ phiên giữa source và plugin, yêu cầu GateRecord citation mới có đủ trường/bằng chứng, và bổ sung công cụ repository để đóng gói tái lập và kiểm bundle bàn giao. Xem [phương án sửa và giới hạn bằng chứng](docs/citeguard/correction-plan.md).
+Bản 0.3.8 bổ sung route tường minh cho audit bằng chứng dự án và helper packaged kiểm đủ structured record, render các trường bắt buộc. Semantic review vẫn độc lập. Xem [hướng dẫn bằng chứng dự án](docs/project-evidence.vi.md) và [giới hạn bằng chứng release](docs/citeguard/correction-plan.md).
 
 ## Bắt đầu đọc
 

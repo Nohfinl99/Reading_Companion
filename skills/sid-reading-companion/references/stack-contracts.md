@@ -10,6 +10,8 @@ SourceManifest: source_id, version/edition hoặc unknown, path/access_method, s
 
 Các records SelectionRecord/ArgumentRecord/ExampleLink/QuestionContract/GateRecord lưu trong Markdown hoặc JSON sidecar bên cạnh state; không thêm field vào pending_question, unit hoặc reading_session mà helper chưa hỗ trợ. Sidecar header: contract_version PS1, source_id/hash/version, state_revision, unit_revisions, artifact_refs. Trước reuse so hash và revision; stale thì chặn phần phụ thuộc và tái kiểm. Các ID SC00–SC05 là contract IDs; C01–C10 trong B05 vẫn là capability IDs, không cùng namespace.
 
+Project evidence audit có profile additive riêng tại `references/project-evidence-profile.json`, được helper `scripts/project_evidence.py` kiểm và render. Profile chỉ giữ record audit ngoài learner checkpoint; không mở rộng session, unit, assessment, pending_question hoặc checkpoint schema. SC00 vẫn sở hữu source provenance/handoff, SC01 selection, SC05 gate semantics.
+
 State cũ thiếu sidecar vẫn đọc được; không suy provenance đã kiểm. Không sidecar thì phát handoff trong chat và ghi chưa lưu. Audit trace là decision facts, không suy luận riêng tư.
 
 Revision state chỉ tăng do navigation/style/pause/resume: đối chiếu source hash, unit revisions, Q ID và lịch sử support trước khi rebind sidecar sang state revision mới; giữ provenance/criterion cũ và log rebind, không đánh stale content chỉ vì cursor đổi. Source/unit/target đổi thật thì tái kiểm phần phụ thuộc. Không rebind để xóa support hoặc claim đã chuẩn bị criterion trước Q.

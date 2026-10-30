@@ -1,0 +1,78 @@
+{
+  "profile_version": "project-evidence-audit-0.3.8",
+  "record_schema": "project-evidence-record.schema.json",
+  "contract_owners": {
+    "source_frame": "KC01",
+    "selection": "SC01",
+    "source_and_handoff": "SC00",
+    "support": "CE02",
+    "continuity": "R12",
+    "validation": "R14/SC05"
+  },
+  "required_record_fields": [
+    "contract_version",
+    "case_id",
+    "artifact",
+    "selection",
+    "searched",
+    "source_context",
+    "handoff"
+  ],
+  "selection_fields": [
+    "selection_id",
+    "purpose",
+    "scope",
+    "basis",
+    "universe_ref",
+    "criterion",
+    "members",
+    "exclusions_or_not_evaluated",
+    "completeness",
+    "count",
+    "count_basis"
+  ],
+  "completeness_values": [
+    "complete_in_verified_scope",
+    "partial",
+    "unknown"
+  ],
+  "basis_values": [
+    "author_explicit",
+    "ai_selection",
+    "user_selection",
+    "mixed"
+  ],
+  "count_basis_values": [
+    "author_stated",
+    "derived_after_selection",
+    "user_limit",
+    "unknown"
+  ],
+  "version_status_values": [
+    "known",
+    "unknown"
+  ],
+  "ack_status_values": [
+    "confirmed",
+    "unknown"
+  ],
+  "gate_status_values": [
+    "PASS",
+    "FAIL",
+    "PARTIAL",
+    "NOT_RUN"
+  ],
+  "required_review_checks": [
+    "selection_and_scope",
+    "stop_reason",
+    "source_snapshot_identity",
+    "implementation_and_runtime_boundary",
+    "handoff_owner_and_ack"
+  ],
+  "readiness_values": [
+    "READY",
+    "PARTIAL",
+    "BLOCKED"
+  ],
+  "semantic_verified_by_helper": false
+}

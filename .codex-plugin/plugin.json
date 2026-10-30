@@ -18,7 +18,7 @@
     ]
   },
   "name": "sid-reading-companion",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "Vietnamese SID reading companion for source-grounded deep reading, knowledge extraction and learning checkpoints.",
   "author": {
     "name": "SID"

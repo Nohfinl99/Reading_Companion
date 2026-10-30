@@ -25,6 +25,8 @@ jobs:
       run: |
         python -m json.tool plugin.json > /dev/null
         python -m json.tool .codex-plugin/plugin.json > /dev/null
+        python -m json.tool skills/sid-reading-companion/references/project-evidence-profile.json > /dev/null
+        python -m json.tool skills/sid-reading-companion/references/project-evidence-record.schema.json > /dev/null
 
     - name: Validate repository structure and documentation links
       run: python tools/validate_repository.py
@@ -37,7 +39,8 @@ jobs:
         python tools/validate_citation_evidence.py
         python tools/validate_luna_rerun.py
         python tools/validate_gate_records.py evaluation/citeguard/sync-0.3.7/sidecar.json --root evaluation/citeguard/sync-0.3.7 --expected-artifact artifact.md=1
-        python tools/validate_sync_evidence.py --root . --require-current-context
+        python tools/validate_sync_evidence.py --root .
+        python tools/validate_project_evidence_release_context.py --root .
 
     - name: Run helper and evidence regression tests
       run: python -m pytest -q --junitxml="$RUNNER_TEMP/reading-companion-tests.xml"
@@ -51,6 +54,7 @@ jobs:
         python skills/sid-reading-companion/scripts/knowledge_compiler.py --help
         python skills/sid-reading-companion/scripts/checkpoint.py --help
         python skills/sid-reading-companion/scripts/reading_session.py --help
+        python skills/sid-reading-companion/scripts/project_evidence.py --help
 
     - name: Build and verify runtime package from source
       run: |

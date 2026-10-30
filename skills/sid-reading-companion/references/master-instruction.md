@@ -48,6 +48,7 @@ Trước mọi nhánh nội dung/artifact ở mode extract, retrieve R02 để �
 |---|---|---|
 | Mục tiêu mới còn mơ hồ | Frame rồi chờ dữ kiện quyết định | M02 |
 | Fresh explain/deep | KC chọn nhánh → D1–D3 | KC01–KC05, R01; R13 khi tạo ví dụ; R07 theo sensitivity; R06 nếu ngôn ngữ cần |
+| Người dùng yêu cầu audit/chọn/đối chiếu/bàn giao bằng chứng một dự án | Project-evidence audit riêng; không tự bật cho lượt đọc/extract/Progress | [Project evidence](project-evidence.md), KC01, SC00/SC01, CE02, R12, R14; packaged `project_evidence.py` kiểm completeness và render mandatory block |
 | Extract | KC nguồn/metadata → K1–K3 → T | KC01–KC05, R02, R07; R09 khi cần |
 | Combined | D/K cùng ID theo mục tiêu | R01/R02, R07 theo sensitivity; Q giữ R04; tránh chép lại |
 | Compare | Cùng tiêu chí/bối cảnh → X1–X3 | KC01/KC03/KC04, R03/R09; R07 theo sensitivity |
@@ -86,6 +87,8 @@ Nguồn đổi hash: dừng state mutation liên quan, reimport phiên mới có
 Rewrite kỹ thuật của build/update/audit: mục tiêu/input/version/scope/output/criterion/layer bằng chứng. Lựa chọn rõ thì làm, không tạo approval round từ phase. Kiểm đúng phạm vi, lưu raw input/output/pros/cons và bản gốc; báo riêng design, self-review, mechanical, render, host và learner. Cùng AI chạy/chấm không independent; test helper không hiểu nghĩa; point design không đo nhớ lâu. Không sinh learner response để có tỷ lệ pass. Chỉ publish khi gate phạm vi thay đổi đạt, giữ metadata/audience ngoài yêu cầu; việc lưu release không chứng minh host đã nạp. Gate khoa học/hiệu quả học cần evidence riêng.
 
 `SID Reading Companion -capa` và alias lỗi chính tả trong SKILL.md yêu cầu audit năng lực; đây không phải cờ CLI hay helper. Chốt phạm vi từ yêu cầu; đọc B01 evidence contract, B05 registry/mapping/coverage rồi B06 failure classes, dependencies và diagnosis. Route observed failure → affected capability → failure class → upstream evidence → symptom/root-cause candidate → implementation owner → patch recommendation. Chỉ retrieve owner section cần kiểm; không thêm phase vào M03 hoặc chấm capability trong mỗi lượt học.
+
+Project evidence cho một dự án do người dùng yêu cầu riêng theo M04 và `references/project-evidence.md`; không đồng nhất với `-capa` audit năng lực hay audit build/update của M07. Nếu được yêu cầu build/update plugin, tiếp tục dùng luồng M07 hiện hữu.
 
 Audit phân biệt kiểm implementation trong file với đo performance trên output. Thiếu source/output/intermediate/state facts thì ghi NOT_RUN hoặc UNRESOLVED đúng lớp, không suy owner từ file đang hiển thị. Output audit gồm đối chiếu requirement theo file/section, capability records, coverage theo lớp evidence, diagnosis/owner candidates và phần chưa chạy. Trace chỉ decision facts theo B06, không private reasoning. Giữ audit ngoài learner checkpoint; không fabricate response/mastery hoặc mutation phiên đọc.
 

@@ -10,6 +10,8 @@
     "assets/logo.svg",
     "docs/usage.vi.md",
     "docs/usage.en.md",
+    "docs/project-evidence.vi.md",
+    "docs/project-evidence.en.md",
     "docs/citeguard/sid-v5-mapping.md",
     "docs/citeguard/correction-plan.md",
     "skills/sid-reading-companion/SKILL.md",
@@ -20,6 +22,9 @@
     "skills/sid-reading-companion/references/stack-contracts.md",
     "skills/sid-reading-companion/references/case-benchmark.md",
     "skills/sid-reading-companion/references/citation-evidence.md",
+    "skills/sid-reading-companion/references/project-evidence.md",
+    "skills/sid-reading-companion/references/project-evidence-profile.json",
+    "skills/sid-reading-companion/references/project-evidence-record.schema.json",
     "skills/sid-reading-companion/references/helper-compatibility-0.3.7.md",
     "skills/sid-reading-companion/references/knowledge/citeguard.md",
     "skills/sid-reading-companion/references/knowledge/citeguard-source.json",
@@ -27,6 +32,7 @@
     "skills/sid-reading-companion/scripts/checkpoint.py",
     "skills/sid-reading-companion/scripts/reading_session.py",
     "skills/sid-reading-companion/scripts/knowledge_compiler.py",
-    "skills/sid-reading-companion/scripts/ia_map.py"
+    "skills/sid-reading-companion/scripts/ia_map.py",
+    "skills/sid-reading-companion/scripts/project_evidence.py"
   ]
 }

@@ -330,6 +330,8 @@ V1 chọn required gates theo nội dung, không chỉ format. V2 kiểm evidenc
 
 V4 là kiểm bản người đọc sẽ thấy: selection dùng biểu diễn tối thiểu SC01; ví dụ dùng learner_bridge SC03; combined/điểm chờ theo R01/R04. Gate record tự ghi PASS không thay các evidence này. Giữ nguyên critical conditions và exceptions của nguồn; đề xuất nới điều kiện phải ghi là giả thuyết mới chưa được nguồn xác nhận, không dùng để certify ví dụ hoặc kết luận đã đúng theo unit.
 
+Project evidence audit có structured record additive ngoài learner state. Helper có thể fail-closed về field/hash/locator và render block hiển thị; semantic stop-reason, source authority/support và handoff claims vẫn cần reviewer R14. Thiếu record review riêng gắn exact rendered artifact SHA-256 và source SHA-256 thì readiness PARTIAL. Helper chỉ báo structural proof, `semantic_verified=false`; self-declared readiness trong model output không là review.
+
 | Gate | Required check | Owner sửa |
 |---|---|---|
 | G-FRAME | Đúng goal/mode/scope/output; khi user chỉ chỗ hụt mạch hoặc hỏi provenance, sửa đúng phần/câu hỏi trước thêm nội dung; không reset Q từ continue/answer | M02/M04/R15 |
